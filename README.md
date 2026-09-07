@@ -2,7 +2,9 @@
 
 1D Holstein 极化子的理论结果网站：从已完成的 VED 和 LR-VMC 计算中读取真实数据，交互比较色散、准粒子留数和全频率窗口内的电子加谱。
 
-仓库：<https://github.com/rjguo1208/Holstein-model>。当前为私有仓库，网站初版已放在 `site/`，尚未发布公共网址。
+网站：**<https://rjguo1208.github.io/Holstein-model/>**
+
+公开仓库：<https://github.com/rjguo1208/Holstein-model>。网站源码与可下载结果位于 `site/`。
 
 ![网站交互谱图预览](docs/preview-desktop.png)
 
@@ -65,9 +67,9 @@ node scripts/check_spectra.mjs
 
 `site/` 可由任意静态 HTTP 服务托管，所有本地资源使用相对路径，兼容 `/Holstein-model/` 子路径。没有外部字体、CDN 脚本或后端服务。
 
-仓库附带手动触发的 `Deploy GitHub Pages` 工作流，推送代码只触发检查。需要发布时，在仓库的 **Settings → Pages** 选择 **GitHub Actions**，再从 **Actions** 运行该部署工作流。工作流只发布 `site/`，发布前再次运行数据校验。
+仓库已启用 GitHub Pages，发布来源为 **GitHub Actions**。后续更新网站时，推送代码后，从 **Actions** 手动运行 `Deploy GitHub Pages` 工作流。工作流只发布 `site/`，发布前再次运行数据校验；普通推送仅自动触发检查。
 
-GitHub Pages 对仓库可见性和账号方案有要求，且私有仓库的普通 Pages 网站也可能公开可见。仓库私有不等于网站私有；具体规则见 [GitHub 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)。目前没有启用或触发网站发布。
+当前账号方案要求此仓库公开才能使用 Pages，因此网站与仓库均公开可访问。相关托管规则见 [GitHub 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)。
 
 ## 方法文献
 

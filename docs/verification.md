@@ -19,4 +19,4 @@ node --check site/assets/app.js
 node scripts/check_spectra.mjs
 ```
 
-浏览器仅访问本地预览服务器，网站没有加载外部运行时资源。网站部署工作流已提供，但没有启用或触发 Pages 发布。
+以上初版浏览器检查访问本地预览服务器，网站没有加载外部运行时资源。后续公开发布使用仓库的 `Deploy GitHub Pages` 工作流；部署状态可在 GitHub Actions 中查看。
