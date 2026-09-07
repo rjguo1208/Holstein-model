@@ -1,0 +1,18 @@
+name: Check website and scientific data
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Check local links, dataset coverage, and spectral moments
+        run: python3 scripts/check_site.py
+      - name: Check JavaScript syntax and numerical agreement
+        run: |
+          node --check site/assets/app.js
+          node scripts/check_spectra.mjs

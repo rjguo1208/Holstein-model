@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="1D Holstein 极化子的 VED 与 LR-VMC 数值对照：交互式色散、准粒子留数和全窗口谱函数，以及完整的收敛记录。">
+  <meta name="theme-color" content="#f6f5ef">
+  <title>Holstein model · 极化子理论与数值结果</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/app.js" type="module"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Holstein model 首页"><span class="brand-symbol" aria-hidden="true">H<span>↝</span></span><span>Holstein <em>model</em></span></a>
+    <nav aria-label="主导航">
+      <a href="#explorer">探索结果</a><a href="#methods">计算方法</a><a href="#data">数据与记录</a>
+      <a class="repo-link" href="https://github.com/rjguo1208/Holstein-model">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="tiny-line"></span> CONDENSED MATTER · RESEARCH NOTE 001</p>
+        <h1 id="hero-title">从极化子色散，<br>到完整<span class="accent">谱函数。</span></h1>
+        <p class="hero-intro">一个电子与一维晶格中的局域声子耦合。我们用变分精确对角化检验神经量子态，追踪基态、准粒子权重与谱的细节。</p>
+        <div class="hero-actions"><a class="button primary" href="#explorer">探索计算结果 <span aria-hidden="true">↓</span></a><span class="status-pill"><span></span> 首轮基准 · 收敛研究中</span></div>
+      </div>
+      <aside class="hero-note" aria-label="研究问题">
+        <p class="eyebrow">THE QUESTION</p>
+        <p class="research-question">能量足够准确，<br>谱也同样准确吗？</p>
+        <div class="note-rule"></div>
+        <p>把 <i>E(k)</i>、<i>Z(k)</i> 与整个频率窗口放在同一组检验中。</p>
+        <div class="note-bottom"><span>VED ↔ LR-VMC</span><span>4 PARAMETER SETS</span></div>
+      </aside>
+    </section>
+
+    <div class="model-strip wrap">
+      <span class="eyebrow">THE MODEL</span>
+      <div class="hamiltonian" aria-label="Holstein 哈密顿量">H = −t ∑<sub>i</sub> (c<sup>†</sup><sub>i+1</sub>c<sub>i</sub> + h.c.) + ω<sub>0</sub> ∑<sub>i</sub> b<sup>†</sup><sub>i</sub>b<sub>i</sub> − g ∑<sub>i</sub> n<sub>i</sub>(b<sub>i</sub> + b<sup>†</sup><sub>i</sub>)</div>
+      <p>t = 1 &nbsp; · &nbsp; λ = g² / (2tω₀) &nbsp; · &nbsp; T = 0 &nbsp; · &nbsp; 单电子</p>
+    </div>
+
+    <section class="stats wrap" aria-label="实际完成的计算规模">
+      <div><strong>96<span>次</span></strong><p>有限空间 NNQS 优化</p></div>
+      <div><strong>72<span>组</span></strong><p>无限晶格 VED 计算</p></div>
+      <div><strong>12<span>次</span></strong><p>随机 VMC 主训练</p></div>
+      <div><strong>3<span>个</span></strong><p>动量点：0、π/2、π</p></div>
+    </section>
+
+    <section class="explorer-section" id="explorer" aria-labelledby="explorer-title">
+      <div class="wrap">
+        <div class="section-heading"><div><p class="eyebrow">01 / EXPLORE</p><h2 id="explorer-title">让数据展开。</h2></div><p>同一能量零点、同一展宽。<br>保留原始谱权重，查看差异来自哪里。</p></div>
+        <div class="explorer-layout">
+          <aside class="controls">
+            <h3>选择参数</h3>
+            <div class="case-buttons" role="group" aria-label="耦合参数组">
+              <button type="button" data-case="A" aria-pressed="false"><span class="case-letter">A</span><span><strong>弱耦合</strong><small>ω₀/t = 0.8 &nbsp; λ = 0.25</small></span></button>
+              <button type="button" data-case="B" aria-pressed="true"><span class="case-letter">B</span><span><strong>中等耦合</strong><small>ω₀/t = 1.0 &nbsp; λ = 0.50</small></span></button>
+              <button type="button" data-case="C" aria-pressed="false"><span class="case-letter">C</span><span><strong>较强耦合</strong><small>ω₀/t = 1.0 &nbsp; λ = 1.00</small></span></button>
+              <button type="button" data-case="D" aria-pressed="false"><span class="case-letter">D</span><span><strong>强耦合</strong><small>ω₀/t = 0.8 &nbsp; λ = 2.00</small></span></button>
+            </div>
+            <fieldset><legend>动量 k</legend><div class="segmented" role="group" aria-label="动量">
+              <button type="button" data-k="0" aria-pressed="true">0</button><button type="button" data-k="0.5" aria-pressed="false">π/2</button><button type="button" data-k="1" aria-pressed="false">π</button>
+            </div></fieldset>
+            <label class="field" for="eta">Lorentz 展宽 η/t<select id="eta"><option value="0.025">0.025 · 较高分辨率</option><option value="0.05" selected>0.050 · 主要比较</option><option value="0.1">0.100 · 补充检查</option><option value="0.2">0.200 · 补充检查</option></select></label>
+            <label class="checkbox"><input type="checkbox" id="rest"> 扣除最低极点，查看余谱</label>
+            <details class="advanced"><summary>LR 采样与截断设置</summary>
+              <label class="field" for="samples">LR 样本数<select id="samples"><option value="65536">65,536</option><option value="262144" selected>262,144</option></select></label>
+              <label class="field" for="rcond">度量相对特征值截断<select id="rcond"><option value="0.01">10⁻²</option><option value="0.001" selected>10⁻³</option><option value="0.0001">10⁻⁴</option></select></label>
+              <p>两个样本量来自同一记录的不同长度。每个参数点只有一个训练种子。</p>
+            </details>
+            <div class="setup-note"><span class="eyebrow">FIXED SETUP</span><p>VED：无限晶格，N<sub>h</sub> = 20<br>LR-VMC：L = 32，h = 40<br>SR 训练 1,600 步</p></div>
+          </aside>
+
+          <div class="results-panel" aria-busy="true" id="results-panel">
+            <div id="load-status" class="load-status" role="status">正在加载计算数据…</div>
+            <div class="plot-header"><div><p class="eyebrow" id="case-label">CASE B / ω₀ = 1 / λ = 0.5</p><h3 id="spectrum-title">电子加谱 <i>A(k, ω)</i></h3></div><div class="legend"><span class="ved-key">VED</span><span class="lr-key">LR-VMC</span></div></div>
+            <figure class="spectrum-figure"><div id="spectrum-plot" class="chart spectrum-chart"></div><figcaption id="spectrum-caption">频率相对真空能量。全窗口包含参考未展宽谱至少 99.9% 的权重。</figcaption></figure>
+            <div class="metrics" aria-label="当前点数值对照" aria-live="polite">
+              <div><span>E<sub>VED</sub> / t</span><strong id="energy-ref">—</strong></div>
+              <div><span>E<sub>LR</sub> / t</span><strong id="energy-lr">—</strong></div>
+              <div><span>Z<sub>VED</sub></span><strong id="z-ref">—</strong></div>
+              <div><span>Z<sub>LR</sub></span><strong id="z-lr">—</strong></div>
+              <div><span id="l1-label">全谱 L¹ 差异</span><strong id="spectral-error">—</strong></div>
+              <div><span>LR 总谱权重</span><strong id="spectral-weight">—</strong></div>
+            </div>
+            <div class="reference-note" id="reference-note"></div>
+            <div class="small-plots">
+              <figure><div class="small-plot-heading"><h3>极化子色散</h3><span>E(k) / t</span></div><div id="dispersion-plot" class="chart"></div></figure>
+              <figure><div class="small-plot-heading"><h3>准粒子留数</h3><span>Z(k)</span></div><div id="residue-plot" class="chart"></div></figure>
+            </div>
+            <p class="plot-footnote">仅计算 k = 0、π/2、π；折线辅助阅读。此处 LR 数值来自随机切空间求解，独立 VMC 测量见下表。</p>
+            <details class="measurement-details"><summary>查看独立 VMC 测量与统计误差</summary><div class="table-scroll"><table><caption>标准误来自独立链均值，不包含有限尺寸或变分误差。</caption><thead><tr><th scope="col">k</th><th scope="col">VMC E/t ± 标准误</th><th scope="col">VMC Z ± 标准误</th><th scope="col">平均声子数</th></tr></thead><tbody id="vmc-table"></tbody></table></div></details>
+            <div class="chart-actions"><button type="button" id="download-spectrum" class="text-button">下载当前谱 CSV <span aria-hidden="true">↓</span></button><a id="raw-data-link" href="data/B.json" download>下载本组原始极点 JSON <span aria-hidden="true">↓</span></a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="methods" class="methods-section wrap" aria-labelledby="methods-title">
+      <div class="section-heading"><div><p class="eyebrow">02 / METHOD & EVIDENCE</p><h2 id="methods-title">三层计算，各自检验。</h2></div><p>训练只最小化能量。<br>ED / VED 的波函数与谱没有参与拟合。</p></div>
+      <div class="method-grid">
+        <article><span class="method-number">01</span><p class="eyebrow">FINITE-SPACE CALIBRATION</p><h3>ED + 全求和 NNQS</h3><p>L = 8，总声子数 ≤ 5。网络宽度 20、40、80、160，各两个种子。精确求和隔离采样误差，检验网络与切空间表达能力。</p><p class="method-detail">96 次优化 · 有限截断空间</p></article>
+        <article><span class="method-number">02</span><p class="eyebrow">VARIATIONAL EXACT DIAGONALIZATION</p><h3>无限晶格 VED</h3><p>电子相对坐标基组从 N<sub>h</sub> = 10 逐级增加到 20。独立求解 E、Z，使用裸电子态的 Lanczos 递推计算谱。</p><p class="method-detail">72 组计算 · 最大 2,975,103 维</p></article>
+        <article><span class="method-number">03</span><p class="eyebrow">STOCHASTIC LINEAR RESPONSE</p><h3>VMC + 切空间 LR</h3><p>L = 32、32 条链、SR 优化。冻结网络后独立采样，在 ψ 与参数导数张成的空间中求谱；扫描样本量和度量截断。</p><p class="method-detail">12 次主训练 · 72 组 LR 求解</p></article>
+      </div>
+      <div class="finding"><span class="eyebrow">WHAT WE HAVE LEARNED</span><div><h3>基态的准确性，无法替代全谱检验。</h3><p>B 组 k = 0 的 LR 能量差约 1.9 × 10⁻⁴ t、Z 差约 1.8 × 10⁻⁴，但在 η = 0.05t 下，全谱 L¹ 差异仍为 5.33%。强耦合和较大动量下，谱的偏差更明显。</p><small>固定展示：262,144 个 LR 样本，度量截断 10⁻³；谱差异相对于 N<sub>h</sub> = 20 的 VED。</small></div></div>
+      <div class="scope-grid">
+        <div><h3>如何读这些结果</h3><p>全谱差异定义为窗口内 ∫|A<sub>LR</sub> − A<sub>VED</sub>| / ∫A<sub>VED</sub>。最低极点余谱仍可包含其他束缚态。谱没有额外面积归一化，也没有分别平移峰的位置。</p><p>VED 相邻基组变化与 Lanczos 步数变化分别检验。“通过参考判据”仅指通过这些已测试变化，不是严格误差上界。</p></div>
+        <div><h3>当前收敛状态</h3><p>主要展宽 η/t = 0.05、0.025 下，VED 全谱参考尚未全部达到预设判据；LR-VMC 的全窗口目标也尚未通过。程序验证通过并不等于物理收敛。</p><p>尚未完成 L = 32/64 尺寸检查、更多独立训练种子或 17 个动量点扫描。本页保留失败项与缺失权重。</p></div>
+      </div>
+      <div class="references"><span class="eyebrow">METHOD REFERENCES</span><a href="https://arxiv.org/abs/cond-mat/9812252">Bonča, Trugman & Batistić · The Holstein Polaron (1999) ↗</a><a href="https://arxiv.org/abs/2405.08701">Mahajan et al. · Neural quantum states for electron–phonon systems (2024) ↗</a></div>
+    </section>
+
+    <section id="data" class="data-section" aria-labelledby="data-title"><div class="wrap">
+      <div class="section-heading"><div><p class="eyebrow">03 / RESEARCH RECORD</p><h2 id="data-title">每条曲线，都有出处。</h2></div><p>数据快照 · 2026.09.07<br>原始极点、比较指标与完整结果记录。</p></div>
+      <div class="download-grid">
+        <a href="reports/RESULTS.md"><span class="file-type">MD</span><span><strong>完整计算报告</strong><small>结果、失败项与收敛状态</small></span><span aria-hidden="true">↗</span></a>
+        <a href="reports/results/comparison_vmc_centered/spectra.pdf"><span class="file-type">PDF</span><span><strong>全部参数的谱图</strong><small>随机 LR 与 VED 对照</small></span><span aria-hidden="true">↗</span></a>
+        <a href="reports/results/comparison_vmc_centered/dispersion_residue.pdf"><span class="file-type">PDF</span><span><strong>色散与准粒子留数</strong><small>4 组参数 × 3 个动量</small></span><span aria-hidden="true">↗</span></a>
+        <a href="downloads/benchmark.csv" download><span class="file-type">CSV</span><span><strong>主要数值对照表</strong><small>η = 0.05 · N = 262,144 · 截断 10⁻³</small></span><span aria-hidden="true">↓</span></a>
+        <a href="data/ved-convergence.json" download><span class="file-type">JSON</span><span><strong>VED 逐级收敛</strong><small>基组与 Lanczos 递推的变化</small></span><span aria-hidden="true">↓</span></a>
+        <a href="data/provenance.json" download><span class="file-type">JSON</span><span><strong>数据来源与文件校验</strong><small>计算约定与 SHA-256 摘要</small></span><span aria-hidden="true">↓</span></a>
+      </div>
+      <p class="validation-note">数值实现已有 18 项测试通过；VED 原始谱前三个矩的最大误差为 2.487 × 10⁻¹⁴。<a href="data/validation.json">查看计算验证记录 ↗</a></p>
+    </div></section>
+  </main>
+  <footer class="site-footer wrap"><a class="brand" href="#">Holstein <em>model</em></a><p>理论计算 · 数据、方法与不确定性</p><a href="https://github.com/rjguo1208/Holstein-model">源代码与更新 ↗</a></footer>
+  <noscript><div class="noscript-note">交互图表需要 JavaScript。你仍可阅读本页方法说明，或下载完整计算报告和 PDF 谱图。</div></noscript>
+</body>
+</html>
