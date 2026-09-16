@@ -1,28 +1,40 @@
-"""Validate site links and the exported scientific data using the standard library."""
+"""Check published links, rendered math, fonts and LaTeX figure provenance."""
+from hashlib import sha256
 from html.parser import HTMLParser
-import json
-import math
 from pathlib import Path
 import re
 from urllib.parse import unquote, urlsplit
+import xml.etree.ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 
 
-class Links(HTMLParser):
+class Page(HTMLParser):
     def __init__(self):
         super().__init__()
         self.links = []
         self.ids = set()
+        self.math_count = 0
+        self.mathml_count = 0
+        self.images = 0
 
     def handle_starttag(self, tag, attrs):
-        for name, value in attrs:
-            if name in {"href", "src"}:
-                self.links.append(value)
-            if name == "id":
-                assert value not in self.ids, f"Duplicate HTML id: {value}"
-                self.ids.add(value)
+        attrs = dict(attrs)
+        assert tag not in {"script", "merror"}, f"Unexpected element: {tag}"
+        classes = attrs.get("class", "").split()
+        assert "katex-error" not in classes, "Unrendered formula"
+        self.math_count += "katex" in classes
+        self.mathml_count += tag == "math"
+        if tag == "img":
+            assert attrs.get("alt"), "A diagram needs alternative text"
+            self.images += 1
+        if "id" in attrs:
+            assert attrs["id"] not in self.ids, f"Duplicate id: {attrs['id']}"
+            self.ids.add(attrs["id"])
+        for name in ("src", "href"):
+            if name in attrs:
+                self.links.append(attrs[name])
 
 
 def check_link(path, link):
@@ -30,60 +42,36 @@ def check_link(path, link):
     if url.scheme or url.netloc:
         return
     target = (path.parent / unquote(url.path)).resolve() if url.path else path
-    assert SITE in target.parents, f"Link escapes site: {path} -> {link}"
-    assert target.is_file(), f"Missing link target: {path} -> {link}"
+    assert SITE in target.parents, f"Link escapes site: {link}"
+    assert target.is_file(), f"Missing local resource: {link}"
     if url.fragment and target.suffix == ".html":
-        parser = Links()
+        parser = Page()
         parser.feed(target.read_text())
         assert unquote(url.fragment) in parser.ids, f"Missing anchor: {link}"
 
 
-for path in SITE.rglob("*.html"):
-    parser = Links()
-    parser.feed(path.read_text())
-    for link in parser.links:
-        check_link(path, link)
-for path in SITE.rglob("*.md"):
-    for link in re.findall(r"!?\[[^\]]+\]\(([^)]+)\)", path.read_text()):
-        check_link(path, link)
+page = Page()
+page.feed((SITE / "index.html").read_text())
+for link in page.links:
+    check_link(SITE / "index.html", link)
+for css in (SITE / "assets").rglob("*.css"):
+    for link in re.findall(r"url\(['\"]?([^)'\"]+)['\"]?\)", css.read_text()):
+        check_link(css, link)
 
-count = 0
-max_moment_error = 0.
-for case in "ABCD":
-    data = json.loads((SITE / "data" / f"{case}.json").read_text())
-    assert data["case"] == case
-    assert [p["k_pi"] for p in data["momenta"]] == [0, .5, 1]
-    omega = data["omega"]
-    assert len(omega) >= 1701
-    assert all(math.isfinite(w) for w in omega)
-    assert all(b > a for a, b in zip(omega[:-1], omega[1:]))
-    for point in data["momenta"]:
-        assert point["reference"]["generations"] == 20
-        assert point["reference"]["dimension"] == 2975103
-        ref = point["reference"]["poles"]
-        source_energy = -2 * math.cos(math.pi * point["k_pi"])
-        exact = [1., source_energy, source_energy ** 2 + data["model"]["g"] ** 2]
-        for order in range(3):
-            moment = math.fsum(w * e ** order for w, e in zip(ref["weights"], ref["energies"]))
-            max_moment_error = max(max_moment_error, abs(moment - exact[order]))
-            assert abs(moment - exact[order]) < 1e-10
-        assert {(r["samples"], r["rcond"]) for r in point["lr"]} == {
-            (n, c) for n in (65536, 262144) for c in (.01, .001, .0001)}
-        for record in [point["reference"], *point["lr"]]:
-            e, w = record["poles"]["energies"], record["poles"]["weights"]
-            assert len(e) == len(w) and len(e) > 0
-            assert all(math.isfinite(x) for x in e + w)
-            assert all(x >= 0 for x in w)
-            assert all(b >= a for a, b in zip(e[:-1], e[1:]))
-            if "total_weight" in record:
-                assert abs(math.fsum(w) - record["total_weight"]) < 1e-11
-        assert len(point["convergence"]) == 4
-        for r in point["convergence"]:
-            if r["eta"] in (.025, .05):
-                assert r["reference_certified"] is False
-        count += len(point["lr"])
-assert count == 72
-assert len(json.loads((SITE / "data/calibration.json").read_text())) == 96
-assert json.loads((SITE / "data/provenance.json").read_text())["physical_convergence_certified"] is False
-print(f"Links and exported data OK: 4 cases, 12 momenta, {count} LR spectra; "
-      f"largest VED moment error = {max_moment_error:.3e}")
+source = (ROOT / "src/index.html").read_text()
+expressions = re.findall(r"\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)", source)
+assert page.math_count == len(expressions) == page.mathml_count, "Incomplete LaTeX/MathML rendering"
+assert page.math_count > 0
+figures = list((SITE / "figures").glob("*.tex"))
+assert page.images == len(figures) == 4
+for source in figures:
+    svg = source.with_suffix(".svg")
+    digest = sha256(source.read_bytes()).hexdigest()
+    assert f"source-sha256: {digest}" in svg.read_text(), f"Recompile changed LaTeX: {source.name}"
+    tree = ET.parse(svg)
+    assert tree.getroot().get("viewBox"), f"Missing scalable bounds: {svg.name}"
+    assert not tree.findall(".//{http://www.w3.org/2000/svg}image"), f"Raster image in {svg.name}"
+    assert not tree.findall(".//{http://www.w3.org/2000/svg}script"), f"Script in {svg.name}"
+    assert source.with_suffix(".pdf").is_file(), f"Missing PDF: {source.name}"
+
+print(f"OK: {page.math_count} LaTeX expressions with MathML; {len(figures)} TikZ vector figures; local links, anchors and fonts.")

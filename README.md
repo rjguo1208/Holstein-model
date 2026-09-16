@@ -1,79 +1,71 @@
-# Holstein model
+# Diagrammatic Monte Carlo 与 Holstein 模型
 
-1D Holstein 极化子的理论结果网站：从已完成的 VED 和 LR-VMC 计算中读取真实数据，交互比较色散、准粒子留数和全频率窗口内的电子加谱。
+网站：<https://rjguo1208.github.io/Holstein-model/>
 
-网站：**<https://rjguo1208.github.io/Holstein-model/>**
+中文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。此仓库是讲解网站，没有实现或运行 DiagMC 求解器。
 
-公开仓库：<https://github.com/rjguo1208/Holstein-model>。网站源码与可下载结果位于 `site/`。
+页面采用白底黑字的单栏排版。公式由 LaTeX 源表达式在构建时排成 HTML + MathML，数学字体随站点托管。四幅费曼图由独立的 LaTeX/TikZ 文件编译成 PDF，再转换为字体已轮廓化的 SVG。阅读时无需 JavaScript、外部字体或 CDN；长公式与图在窄屏中可横向滚动。
 
-![网站交互谱图预览](docs/preview-desktop.png)
+## 本地预览
 
-## 本地浏览
-
-只需 Python 3，无需安装前端依赖或构建：
+已生成的页面与全部资源保存在 `site/`：
 
 ```bash
 cd site
 python3 -m http.server 8000 --bind 127.0.0.1
 ```
 
-打开 <http://localhost:8000>。在远程机器运行时可通过 SSH 转发本地端口；请用 HTTP 预览，因为图表通过 `fetch` 读取 JSON。
+打开 <http://localhost:8000>。
 
-## 网站内容
+## 修改正文或公式
 
-- 参数 A–D，分别为 `(ω₀/t, λ) = (0.8, 0.25), (1, 0.5), (1, 1), (0.8, 2)`。
-- 已计算的三个动量 `k = 0, π/2, π`，主展宽 `η/t = 0.025, 0.05`，补充展宽 `0.1, 0.2`。
-- 主结果来自 `L=32, h=40` 的随机 SR 训练，以及无限晶格 `Nh=20` 的 VED。
-- LR 样本量 `65,536 / 262,144`，度量截断 `10⁻² / 10⁻³ / 10⁻⁴`；两个样本量是同一测量记录的前缀。
-- 全谱/最低极点余谱、E(k)、Z(k)、独立 VMC 测量、当前谱 CSV、原始极点 JSON、PDF 谱图和完整报告。
+需要 Node.js 22。修改 `src/index.html` 中的正文和 LaTeX，或修改 `src/style.css`，然后运行：
 
-**目前全窗口精度尚未通过。** 能量接近 VED 不代表整个谱收敛，VED 参考谱自身也有截断误差。网站保留原始权重，不平移能量、不强制归一化，也不把三个动量点插值成连续动量扫描。
+```bash
+npm ci --ignore-scripts
+npm run build
+npm run check
+```
 
-详见 [实际计算报告](site/reports/RESULTS.md)。报告中的 18 项测试对应原计算程序，与下面的网站数据校验不同。
+使用 `\(...\)` 写行内公式，`\[...\]` 写独立公式。构建采用固定版本的 [KaTeX](https://katex.org/docs/api.html)，遇到不支持的公式语法即报错。数学表达式中的小于号使用 `\lt`，不使用 HTML 实体。`site/index.html` 和 `site/assets/` 中的数学字体、样式均为已提交的发布产物。
 
-首版的数值一致性与浏览器检查见 [验证记录](docs/verification.md)。
+## 修改费曼图
+
+`site/figures/` 中的四份 `.tex` 均可独立编译，使用标准 LaTeX、AMS Math 和 TikZ。每幅图在网页中同时提供 SVG、PDF 和 LaTeX 源文件。
+
+安装 [Tectonic](https://tectonic-typesetting.github.io/en-US/install.html) 和 Poppler（提供 `pdftocairo`）后：
+
+```bash
+npm run figures
+npm run check
+```
+
+如果 Tectonic 不在 PATH，可设置 `TECTONIC=/path/to/tectonic`。构建脚本把 LaTeX 源文件的 SHA-256 写入 SVG；站点检查会拒绝源文件已改变但图未重新编译的情况。
+
+## 发布
+
+GitHub Pages 的发布来源为 GitHub Actions。推送到 `main` 会运行检查；发布仍由 `Deploy GitHub Pages` 工作流手动触发：
+
+```bash
+gh workflow run pages.yml --ref main
+```
+
+检查和发布流程都会重新渲染公式、验证本地链接与图文件，并确认发布产物与源文件一致。TikZ 产物已提交，因此普通页面构建无需下载 TeX 发行版。工作流只上传 `site/`，所有资源路径兼容 `/Holstein-model/` 子路径。
 
 ## 文件结构
 
 ```text
-site/index.html           中文研究结果主页
-site/assets/              样式、交互图表、Lorentz 展宽函数
-site/data/                真实极点、独立测量、收敛数据与来源摘要
-site/downloads/           固定展示设置的 12 点 CSV 对照
-site/reports/             计算报告与可下载图件
-scripts/export_holstein.py  从原计算目录重新导出网站数据
-scripts/check_site.py       链接、数据完整性与谱矩检查
-scripts/check_spectra.mjs    浏览器展宽结果与 Python 计算记录交叉核对
-.github/workflows/          自动校验与手动 Pages 部署配置
+src/index.html                正文及 LaTeX 公式
+src/style.css                 简洁排版与打印样式
+site/index.html               预先渲染的静态网页
+site/assets/katex/            数学样式、字体与许可证
+site/figures/                 费曼图的 LaTeX、PDF 与 SVG
+scripts/build.mjs             公式渲染与静态资源复制
+scripts/build_figures.py      TikZ → PDF → SVG
+scripts/check_site.py         数学、链接、字体与图来源检查
+.github/workflows/            自动检查及 Pages 发布
 ```
 
-这是网站及结果快照仓库。完整训练样本、检查点和计算引擎保留在原计算项目中；导出脚本不会运行新的物理计算。
+KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学文献链接见网页末尾。
 
-## 更新结果
-
-在仓库根目录、包含 NumPy 的 Python ≥ 3.9 环境中：
-
-```bash
-python scripts/export_holstein.py /path/to/holstein_lrvmc
-python3 scripts/check_site.py
-node scripts/check_spectra.mjs
-```
-
-导出文件记录原始来源文件的 SHA-256，保留浮点数据精度。网页对全部保存的极点进行 Lorentz 展宽，L¹ 指标采用与计算程序相同的频率网格与梯形积分。
-
-修改研究结论或新增参数后，也应同步更新页面说明。这里的导出器明确对应当前四组参数、三个动量和六档 LR 设置，缺少数据时会报错。
-
-## 部署
-
-`site/` 可由任意静态 HTTP 服务托管，所有本地资源使用相对路径，兼容 `/Holstein-model/` 子路径。没有外部字体、CDN 脚本或后端服务。
-
-仓库已启用 GitHub Pages，发布来源为 **GitHub Actions**。后续更新网站时，推送代码后，从 **Actions** 手动运行 `Deploy GitHub Pages` 工作流。工作流只发布 `site/`，发布前再次运行数据校验；普通推送仅自动触发检查。
-
-当前账号方案要求此仓库公开才能使用 Pages，因此网站与仓库均公开可访问。相关托管规则见 [GitHub 官方说明](https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site)。
-
-## 方法文献
-
-- [Bonča, Trugman & Batistić, The Holstein Polaron (1999)](https://arxiv.org/abs/cond-mat/9812252)
-- [Mahajan et al., Structure and dynamics of electron-phonon coupled systems using neural quantum states (2024)](https://arxiv.org/abs/2405.08701)
-
-本页对应独立实现与首轮基准，不宣称复现文献中的全部模型、网络结构或精度。
+本版的浏览器与排版检查见 [验证记录](docs/verification.md)。

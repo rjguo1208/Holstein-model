@@ -19,10 +19,16 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
-      - name: Validate website and data
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Render LaTeX and verify the published site
         run: |
-          python3 scripts/check_site.py
-          node scripts/check_spectra.mjs
+          npm ci --ignore-scripts
+          npm run build
+          npm run check
+          git diff --exit-code -- site/
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v4
         with:

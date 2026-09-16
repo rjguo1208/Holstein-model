@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Diagrammatic Monte Carlo 的基本思想，以及用 DiagMC 求解 Holstein 单极化子的图展开、采样、归一化、物理量与收敛检查。含 LaTeX 公式及 TikZ 费曼图。">
+  <meta name="theme-color" content="#ffffff">
+  <title>Diagrammatic Monte Carlo 与 Holstein 模型</title>
+  <link rel="stylesheet" href="assets/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#content">跳到正文</a>
+  <main id="content">
+    <header>
+      <h1>Diagrammatic Monte Carlo<br>与 Holstein 模型</h1>
+      <p>从费曼图展开到极化子的能量、准粒子权重和有效质量。</p>
+      <p class="muted">本文讨论方法与理论构造，以零温、单电子 Holstein 极化子为主，最后说明有限电子密度需要改变什么。图均为展开示意，不代表数值计算结果。较长的公式与图可以横向滚动。</p>
+    </header>
+
+    <nav aria-label="文章目录">
+      <strong>目录</strong>
+      <ol>
+        <li><a href="#idea">DiagMC 在采样什么</a></li>
+        <li><a href="#model">Holstein 模型与传播子</a></li>
+        <li><a href="#diagrams">费曼图与图的权重</a></li>
+        <li><a href="#topologies">二阶图：先后、嵌套与交叉</a></li>
+        <li><a href="#sampling">蒙特卡洛更新与归一化</a></li>
+        <li><a href="#observables">从传播子提取物理量</a></li>
+        <li><a href="#validation">极限检验、收敛与误差</a></li>
+        <li><a href="#finite-density">有限电子密度与 Bold DiagMC</a></li>
+        <li><a href="#next">实现之前的理论准备</a></li>
+        <li><a href="#references">参考文献</a></li>
+      </ol>
+    </nav>
+
+    <section id="idea" aria-labelledby="idea-title">
+      <h2 id="idea-title">1. DiagMC 在采样什么</h2>
+      <p><strong>Diagrammatic Monte Carlo（DiagMC，图蒙特卡洛）把费曼图展开中的求和与积分交给随机采样完成。</strong> 它同时采样图的阶数、连接方式、内部动量和虚时间，从而计算格林函数、自能等物理量。<a href="#ref-prokofev">[1]</a></p>
+      <p>设目标量可以写成</p>
+      \[
+        Q=\sum_{n=0}^{\infty}\sum_{\mathcal T_n}
+        \int dX_n\,W(n,\mathcal T_n,X_n).
+      \]
+      <p>其中，\(n\) 是展开阶数，\(\mathcal T_n\) 是图的拓扑，\(X_n\) 是内部积分变量。一个蒙特卡洛构型就是<strong>某一张图，加上这张图所有变量的具体数值</strong>。算法在这些构型之间移动，使重要贡献被更频繁地访问。</p>
+      <p>如果权重有正负号，通常采样 \(|W|\)，再在测量中计入符号。逐步纳入高阶贡献可以超越低阶微扰理论，但<strong>采样是否正确、级数是否收敛，需要分别检查</strong>。随机采样本身不会消除级数的收敛问题。<a href="#ref-greitemann">[2]</a></p>
+    </section>
+
+    <section id="model" aria-labelledby="model-title">
+      <h2 id="model-title">2. Holstein 模型与传播子</h2>
+      <p>取 \(\hbar=a=1\)，在 \(d\) 维超立方最近邻晶格上考虑</p>
+      \[
+        \begin{aligned}
+        H={}&-t\sum_{\langle ij\rangle}
+          (c_i^\dagger c_j+\mathrm{h.c.})\\
+          &+\omega_0\sum_i b_i^\dagger b_i
+          +g\sum_i n_i(b_i^\dagger+b_i).
+        \end{aligned}
+      \]
+      <p>\(c_i^\dagger\) 和 \(b_i^\dagger\) 分别产生电子和局域声子，\(n_i=c_i^\dagger c_i\)。\(t\) 是电子跃迁幅度，\(\omega_0>0\) 是无色散声子的能量，\(g\) 是具有能量量纲的耦合常数。单电子情况下可以省略自旋指标。</p>
+      <p>自由电子的色散是</p>
+      \[
+        \varepsilon_{\mathbf k}=-2t\sum_{\alpha=1}^{d}\cos k_\alpha.
+      \]
+      <p>Holstein 耦合在实空间是局域的，因此动量空间中的耦合顶点不依赖声子动量。<a href="#ref-goodvin">[3]</a></p>
+      <p>最直接的计算对象是单电子虚时间传播子：</p>
+      \[
+        \begin{aligned}
+        \mathcal G(\mathbf k,\tau)
+        ={}&\langle\mathrm{vac}|\,c_{\mathbf k}
+        e^{-\tau(H-\mu N_e)}
+        c_{\mathbf k}^\dagger|\mathrm{vac}\rangle,\\
+        &\tau>0,\qquad N_e=\sum_i n_i.
+        \end{aligned}
+      \]
+      <p>\(|\mathrm{vac}\rangle\) 中没有电子和声子。这里的 \(\mathcal G\) 采用不带常规费米格林函数整体负号的定义。辅助参数 \(\mu\) 可以选在单电子最低能量以下，使传播子随虚时间衰减；它在这个问题中用于调节采样。</p>
+      <p>其物理含义是：在真空中放入一个动量为 \(\mathbf k\) 的裸电子，让它与声子相互作用一段虚时间，再测量其回到裸电子态的幅度。</p>
+    </section>
+
+    <section id="diagrams" aria-labelledby="diagrams-title">
+      <h2 id="diagrams-title">3. 费曼图与图的权重</h2>
+      <p>展开相互作用后，每张图由一条从 \(0\) 延伸到 \(\tau\) 的电子线，以及连接电子线顶点的声子线组成。实线上的箭头表示电子沿虚时间向前传播，虚线表示声子收缩。</p>
+      <p>电子段与声子线的基本因子分别是</p>
+      \[
+        \begin{aligned}
+        \mathcal G_0(\mathbf p,\Delta\tau)
+          &=e^{-(\varepsilon_{\mathbf p}-\mu)\Delta\tau},\\
+        D_0(\Delta\tau)&=e^{-\omega_0\Delta\tau},
+        \qquad \Delta\tau>0.
+        \end{aligned}
+      \]
+      <p>这里 \(D_0\) 表示不带整体负号的声子收缩。每条声子线连接一次发射和一次吸收，带来两个相互作用顶点，因此贡献 \(g^2\)。如果把声子线数记为图阶数 \(n\)，该阶对应 \(g^{2n}\)，并有 \(2n\) 个顶点。</p>
+
+      <figure>
+        <div class="figure-scroll wide"><img src="figures/one-phonon.svg" width="650" height="255" alt="一阶图：电子在虚时间 u 发射动量 q 的声子，在 v 吸收；电子中间段的动量由 k 变为 k−q，吸收后恢复 k。虚线连接 u 和 v。"></div>
+        <figcaption>图 1. 一条声子线的贡献。声子在 \(u\) 发射、在 \(v\) 吸收，\(0\lt u\lt v\lt\tau\)。它存在期间，电子动量为 \(\mathbf k-\mathbf q\)。图阶数为 \(n=1\)，耦合阶数为 \(g^2\)。</figcaption>
+        <p class="figure-links"><a href="figures/one-phonon.svg">SVG</a><a href="figures/one-phonon.pdf">PDF</a><a href="figures/one-phonon.tex">LaTeX 源文件</a></p>
+      </figure>
+
+      <p>固定声子动量和端点时，图 1 的权重可以直接写成</p>
+      \[
+        \begin{aligned}
+        W_1={}&g^2\mathcal G_0(\mathbf k,u)
+          \mathcal G_0(\mathbf k-\mathbf q,v-u)\\
+          &\times\mathcal G_0(\mathbf k,\tau-v)
+          e^{-\omega_0(v-u)}.
+        \end{aligned}
+      \]
+      <p>一般情况下，第 \(\ell\) 条声子线连接 \(u_\ell\lt v_\ell\)，电子线被分成 \(2n+1\) 段，图权重为</p>
+      \[
+        \begin{aligned}
+        W(C)={}&g^{2n}
+          \exp\!\left[-\sum_{j=0}^{2n}
+          (\varepsilon_{\mathbf p_j}-\mu)\Delta\tau_j\right]\\
+          &\times\exp\!\left[-\omega_0\sum_{\ell=1}^{n}
+          (v_\ell-u_\ell)\right].
+        \end{aligned}
+      \]
+      <p>定义 \(\mathcal A_j\) 为第 \(j\) 段电子传播期间已发射、尚未吸收的声子集合。动量守恒给出</p>
+      \[
+        \mathbf p_j=\mathbf k-\sum_{\ell\in\mathcal A_j}\mathbf q_\ell.
+      \]
+      <p>对有序顶点时间积分，对每条声子的动量使用归一化测度</p>
+      \[
+        \int_{\mathrm{BZ}}\frac{d^d q_\ell}{(2\pi)^d},
+      \]
+      <p>再对所有阶数与配对求和，就得到完整的 \(\mathcal G\)。在有限的 \(N_s\) 个格点上，上式替换为 \(N_s^{-1}\sum_{\mathbf q_\ell}\)。这里采用时间有序、每种配对只计一次的约定；组合系数必须与这一约定一致。<a href="#ref-ragni">[4]</a></p>
+      <p><strong>这个单电子真空展开的权重非负。</strong> 图中没有费米交换回路，且上述各因子非负，因此这一表示没有符号问题。声子线的交叉也不会引入费米交换负号。图阶数 \(n\) 统计整段虚时间中的声子线数，不能直接当作极化子云中的平均声子数。</p>
+    </section>
+
+    <section id="topologies" aria-labelledby="topologies-title">
+      <h2 id="topologies-title">4. 二阶图：先后、嵌套与交叉</h2>
+      <p>固定四个有序顶点 \(\tau_1\lt\tau_2\lt\tau_3\lt\tau_4\)，\(n=2\) 时有三种声子配对。所有端点均位于同一条电子线上。</p>
+
+      <figure>
+        <div class="figure-scroll"><img src="figures/sequential.svg" width="540" height="190" alt="先后图：第一条虚线连接顶点1和2，第二条虚线连接顶点3和4，两条声子线不重叠。"></div>
+        <figcaption>图 2. 先后配对 \((1,2),(3,4)\)：电子先完成一次发射与吸收，再发生第二次过程。</figcaption>
+        <p class="figure-links"><a href="figures/sequential.svg">SVG</a><a href="figures/sequential.pdf">PDF</a><a href="figures/sequential.tex">LaTeX 源文件</a></p>
+      </figure>
+
+      <figure>
+        <div class="figure-scroll"><img src="figures/nested.svg" width="540" height="250" alt="嵌套图：外侧声子线连接顶点1和4，内侧声子线连接顶点2和3，第二个声子的存在时间包含在第一个声子的存在时间内。"></div>
+        <figcaption>图 3. 嵌套配对 \((1,4),(2,3)\)：第二个声子在第一个声子被吸收之前发射并被吸收。</figcaption>
+        <p class="figure-links"><a href="figures/nested.svg">SVG</a><a href="figures/nested.pdf">PDF</a><a href="figures/nested.tex">LaTeX 源文件</a></p>
+      </figure>
+
+      <figure>
+        <div class="figure-scroll"><img src="figures/crossing.svg" width="540" height="220" alt="交叉图：一条虚线连接顶点1和3，另一条连接顶点2和4，两条声子线相交；相交处没有顶点。"></div>
+        <figcaption>图 4. 交叉配对 \((1,3),(2,4)\)：两个声子的吸收顺序与发射顺序相同。虚线交点不是相互作用顶点；实线上的黑点才是顶点。</figcaption>
+        <p class="figure-links"><a href="figures/crossing.svg">SVG</a><a href="figures/crossing.pdf">PDF</a><a href="figures/crossing.tex">LaTeX 源文件</a></p>
+      </figure>
+
+      <p><strong>完整 DiagMC 展开必须包含交叉图。</strong> 如果主动排除某类图，得到的就是相应受限图类的近似。插入声子线时允许端点跨越已有顶点，是覆盖这些拓扑的一种方式。</p>
+    </section>
+
+    <section id="sampling" aria-labelledby="sampling-title">
+      <h2 id="sampling-title">5. 蒙特卡洛更新与归一化</h2>
+      <p>采样方案需要围绕 \(W(C)\) 构造。概念上，应允许以下变化：</p>
+      <ul>
+        <li>插入或删除一条声子线，改变图阶数。</li>
+        <li>移动顶点的虚时间，改变声子动量。</li>
+        <li>访问不同配对，包括交叉结构；额外的重连更新可以改善采样效率。</li>
+        <li>如果一次采样一段 \(\mathcal G(\tau)\)，还需更新外部虚时间。</li>
+      </ul>
+      <p>对于直接使用上述坐标的插入、删除与移动，接受率具有 Metropolis–Hastings 形式：</p>
+      \[
+        P_{\mathrm{acc}}(C\to C')
+        =\min\!\left[
+          1,\frac{W(C')T(C'\to C)}{W(C)T(C\to C')}
+        \right].
+      \]
+      <p>\(T\) 包括更新类型、线的选择，以及新时间与动量的提议概率密度。如果换用带非平凡雅可比的坐标变换，还需计入对应因子。理论设计需要证明详细平衡，并确认所有有贡献的构型都能被访问。</p>
+      <p><strong>相对频率还需要绝对归一化。</strong> 例如，固定 \((\mathbf k,\tau)\)，直接按 \(W\) 采样且没有额外偏置时，零阶图的访问概率是</p>
+      \[
+        \Pr(n=0)=\frac{\mathcal G_0(\mathbf k,\tau)}
+        {\mathcal G(\mathbf k,\tau)}.
+      \]
+      <p>因此已知的零阶贡献可以作为基准：</p>
+      \[
+        \mathcal G(\mathbf k,\tau)
+        =\frac{\mathcal G_0(\mathbf k,\tau)}{\Pr(n=0)}.
+      \]
+      <p>也可以引入独立的参考扇区。若加入采样偏置或同时采样外部变量，归一化公式必须相应调整，不能直接套用上面的固定变量表达式。<a href="#ref-prokofev">[1]</a></p>
+    </section>
+
+    <section id="observables" aria-labelledby="observables-title">
+      <h2 id="observables-title">6. 从传播子提取物理量</h2>
+      <p>传播子包含单电子能谱的信息。若目标动量处存在孤立的最低能极化子态，且它与裸电子态有非零重叠，长虚时间行为为</p>
+      \[
+        \mathcal G(\mathbf k,\tau)
+        \sim Z_{\mathbf k}e^{-(E_{\mathbf k}-\mu)\tau}.
+      \]
+      <p>取对数后，斜率给出能量：</p>
+      \[
+        E_{\mathbf k}=\mu-lim_{\tau\to\infty}
+        \partial_\tau\ln\mathcal G(\mathbf k,\tau).
+      \]
+      <p>绝对归一化后的指数前因子给出准粒子权重：</p>
+      \[
+        Z_{\mathbf k}=\lim_{\tau\to\infty}
+        e^{(E_{\mathbf k}-\mu)\tau}\mathcal G(\mathbf k,\tau).
+      \]
+      <p>在各向同性情况下，极小值附近的小动量色散给出有效质量：</p>
+      \[
+        E_{\mathbf k}=E_{\mathbf 0}
+        +\frac{|\mathbf k|^2}{2m^*}+\cdots.
+      \]
+      <p>这是极化子 DiagMC 的经典路线。<a href="#ref-original">[5]</a> 在谱的最低边缘属于连续谱、没有孤立极点时，不能直接假设一个非零常数 \(Z_{\mathbf k}\) 乘上单指数就描述了完整渐近行为。</p>
+      <p>如果目标是完整谱函数 \(A(\mathbf k,\omega)\)，还需处理从虚时间数据恢复实频信息的解析延拓问题。计算基态能量和有效质量可以直接使用上述长时间行为。</p>
+    </section>
+
+    <section id="validation" aria-labelledby="validation-title">
+      <h2 id="validation-title">7. 极限检验、收敛与误差</h2>
+      <p>在考虑实现之前，应先明确怎样判断结果可信。</p>
+      <ol>
+        <li><strong>自由极限。</strong> \(g=0\) 时应恢复 \(\mathcal G_0\)。</li>
+        <li><strong>原子极限。</strong> \(t=0\) 时，对谐振子作位移即可精确得到
+          \[
+            E_{\mathrm{at}}=-\frac{g^2}{\omega_0},
+            \qquad Z_{\mathrm{at}}=e^{-(g/\omega_0)^2}.
+          \]
+          <p>这两个量分别检验能量尺度与传播子的绝对归一化。按照本文的能量零点与 \(\mu\) 约定，完整的原子极限传播子还可写成</p>
+          \[
+            \begin{aligned}
+            \mathcal G_{\mathrm{at}}(\tau)
+            =\exp\!\Bigg[&\left(\mu+\frac{g^2}{\omega_0}\right)\tau\\
+            &-\left(\frac{g}{\omega_0}\right)^2
+              (1-e^{-\omega_0\tau})\Bigg].
+            \end{aligned}
+          \]
+        </li>
+        <li><strong>低阶对照。</strong> 单条声子线的贡献应与直接积分一致，用来检查积分测度、动量守恒和组合计数。</li>
+        <li><strong>阶数与长时间收敛。</strong> 增大允许阶数、移动长时间拟合窗口后，结果应在误差内稳定。不能只凭某个固定截断下的稳定统计量判断收敛。</li>
+        <li><strong>统计可靠性。</strong> 误差估计需要考虑自相关。强耦合下还应检查零阶图或参考扇区是否被充分访问。</li>
+      </ol>
+      <p>单极化子展开具有非负权重，并不保证计算始终便宜。强耦合、低声子频率和较长虚时间通常会使重要贡献集中在更高阶的图上。</p>
+      <p>不同误差来源应分别记录：蒙特卡洛统计误差、阶数截断误差、有限虚时间的激发态污染，以及可能采用的动量或时间网格误差。用连续动量积分可以直接面向无限晶格，但若实际采用离散网格，仍需检查网格收敛。</p>
+    </section>
+
+    <section id="finite-density" aria-labelledby="finite-density-title">
+      <h2 id="finite-density-title">8. 有限电子密度与 Bold DiagMC</h2>
+      <p>有限电子密度下，电子传播包含占据效应，图中会出现闭合电子回路；有限温度的声子传播还包含热吸收过程。单极化子展开的非负性不能直接沿用。这里说的是图级权重的符号，不能据此断言所有 Holstein 蒙特卡洛表示都有符号问题。</p>
+      <div class="table-scroll">
+        <table>
+          <caption>两种物理问题的主要区别</caption>
+          <thead><tr><th scope="col">方面</th><th scope="col">零温单极化子</th><th scope="col">有限电子密度</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">电子背景</th><td>真空中加入一个电子</td><td>已占据的多电子背景</td></tr>
+            <tr><th scope="row">图结构</th><td>一条向前的电子线与声子线</td> <td>可含电子回路与粒子—空穴过程</td></tr>
+            <tr><th scope="row">主要目标</th><td>\(E_{\mathbf k}\)、\(Z_{\mathbf k}\)、\(m^*\)</td><td>多体自能、响应与可能的有序态</td></tr>
+            <tr><th scope="row">方法检查</th><td>阶数、长时间与采样效率</td><td>还需处理图间抵消与多体展开收敛</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>一种路线是 <strong>Bold DiagMC</strong>：用重整化的电子和声子传播子构造骨架图，采样电子自能与声子极化，再通过 Dyson 方程自洽更新。必须排除已包含在重整化传播子中的子图，避免重复计数，并独立检查阶数收敛。</p>
+      <p>Holstein 有限密度体系已有这方面的研究。<a href="#ref-many-polaron">[6]</a> 这类工作展示了特定参数范围内的正常态计算；研究电荷密度波或超导，还需要相应的两粒子关联函数与不稳定性分析，不能从前面的单极化子传播子直接得到多体相图。</p>
+    </section>
+
+    <section id="next" aria-labelledby="next-title">
+      <h2 id="next-title">9. 实现之前的理论准备</h2>
+      <p>适合逐步建立的起点是：<strong>最近邻晶格、零温、单电子，直接采样由裸传播子构成的完整 \(\mathcal G\) 展开</strong>。</p>
+      <p>在写求解器之前，先在纸上完成以下三件事：</p>
+      <ol>
+        <li>写全前两阶图，并将每一条线对应到权重公式。</li>
+        <li>推导一对插入／删除更新的详细平衡，证明更新能覆盖所有配对。</li>
+        <li>推导归一化与物理量估计关系，并用自由极限和原子极限检验。</li>
+      </ol>
+      <p>这些推导明确之后，再讨论采样效率、自能展开或 Bold 方案，才有可靠的比较基准。</p>
+    </section>
+
+    <section id="references" aria-labelledby="references-title">
+      <h2 id="references-title">10. 参考文献</h2>
+      <ol class="references">
+        <li id="ref-prokofev">N. Prokof’ev, <a href="https://www.cond-mat.de/events/correl19/manuscripts/prokofev.pdf">Diagrammatic Monte Carlo</a> (2019). 图空间、更新、归一化与收敛的讲义。</li>
+        <li id="ref-greitemann">J. Greitemann and L. Pollet, <a href="https://arxiv.org/abs/1711.03044">Lecture notes on Diagrammatic Monte Carlo for the Fröhlich polaron</a>, SciPost Phys. Lect. Notes 2 (2018). 以 Fröhlich 极化子说明裸图、自能与 Bold 展开。</li>
+        <li id="ref-goodvin">G. L. Goodvin, M. Berciu and G. A. Sawatzky, <a href="https://arxiv.org/abs/cond-mat/0609597">The Green’s Function of the Holstein Polaron</a>, Phys. Rev. B 74, 245104 (2006). Holstein 格林函数与解析极限；文中提出的是动量平均近似。</li>
+        <li id="ref-ragni">S. Ragni, <a href="https://amslaurea.unibo.it/id/eprint/22104/1/ragni-diagrammatic_monte_carlo_study_of_the_holstein_polaron.pdf">Diagrammatic Monte Carlo study of the Holstein polaron</a>, Università di Bologna (2020). Holstein 极化子的具体图展开与采样构造。</li>
+        <li id="ref-original">N. V. Prokof’ev and B. V. Svistunov, <a href="https://arxiv.org/abs/cond-mat/9804097">Polaron Problem by Diagrammatic Quantum Monte Carlo</a>, Phys. Rev. Lett. 81, 2514 (1998). 极化子 DiagMC 的原始工作。</li>
+        <li id="ref-many-polaron">A. S. Mishchenko, N. Nagaosa and N. Prokof’ev, <a href="https://arxiv.org/abs/1406.4267">Diagrammatic Monte Carlo method for many-polaron problems</a>, Phys. Rev. Lett. 113, 166402 (2014). 有限电子密度的 Bold DiagMC 路线。</li>
+      </ol>
+    </section>
+
+    <footer>
+      <p>Holstein 模型理论笔记 · <a href="https://github.com/rjguo1208/Holstein-model">页面与图的源文件</a></p>
+    </footer>
+  </main>
+</body>
+</html>

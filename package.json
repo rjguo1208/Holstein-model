@@ -1,0 +1,13 @@
+{
+  "name": "holstein-diagmc-notes",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "figures": "python3 scripts/build_figures.py",
+    "check": "python3 scripts/check_site.py"
+  },
+  "dependencies": {
+    "katex": "0.18.7"
+  }
+}

@@ -1,4 +1,4 @@
-name: Check website and scientific data
+name: Check theory website
 on:
   push:
     branches: [main]
@@ -10,9 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Check local links, dataset coverage, and spectral moments
-        run: python3 scripts/check_site.py
-      - name: Check JavaScript syntax and numerical agreement
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Render LaTeX and verify the published site
         run: |
-          node --check site/assets/app.js
-          node scripts/check_spectra.mjs
+          npm ci --ignore-scripts
+          npm run build
+          npm run check
+          git diff --exit-code -- site/

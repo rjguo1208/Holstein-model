@@ -1,0 +1,24 @@
+\documentclass[tikz,border=8pt]{standalone}
+\usepackage{amsmath}
+\usetikzlibrary{arrows.meta,decorations.markings}
+\begin{document}
+\begin{tikzpicture}[
+  fermion/.style={line width=.8pt,postaction={decorate},
+    decoration={markings,mark=at position .52 with {\arrow{Latex[length=2mm,width=1.4mm]}}}},
+  phonon/.style={line width=.8pt,dash pattern=on 4pt off 2.8pt}]
+  \draw[fermion] (0,0) -- (3,0);
+  \draw[fermion] (3,0) -- (7,0);
+  \draw[fermion] (7,0) -- (10,0);
+  \draw[phonon] (3,0) .. controls (3,2.6) and (7,2.6) .. (7,0);
+  \fill (3,0) circle (1.7pt);
+  \fill (7,0) circle (1.7pt);
+  \node at (5,2.24) {$\mathbf q$};
+  \node at (1.5,-.38) {$\mathbf k$};
+  \node at (5,-.38) {$\mathbf k-\mathbf q$};
+  \node at (8.5,-.38) {$\mathbf k$};
+  \node at (0,-.92) {$0$};
+  \node at (3,-.92) {$u$};
+  \node at (7,-.92) {$v$};
+  \node at (10,-.92) {$\tau$};
+\end{tikzpicture}
+\end{document}
