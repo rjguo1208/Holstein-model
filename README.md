@@ -2,7 +2,9 @@
 
 网站：<https://rjguo1208.github.io/Holstein-model/>
 
-中文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。此仓库是讲解网站，没有实现或运行 DiagMC 求解器。
+中文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。
+
+新增 [数值结果页](https://rjguo1208.github.io/Holstein-model/results.html)：1D、零温、单电子 bare DiagMC，默认参数 t=ω₀=1、λ=0.25/0.5。基态和有效质量已完成验证，谱函数明确标为初步重建，并列出独立参考误差。原始块数据、代码和报告作为 ZIP 提供下载；所有曲线都有 SVG/PDF 版本。结果页的科学计算与网站排版检查分别记录。
 
 页面采用白底黑字的单栏排版。公式由 LaTeX 源表达式在构建时排成 HTML + MathML，数学字体随站点托管。四幅费曼图由独立的 LaTeX/TikZ 文件编译成 PDF，再转换为字体已轮廓化的 SVG。阅读时无需 JavaScript、外部字体或 CDN；长公式与图在窄屏中可横向滚动。
 
@@ -56,10 +58,13 @@ gh workflow run pages.yml --ref main
 
 ```text
 src/index.html                正文及 LaTeX 公式
+src/results.html              数值结果、误差与初步谱函数
 src/style.css                 简洁排版与打印样式
 site/index.html               预先渲染的静态网页
 site/assets/katex/            数学样式、字体与许可证
 site/figures/                 费曼图的 LaTeX、PDF 与 SVG
+site/results/                 科学图的 SVG 与 PDF
+site/data/                    结果摘要、CSV、代码和原始数据包
 scripts/build.mjs             公式渲染与静态资源复制
 scripts/build_figures.py      TikZ → PDF → SVG
 scripts/check_site.py         数学、链接、字体与图来源检查
@@ -69,3 +74,5 @@ scripts/check_site.py         数学、链接、字体与图来源检查
 KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学文献链接见网页末尾。
 
 本版的浏览器与排版检查见 [验证记录](docs/verification.md)。
+
+数值结果与新增页面的检查见 [结果验证记录](docs/results-verification.md)。

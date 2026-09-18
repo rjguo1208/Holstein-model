@@ -50,20 +50,25 @@ def check_link(path, link):
         assert unquote(url.fragment) in parser.ids, f"Missing anchor: {link}"
 
 
-page = Page()
-page.feed((SITE / "index.html").read_text())
-for link in page.links:
-    check_link(SITE / "index.html", link)
+pages = {}
+math_count = 0
+for path in sorted(SITE.glob("*.html")):
+    page = Page()
+    page.feed(path.read_text())
+    pages[path.name] = page
+    for link in page.links:
+        check_link(path, link)
+    source = (ROOT / "src" / path.name).read_text()
+    expressions = re.findall(r"\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)", source)
+    assert page.math_count == len(expressions) == page.mathml_count, "Incomplete LaTeX/MathML rendering"
+    assert page.math_count > 0
+    math_count += page.math_count
 for css in (SITE / "assets").rglob("*.css"):
     for link in re.findall(r"url\(['\"]?([^)'\"]+)['\"]?\)", css.read_text()):
         check_link(css, link)
 
-source = (ROOT / "src/index.html").read_text()
-expressions = re.findall(r"\\\[([\s\S]*?)\\\]|\\\(([\s\S]*?)\\\)", source)
-assert page.math_count == len(expressions) == page.mathml_count, "Incomplete LaTeX/MathML rendering"
-assert page.math_count > 0
 figures = list((SITE / "figures").glob("*.tex"))
-assert page.images == len(figures) == 4
+assert pages['index.html'].images == len(figures) == 4
 for source in figures:
     svg = source.with_suffix(".svg")
     digest = sha256(source.read_bytes()).hexdigest()
@@ -74,4 +79,10 @@ for source in figures:
     assert not tree.findall(".//{http://www.w3.org/2000/svg}script"), f"Script in {svg.name}"
     assert source.with_suffix(".pdf").is_file(), f"Missing PDF: {source.name}"
 
-print(f"OK: {page.math_count} LaTeX expressions with MathML; {len(figures)} TikZ vector figures; local links, anchors and fonts.")
+plots = list((SITE / "results").glob("*.svg"))
+for plot in plots:
+    tree = ET.parse(plot)
+    assert tree.getroot().get("viewBox"), f"Missing scalable bounds: {plot.name}"
+    assert not tree.findall(".//{http://www.w3.org/2000/svg}image"), f"Raster image in {plot.name}"
+    assert plot.with_suffix('.pdf').is_file(), f"Missing PDF: {plot.name}"
+print(f"OK: {len(pages)} pages; {math_count} LaTeX expressions with MathML; {len(figures)} TikZ figures; {len(plots)} scientific plots; local links, anchors and fonts.")

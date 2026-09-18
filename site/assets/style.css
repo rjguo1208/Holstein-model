@@ -32,6 +32,7 @@ figure { margin: 1.5rem 0; }
 .figure-scroll { overflow-x: auto; padding: 8px 0; }
 .figure-scroll img { display: block; width: 100%; height: auto; max-width: 540px; min-width: 330px; margin: 0 auto; }
 .figure-scroll.wide img { max-width: 650px; min-width: 450px; }
+.figure-scroll.data img { max-width: 100%; min-width: 760px; }
 figcaption { margin-top: .45rem; line-height: 1.75; }
 .figure-links { margin: .35rem 0 0; }
 .figure-links a + a { margin-left: 1rem; }
@@ -60,5 +61,6 @@ footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #ccc; font
   .equation, .figure-scroll, .table-scroll { overflow: visible; }
   .figure-scroll img { min-width: 0; max-width: 115mm; }
   .figure-scroll.wide img { min-width: 0; max-width: 150mm; }
+  .figure-scroll.data img { min-width: 0; max-width: 100%; }
   a { color: #202020; }
 }
