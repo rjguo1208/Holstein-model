@@ -6,6 +6,10 @@
 
 新增 [数值结果页](https://rjguo1208.github.io/Holstein-model/results.html)：1D、零温、单电子 bare DiagMC，默认参数 t=ω₀=1、λ=0.25/0.5。基态和有效质量已完成验证，谱函数明确标为初步重建，并列出独立参考误差。原始块数据、代码和报告作为 ZIP 提供下载；所有曲线都有 SVG/PDF 版本。结果页的科学计算与网站排版检查分别记录。
 
+第二轮增加直接质量估计量、真正小 k 的 VED 曲率对照、精确非线性极点、连续矩形 SOM 变体、
+重新选择正则化参数的块 bootstrap 与谱分辨率检查。页面明确区分已完成的重分析和仍在排队的新采样，
+并保留未通过 η=0.25t 精细谱目标的结果。更新包与首轮数据包分别下载，均不依赖网页脚本。
+
 页面采用白底黑字的单栏排版。公式由 LaTeX 源表达式在构建时排成 HTML + MathML，数学字体随站点托管。四幅费曼图由独立的 LaTeX/TikZ 文件编译成 PDF，再转换为字体已轮廓化的 SVG。阅读时无需 JavaScript、外部字体或 CDN；长公式与图在窄屏中可横向滚动。
 
 ## 本地预览
@@ -76,3 +80,5 @@ KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学�
 本版的浏览器与排版检查见 [验证记录](docs/verification.md)。
 
 数值结果与新增页面的检查见 [结果验证记录](docs/results-verification.md)。
+
+第二轮的完成范围、排队作业、数值限制与显示检查见 [第二轮验证记录](docs/results-v2-verification.md)。
