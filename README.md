@@ -12,6 +12,11 @@
 
 页面采用白底黑字的单栏排版。公式由 LaTeX 源表达式在构建时排成 HTML + MathML，数学字体随站点托管。四幅费曼图由独立的 LaTeX/TikZ 文件编译成 PDF，再转换为字体已轮廓化的 SVG。阅读时无需 JavaScript、外部字体或 CDN；长公式与图在窄屏中可横向滚动。
 
+新增 [动量–能量谱函数图](https://rjguo1208.github.io/Holstein-model/spectral-map.html)：
+默认两种耦合、Γ→X 路径、线性与对数色标，提供 SVG/PDF/PNG、NPZ 和 CSV。
+当前完整图明确标注为 VED/Lanczos 参考计算；17点 DiagMC 采样已提交，仍在排队。
+数值来源、参考收敛和浏览器检查见 [谱图验证记录](docs/spectral-map-verification.md)。
+
 ## 本地预览
 
 已生成的页面与全部资源保存在 `site/`：

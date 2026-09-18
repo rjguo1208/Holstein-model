@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="1D Holstein 的 k–能量谱函数图，清楚标注 VED/Lanczos 参考来源、绝对谱强度、展宽和 DiagMC 采样状态。">
+<title>1D Holstein：谱函数图 A(k,ω)</title>
+<link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head>
+<body><a class="skip-link" href="#content">跳到正文</a><main id="content">
+<header><p><a href="results.html">DiagMC 结果与验证</a> · <a href="index.html">理论与费曼图</a></p>
+<h1>1D Holstein 谱函数图</h1>
+<p>横轴为动量路径，纵轴为能量，颜色表示谱函数的绝对强度。零温、单电子、无限晶格；更新：2026-09-18。</p>
+<p><strong>当前完整图来自独立的 VED/Lanczos 参考计算。</strong>
+现有完整 DiagMC 谱只覆盖 \(k=0\)；沿整条路径的新增 DiagMC 采样已提交，发布时仍在排队。
+这张参考图用于展示结构和后续对照，不能作为 DiagMC 已完成的结果。</p></header>
+<section id="map"><h2>线性色标：比较绝对强度</h2>
+\[t=\omega_0=\hbar=a=1,\qquad
+\lambda=\frac{g^2}{2t\omega_0}=0.25,\;0.5,\qquad
+k:\Gamma(0)\longrightarrow X(\pi).\]
+<p>每种耦合独立计算41个均匀动量点，能量范围为 \(\omega/t\in[-3.25,5.5]\)。
+所有动量使用同一个真空能量零点，左右两图共用色标；没有对每个动量单独归一化，也没有平移动量列的能量。
+色块直接对应计算的动量点，未沿动量方向平滑插值。</p>
+<figure><div class="figure-scroll data"><img src="results/spectral-map-linear.svg" width="1020" height="540"
+alt="两种耦合的VED参考谱函数图：横轴从Gamma的k等于0到X的k等于pi，纵轴为相对真空的能量，右侧共同线性色标为t乘以谱函数。"></div>
+<figcaption>VED 16代变分空间，178617个基矢；显示展宽 \(\eta=0.25t\)。
+亮色表示较大的谱权重。它包含准粒子峰和其余谱重，不只是基态色散线。</figcaption>
+<p class="figure-links"><a href="results/spectral-map-linear.svg">SVG</a>
+<a href="results/spectral-map-linear.pdf">PDF</a><a href="results/spectral-map-linear.png">PNG</a></p></figure>
+</section><section id="convention"><h2>谱函数和展宽的定义</h2>
+\[A(k,\omega)=\sum_\nu
+\bigl|\langle \nu,k|c_k^\dagger|\mathrm{vac}\rangle\bigr|^2
+\delta\!\left(\omega-E_\nu(k)\right),\qquad
+\int_{-\infty}^{\infty}A(k,\omega)\,d\omega=1.\]
+\[A_\eta(k,\omega)=\int d\omega'\,A(k,\omega')
+\frac{\eta/\pi}{(\omega-\omega')^2+\eta^2}
+=-\frac{1}{\pi}\operatorname{Im}G^R(k,\omega+i\eta).\]
+<p>图中颜色为无量纲的 \(tA_\eta\)。\(\eta\) 是洛伦兹线形的半高半宽，本图对应全宽 \(0.5t\)。
+它控制显示分辨率，不等于极化子的物理衰减率。
+有限绘图窗口没有收集全部谱重和洛伦兹尾，因此没有把图窗内的每列积分强行调成1。</p>
+</section><section id="weak"><h2>对数色标：查看较弱的谱重</h2>
+<figure><div class="figure-scroll data"><img src="results/spectral-map-log.svg" width="1020" height="540"
+alt="与主图相同的谱函数数据，改用对数色标显示较弱的谱强度，色标刻度仍为谱函数本身。"></div>
+<figcaption>与主图使用完全相同的数据，只改变颜色映射；色标刻度仍是 \(tA_\eta\)，不是其对数值。
+色标下限为 \(10^{-3}\)，更小的值显示为最深色。较弱的颜色还包括展宽产生的尾部，不能全部视为新的激发。</figcaption>
+<p class="figure-links"><a href="results/spectral-map-log.svg">SVG</a>
+<a href="results/spectral-map-log.pdf">PDF</a><a href="results/spectral-map-log.png">PNG</a></p></figure>
+</section><section id="validation"><h2>参考图的数值检查</h2>
+<p>变分空间按 Bonča 等提出的无限晶格基底构造。有限空间把连续谱表示为离散极点，再按同一展宽求和；
+见 <a href="https://arxiv.org/abs/cond-mat/9812252">Bonča、Trugman 与 Batistić（1999）</a>。
+主图使用16代；14与16代在全部41个动量点比较，16与18代在 \(0,\pi/4,\pi/2,3\pi/4,\pi\) 五点比较。</p>
+\[\delta_A(k)=
+\frac{\int_{\omega_{\min}}^{\omega_{\max}}|A_{\eta,N_h}(k,\omega)-A_{\eta,N_h'}(k,\omega)|\,d\omega}
+{\int_{\omega_{\min}}^{\omega_{\max}}A_{\eta,N_h'}(k,\omega)\,d\omega}.\]
+<div class="table-scroll"><table><caption>相同图窗、η=0.25t：检查点中的最大相对积分差异</caption>
+<thead><tr><th scope="col">λ</th><th scope="col">14→16代，41点</th>
+<th scope="col">16→18代，5点</th><th scope="col">400→800步，检查点</th></tr></thead>
+<tbody><tr><th scope="row">0.25</th><td>0.102%</td><td>0.025%</td><td>1.75e-12</td></tr><tr><th scope="row">0.5</th><td>0.096%</td><td>0.037%</td><td>3.25e-11</td></tr></tbody></table></div>
+<p>Lanczos 不保存全部向量作重正交化；在上述五个动量点、各个变分空间，以800步检查400步结果。
+这些差异支持当前展宽下的参考图稳定性，但不是对无限基底精确解的严格误差上界，也不保证更窄展宽的细结构。</p>
+\[M_0=1,\qquad M_1=-2t\cos k,\qquad M_2=4t^2\cos^2k+g^2.\]
+<p>所有计算均检验了展宽前的三个谱矩；最大绝对残差为 1.20e-14。
+洛伦兹展宽后的高阶矩不用于这项检验。</p>
+</section><section id="diagmc"><h2>对应的 DiagMC 谱图</h2>
+\[\mathcal G_\mu(k,\tau)=\int d\omega\,A(k,\omega)e^{-(\omega-\mu)\tau}.\]
+<p>已新增17个均匀动量点的采样流程；两种耦合、每点4条独立链，
+每链2400万生产步，共136条链。计算保存条件虚时估计量和相关块数据；
+采样结束后自动执行非负谱延拓、独立链交叉验证、块重采样，并输出相同坐标的谱图。</p>
+<p>全路径延拓不强行指定每个动量的孤立基态极点，也不将 VED 图作为输入。
+它使用精确的有限时间箱积分核和未展宽谱矩。
+当前流程中的 \(\eta=0.25t\) 与 \(1t\) 两种显示分辨率均需事后验证，不能从已有 \(k=0\) 检查推断整条路径都已达到同样精度。</p>
+<p>发布时状态：采样作业 20826452 排队；后处理作业 20826455 等待采样成功。。新增计算成功后会在计算目录自动生成数据与报告，网页结果需验证后再更新。</p>
+</section><section id="download"><h2>数据和复现</h2>
+<ul><li>λ=0.25：<a href="data/lambda0.25_map.npz">完整 NPZ</a> · <a href="data/lambda0.25_map_eta0.25.csv.gz">主图 CSV（gzip）</a></li><li>λ=0.5：<a href="data/lambda0.50_map.npz">完整 NPZ</a> · <a href="data/lambda0.50_map_eta0.25.csv.gz">主图 CSV（gzip）</a></li></ul>
+<p>NPZ 内的 <code>A</code> 轴顺序为 <code>(eta, k, energy)</code>，
+展宽数组为 <code>[0.15, 0.25, 0.5, 1.0]</code>，每张主图的数据形状为 <code>(41, 701)</code>。
+CSV 每行依次是 <code>k, k/π, ω/t, tA</code>；只导出主图的 \(\eta=0.25t\)。</p>
+<p><a href="data/spectral-map-validation.json">完整参考检查 JSON</a> ·
+<a href="data/spectral-map-jobs.json">采样作业记录</a> ·
+<a href="data/diagmc-spectral-map-01.zip">本轮源码、极点和图谱数据</a>。</p>
+</section><footer><p><a href="results.html">DiagMC 结果与验证</a> ·
+<a href="https://github.com/rjguo1208/Holstein-model">网站源文件</a></p></footer>
+</main></body></html>

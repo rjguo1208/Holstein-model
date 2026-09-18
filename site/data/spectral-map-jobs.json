@@ -1,0 +1,22 @@
+{
+  "captured_utc": "2026-09-18T22:03:00.229276+00:00",
+  "sampling_job": 20826452,
+  "postprocess_job": 20826455,
+  "dependency": "afterok:20826452",
+  "k_points": 17,
+  "couplings": [
+    0.25,
+    0.5
+  ],
+  "chains_per_point": 4,
+  "production_steps_per_chain": 24000000,
+  "total_chains": 136,
+  "publication_status_zh": "发布时仍在排队",
+  "description_zh": "采样作业 20826452 排队；后处理作业 20826455 等待采样成功。",
+  "queue": [
+    "20826455|PENDING|(Dependency)",
+    "20826452|PENDING|(Priority)"
+  ],
+  "submission_note": "An initial 17-element array was rejected by QOSMaxSubmitJobPerUserLimit; a single 4-CPU sequential-momentum batch was accepted instead.",
+  "current_figure_source": "completed VED/Lanczos reference_map_01; no pending DiagMC data included"
+}

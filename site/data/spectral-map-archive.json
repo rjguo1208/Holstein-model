@@ -1,0 +1,7 @@
+{
+  "file": "diagmc-spectral-map-01.zip",
+  "bytes": 7824276,
+  "sha256": "769935d258e8727df254f7b1cef7321cbc37410c9c70a1d5febfdd8947f419be",
+  "files": 240,
+  "description": "Completed VED/Lanczos reference map, source snapshots, full plot arrays, and submitted DiagMC map workflow. No pending MC samples included."
+}
