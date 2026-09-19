@@ -1,0 +1,50 @@
+{
+  "captured_utc": "2026-09-19T03:32:49.928076+00:00",
+  "sampling_job": 20829123,
+  "partition": "highmem",
+  "k_points": 41,
+  "couplings": [
+    0.25,
+    0.5
+  ],
+  "chains_per_point": 4,
+  "production_steps_per_chain": 24000000,
+  "total_chains": 328,
+  "new_chains": 256,
+  "reused_chains": 72,
+  "new_points": 32,
+  "reused_points": 9,
+  "total_production_steps": 7872000000,
+  "new_production_steps": 6144000000,
+  "grid_manifest": "results/map_data_41_01/grid_manifest.json",
+  "status": "PENDING",
+  "publication_status_zh": "41点网格补算已提交 highmem，等待集群维护结束",
+  "current_figure_source": "Completed 17-point map remains published until the 41-point map passes data checks",
+  "postprocess_job": 20829124,
+  "dependency": "afterok:20829123",
+  "description_zh": "采样20829123等待维护保留节点；后处理20829124等待采样成功",
+  "queue": [
+    "20829123|highmem|PENDING|ReqNodeNotAvail, Reserved for maintenance",
+    "20829124|highmem|PENDING|Dependency"
+  ],
+  "job_details": {
+    "20829123": "JobId=20829123 JobName=holstein-map41\n   UserId=x-rg47749(7119581) GroupId=x-che190065(7001446) MCS_label=N/A\n   Priority=81 Nice=0 Account=che190065 QOS=cpu\n   JobState=PENDING Reason=ReqNodeNotAvail,_Reserved_for_maintenance Dependency=(null)\n   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A\n   SubmitTime=2026-09-18T23:29:27 EligibleTime=2026-09-18T23:29:27\n   AccrueTime=2026-09-18T23:29:28\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-18T23:29:27 Scheduler=Main\n   Partition=highmem AllocNode:Sid=login06:3610275\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=4,mem=8G,node=1,billing=16\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=4 MinMemoryNode=8G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/home/x-rg47749/code/holstein-diagmc/scripts/map_dense_data.slurm\n   SubmitLine=sbatch --parsable --account=che190065 --partition=highmem --output=logs/map41-%j.out scripts/map_dense_data.slurm\n   WorkDir=/home/x-rg47749/code/holstein-diagmc\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/home/x-rg47749/code/holstein-diagmc/logs/map41-20829123.out\n   TresPerTask=cpu=4\n\n",
+    "20829124": "JobId=20829124 JobName=holstein-map41-fit\n   UserId=x-rg47749(7119581) GroupId=x-che190065(7001446) MCS_label=N/A\n   Priority=75 Nice=0 Account=che190065 QOS=cpu\n   JobState=PENDING Reason=Dependency Dependency=afterok:20829123(unfulfilled)\n   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A\n   SubmitTime=2026-09-18T23:29:27 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-18T23:29:27 Scheduler=Main\n   Partition=highmem AllocNode:Sid=login06:3610275\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=1,mem=4G,node=1,billing=4\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/home/x-rg47749/code/holstein-diagmc/scripts/map_dense_finish.slurm\n   SubmitLine=sbatch --parsable --account=che190065 --partition=highmem --dependency=afterok:20829123 --output=logs/map41-fit-%j.out scripts/map_dense_finish.slurm\n   WorkDir=/home/x-rg47749/code/holstein-diagmc\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/home/x-rg47749/code/holstein-diagmc/logs/map41-fit-20829124.out\n   TresPerTask=cpu=1\n\n"
+  },
+  "maintenance": {
+    "name": "anvil-maint-2026-q3",
+    "start": "2026-09-18T23:30:00-04:00",
+    "end": "2026-09-20T21:00:00-04:00",
+    "timezone": "America/Indianapolis",
+    "verified_reservation": "ReservationName=anvil-maint-2026-q3 StartTime=2026-09-18T23:30:00 EndTime=2026-09-20T21:00:00 Duration=1-21:30:00\n   Nodes=a[000-999],b[000-031],g[000-015],gateway,h[000-020],login[00-07],ondemand,z[000-007] NodeCnt=1087 CoreCnt=136464 Features=(null) PartitionName=(null) Flags=MAINT,IGNORE_JOBS,SPEC_NODES\n   TRES=cpu=136480\n   AllowedPartitions=(null) QOS=(null)\n   Users=root Groups=(null) Accounts=(null) Licenses=(null) State=ACTIVE BurstBuffer=(null)\n   MaxStartDelay=(null)\n\n",
+    "actual_job_start_assigned": false
+  },
+  "preflight": {
+    "reused_files_hashes_verified": true,
+    "reused_raw_block_counts_verified": true,
+    "reused_chains_checked": 72,
+    "both_reference_grids_identical": true,
+    "new_indices_checked": 32,
+    "new_seeds_unique_and_disjoint": true
+  }
+}
