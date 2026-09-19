@@ -7,15 +7,17 @@
 新增 [数值结果页](https://rjguo1208.github.io/Holstein-model/results.html)：1D、零温、单电子 bare DiagMC，默认参数 t=ω₀=1、λ=0.25/0.5。基态和有效质量已完成验证，谱函数明确标为初步重建，并列出独立参考误差。原始块数据、代码和报告作为 ZIP 提供下载；所有曲线都有 SVG/PDF 版本。结果页的科学计算与网站排版检查分别记录。
 
 第二轮增加直接质量估计量、真正小 k 的 VED 曲率对照、精确非线性极点、连续矩形 SOM 变体、
-重新选择正则化参数的块 bootstrap 与谱分辨率检查。页面明确区分已完成的重分析和仍在排队的新采样，
+重新选择正则化参数的块 bootstrap 与谱分辨率检查。新增采样和后处理现已全部完成，
 并保留未通过 η=0.25t 精细谱目标的结果。更新包与首轮数据包分别下载，均不依赖网页脚本。
 
 页面采用白底黑字的单栏排版。公式由 LaTeX 源表达式在构建时排成 HTML + MathML，数学字体随站点托管。四幅费曼图由独立的 LaTeX/TikZ 文件编译成 PDF，再转换为字体已轮廓化的 SVG。阅读时无需 JavaScript、外部字体或 CDN；长公式与图在窄屏中可横向滚动。
 
 新增 [动量–能量谱函数图](https://rjguo1208.github.io/Holstein-model/spectral-map.html)：
 默认两种耦合、Γ→X 路径、线性与对数色标，提供 SVG/PDF/PNG、NPZ 和 CSV。
-当前完整图明确标注为 VED/Lanczos 参考计算；17点 DiagMC 采样已提交，仍在排队。
+17点 DiagMC 采样与后处理已在 highmem 完成；页面同时展示实际重建与独立 VED 参考。
+细分辨率谱仍未通过稳定性验证，较粗展宽下的整体谱形更稳定。
 数值来源、参考收敛和浏览器检查见 [谱图验证记录](docs/spectral-map-verification.md)。
+实际 DiagMC 谱图、完成作业、当前精度和新数据包见 [完成后的验证记录](docs/completed-runs-verification.md)。
 
 ## 本地预览
 

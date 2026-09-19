@@ -1,0 +1,26 @@
+[
+  {
+    "file": "diagmc-map-completed-01.zip",
+    "files": 809,
+    "bytes": 22062694,
+    "sha256": "81b5ad999e4117cd807333ba8db3aaddb6ac8cabaea62f7b895766fe46de0d62"
+  },
+  {
+    "file": "diagmc-completed-03.zip",
+    "files": 419,
+    "bytes": 48724635,
+    "sha256": "bb2015f37ef0678fd32aaf924375cfa7fc0c9ad6ba19b26102f4be7f0f14f2b2"
+  },
+  {
+    "file": "diagmc-map-raw-lambda0.25.zip",
+    "files": 340,
+    "bytes": 37542239,
+    "sha256": "24a1f1e5b87e21b759915d808812421e49bac70af5e9d77a9471b03cfc5a2f89"
+  },
+  {
+    "file": "diagmc-map-raw-lambda0.50.zip",
+    "files": 340,
+    "bytes": 42955690,
+    "sha256": "17c78a9995597ee28239d24eb114da6bc7642a580b0f00574b0adde5dd1d4b0b"
+  }
+]

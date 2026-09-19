@@ -1,5 +1,5 @@
 {
-  "captured_utc": "2026-09-18T22:03:00.229276+00:00",
+  "captured_utc": "2026-09-19T02:47:12.634219+00:00",
   "sampling_job": 20826452,
   "postprocess_job": 20826455,
   "dependency": "afterok:20826452",
@@ -11,12 +11,61 @@
   "chains_per_point": 4,
   "production_steps_per_chain": 24000000,
   "total_chains": 136,
-  "publication_status_zh": "发布时仍在排队",
-  "description_zh": "采样作业 20826452 排队；后处理作业 20826455 等待采样成功。",
-  "queue": [
-    "20826455|PENDING|(Dependency)",
-    "20826452|PENDING|(Priority)"
-  ],
+  "publication_status_zh": "采样和后处理已完成",
+  "description_zh": "采样作业20826452与后处理作业20826455均已在highmem的b000完成",
+  "queue": [],
   "submission_note": "An initial 17-element array was rejected by QOSMaxSubmitJobPerUserLimit; a single 4-CPU sequential-momentum batch was accepted instead.",
-  "current_figure_source": "completed VED/Lanczos reference_map_01; no pending DiagMC data included"
+  "current_figure_source": "actual bare DiagMC map_diagmc_01 and separate VED reference_map_01; resolution remains preliminary",
+  "partition_updates": [
+    {
+      "captured_utc": "2026-09-18T22:44:40.612696+00:00",
+      "from_partition": "shared",
+      "to_partition": "highmem",
+      "method": "scontrol update on existing pending jobs; original IDs and afterok dependency preserved",
+      "previous_capture": "2026-09-18T22:03:00.229276+00:00",
+      "previous_queue": [
+        "20826455|PENDING|(Dependency)",
+        "20826452|PENDING|(Priority)"
+      ],
+      "job_details": {
+        "20826452": "JobId=20826452 JobName=holstein-map\n   UserId=x-rg47749(7119581) GroupId=x-che190065(7001446) MCS_label=N/A\n   Priority=75 Nice=0 Account=che190065 QOS=cpu\n   JobState=PENDING Reason=None Dependency=(null)\n   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=00:30:00 TimeMin=N/A\n   SubmitTime=2026-09-18T18:02:05 EligibleTime=2026-09-18T18:02:05\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-18T18:02:05 Scheduler=Main\n   Partition=highmem AllocNode:Sid=login06:995496\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=4 NumTasks=1 CPUs/Task=4 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=4,mem=8G,node=1,billing=4\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=4 MinMemoryNode=8G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/home/x-rg47749/code/holstein-diagmc/scripts/map_data.slurm\n   SubmitLine=sbatch --parsable --account=che190065 --partition=shared --time=00:30:00 --output=logs/map-%j.out scripts/map_data.slurm\n   WorkDir=/home/x-rg47749/code/holstein-diagmc\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/home/x-rg47749/code/holstein-diagmc/logs/map-20826452.out\n   TresPerTask=cpu=4\n\n",
+        "20826455": "JobId=20826455 JobName=holstein-map-fit\n   UserId=x-rg47749(7119581) GroupId=x-che190065(7001446) MCS_label=N/A\n   Priority=75 Nice=0 Account=che190065 QOS=cpu\n   JobState=PENDING Reason=Dependency Dependency=afterok:20826452(unfulfilled)\n   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0\n   RunTime=00:00:00 TimeLimit=02:00:00 TimeMin=N/A\n   SubmitTime=2026-09-18T18:02:23 EligibleTime=Unknown\n   AccrueTime=Unknown\n   StartTime=Unknown EndTime=Unknown Deadline=N/A\n   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-09-18T18:02:23 Scheduler=Main\n   Partition=highmem AllocNode:Sid=login06:1006535\n   ReqNodeList=(null) ExcNodeList=(null)\n   NodeList=\n   NumNodes=1-1 NumCPUs=1 NumTasks=1 CPUs/Task=1 ReqB:S:C:T=0:0:*:*\n   ReqTRES=cpu=1,mem=4G,node=1,billing=1\n   AllocTRES=(null)\n   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*\n   MinCPUsNode=1 MinMemoryNode=4G MinTmpDiskNode=0\n   Features=(null) DelayBoot=00:00:00\n   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)\n   Command=/home/x-rg47749/code/holstein-diagmc/scripts/map_finish.slurm\n   SubmitLine=sbatch --parsable --account=che190065 --partition=shared --dependency=afterok:20826452 --output=logs/map-fit-%j.out scripts/map_finish.slurm\n   WorkDir=/home/x-rg47749/code/holstein-diagmc\n   StdErr=\n   StdIn=/dev/null\n   StdOut=/home/x-rg47749/code/holstein-diagmc/logs/map-fit-20826455.out\n   TresPerTask=cpu=1\n\n"
+      }
+    }
+  ],
+  "partition": "highmem",
+  "history": [
+    {
+      "captured_utc": "2026-09-18T22:44:40.612696+00:00",
+      "queue": [
+        "20826455|highmem|PENDING|(Dependency)",
+        "20826452|highmem|PENDING|(None)"
+      ]
+    }
+  ],
+  "accounting": [
+    {
+      "JobID": "20826452",
+      "JobName": "holstein-map",
+      "Partition": "highmem",
+      "State": "COMPLETED",
+      "Elapsed": "00:03:02",
+      "ExitCode": "0:0",
+      "Start": "2026-09-18T19:22:59",
+      "End": "2026-09-18T19:26:01",
+      "NodeList": "b000"
+    },
+    {
+      "JobID": "20826455",
+      "JobName": "holstein-map-fit",
+      "Partition": "highmem",
+      "State": "COMPLETED",
+      "Elapsed": "00:02:29",
+      "ExitCode": "0:0",
+      "Start": "2026-09-18T19:32:56",
+      "End": "2026-09-18T19:35:25",
+      "NodeList": "b000"
+    }
+  ],
+  "status": "COMPLETED"
 }

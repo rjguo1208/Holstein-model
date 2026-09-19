@@ -6,18 +6,18 @@
 <body><a class="skip-link" href="#content">跳到正文</a><main id="content">
 <header><p><a href="index.html">返回 DiagMC 理论与费曼图</a></p><h1>1D Holstein<br>DiagMC 改进与验证</h1>
 <p>零温、单电子、无限晶格。更新：2026-09-18。</p>
-<p><a href="spectral-map.html">查看完整的 k–能量谱函数图</a>：当前为 VED/Lanczos 参考；全路径 DiagMC 已提交采样。</p>
+<p><a href="spectral-map.html">查看 k–能量谱函数图</a>：实际 DiagMC 重建、独立 VED 参考与精度检查。</p>
 <p><strong>直接质量估计量显著减小了统计误差；谱重建增加了非线性极点和随机优化比较。尚有参数或方法未达到10%目标，精细谱形仍需进一步检验。</strong></p>
-<p>本页展示已完成的既有数据重分析。新增的每个耦合8条长虚时链、16条谱数据链已提交集群，本次发布时仍在排队；图表未把这些尚未完成的采样算入结果。两批作业成功后会自动进行后处理并保存新的报告。</p></header>
+<p>新增独立链与后处理已完成；本页使用合并后的长虚时结果及新谱数据。</p></header>
 <section id="parameters"><h2>参数与基态结果</h2>
 \[t=\omega_0=\hbar=a=1,\qquad \lambda=\frac{g^2}{2t\omega_0}=0.25,\;0.5.\]
 <p>能量相对于无电子、无声子的真空；\(\varepsilon_k=-2t\cos k\)，自由质量 \(m_0=1/(2t)=0.5\)。
 采样包含交叉图，内部动量连续分布在布里渊区。辅助参数 \(\mu\) 与虚时截止不改变零温的物理模型。</p>
-<div class="table-scroll"><table><caption>实际 bare DiagMC 结果；系统误差检查见下文</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">\(E_0/t\)</th><th scope="col">\(Z_0\)</th><th scope="col">直接 \(m^*/m_0\)</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>-2.2286495 ± 0.0002012</td><td>0.86824 ± 0.00164</td><td>1.15277 ± 0.00044</td></tr><tr><th scope="row">0.5</th><td>-2.4697713 ± 0.0003132</td><td>0.73588 ± 0.00213</td><td>1.34949 ± 0.00111</td></tr></tbody></table></div>
+<div class="table-scroll"><table><caption>实际 bare DiagMC 结果；系统误差检查见下文</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">\(E_0/t\)</th><th scope="col">\(Z_0\)</th><th scope="col">直接 \(m^*/m_0\)</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>-2.2287524 ± 0.0001178</td><td>0.86834 ± 0.00101</td><td>1.15205 ± 0.00040</td></tr><tr><th scope="row">0.5</th><td>-2.4698465 ± 0.0001906</td><td>0.73625 ± 0.00129</td><td>1.35091 ± 0.00074</td></tr></tbody></table></div>
 <p>± 为一个统计标准误差。\(E_0,Z_0\) 来自长虚时的相关拟合；质量来自本轮直接估计量。
 质量的窗口依赖另列，不能把更小的统计误差当成全部计算误差。</p>
 <p>下载：<a href="data/observables-v2.csv">本轮主要结果 CSV</a> · <a href="data/summary-v2.json">完整分析 JSON</a> ·
-<a href="data/diagmc-update-02.zip">本轮代码、分析数据与报告</a> · <a href="data/holstein-diagmc.zip">首轮完整代码与原始块数据</a>。
+<a href="data/diagmc-completed-03.zip">本轮代码、分析数据与报告</a> · <a href="data/holstein-diagmc.zip">首轮完整代码与原始块数据</a>。
 复现本轮重分析时，将两个 ZIP 解压到同一目录；原始采样没有被参考解替换。</p></section>
 <section id="mass"><h2>从图的动量导数直接计算质量</h2>
 <p>已有采样保存了每段电子动量 \(p_i\) 和传播时间对应的导数统计量：</p>
@@ -29,7 +29,7 @@
 方法背景见 <a href="https://amslaurea.unibo.it/id/eprint/22104/1/ragni-diagrammatic_monte_carlo_study_of_the_holstein_polaron.pdf#page=67">Ragni 的直接估计量</a>。</p>
 <p>统计误差取三种块长和逐链删除 jackknife 的最大值。还扫描时间分箱、协方差收缩和拟合窗口。
 首轮色散拟合为 1.1496 ± 0.0076、1.3543 ± 0.0161，与直接结果相容。</p>
-<div class="table-scroll"><table><caption>直接质量的精度与窗口检查</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">VED \(m^*/m_0\)</th><th scope="col">与参考差异</th><th scope="col">\(\chi^2/\mathrm{dof}\)</th><th scope="col">窗口6–10的质量范围</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>1.15187059</td><td>2.03σ</td><td>2.54</td><td>1.152450–1.153720</td></tr><tr><th scope="row">0.5</th><td>1.35048980</td><td>0.90σ</td><td>0.76</td><td>1.347852–1.349489</td></tr></tbody></table></div>
+<div class="table-scroll"><table><caption>直接质量的精度与窗口检查</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">VED \(m^*/m_0\)</th><th scope="col">与参考差异</th><th scope="col">\(\chi^2/\mathrm{dof}\)</th><th scope="col">窗口6–10的质量范围</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>1.15187059</td><td>0.46σ</td><td>2.25</td><td>1.152036–1.152572</td></tr><tr><th scope="row">0.5</th><td>1.35048980</td><td>0.56σ</td><td>0.64</td><td>1.349545–1.351087</td></tr></tbody></table></div>
 <p>此处 VED 用 \(k=0,0.01,0.02,0.04\) 与14/16代变分空间检查真正的 \(k\to0\) 曲率。
 首轮参考质量使用较大的动量网格，本轮参考更接近导数极限。
 \(\lambda=0.25\) 的拟合 \(\chi^2/\mathrm{dof}\) 偏高且窗口结果有漂移，这些影响需要结合独立链进一步检验。</p>
@@ -44,19 +44,19 @@
 <figure><div class="figure-scroll data"><img src="results/forward-check.svg" width="1000" height="340" alt="虚时数据与VED正向传播子、两种谱重建的逐点残差。"></div><figcaption>残差使用各点标准误差归一化。相邻点相关，因此灰色区域不是同时置信带。</figcaption><p class="figure-links"><a href="results/forward-check.svg">SVG</a><a href="results/forward-check.pdf">PDF</a></p></figure>
 <p>基准还包括无噪声传播子，以及8组协方差与实际数据匹配的带噪声合成实验。
 真实数据的模型选择先完成，之后才读取 VED 谱；合成实验用于检验方法。</p>
-<div class="table-scroll"><table><caption>无噪声输入下的非相干谱误差，η=0.25t</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">Tikhonov</th><th scope="col">SOM 变体</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>26.6%</td><td>8.0%</td></tr><tr><th scope="row">0.5</th><td>31.5%</td><td>6.7%</td></tr></tbody></table></div>
+<div class="table-scroll"><table><caption>无噪声输入下的非相干谱误差，η=0.25t</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">Tikhonov</th><th scope="col">SOM 变体</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>14.2%</td><td>4.2%</td></tr><tr><th scope="row">0.5</th><td>14.8%</td><td>4.2%</td></tr></tbody></table></div>
 <p>这里“无噪声”是指输入均值取自参考传播子，仍用实际协方差、真实数据已选定的正则化强度或优化长度来评估。
 它检验有限分辨率下的表示和正则化偏差，不保证含噪声数据同样准确。</p></section>
 <section id="spectrum"><h2>精确基态极点与两种延拓方法</h2>
 \[A(0,\omega)=Z_0\delta(\omega-E_0)+A_{\mathrm{rest}}(0,\omega).\]
 <p>新版 Tikhonov 对极点能量进行精确非线性剖面优化，保留独立长虚时运行给出的相关 \(E_0,Z_0\) 误差。
-原来 \(\lambda=0.25\) 的约 \(-2.71\sigma\) 极点偏移，本轮为约 \(-1.03\sigma\)。</p>
+原来 \(\lambda=0.25\) 的约 \(-2.71\sigma\) 极点偏移，本轮为约 \(-0.58\sigma\)。</p>
 <p>SOM 变体用连续矩形表示非负谱，随机改变中心、宽度和矩形数量，重新优化面积，并平均多个近最优解。
 它借鉴 <a href="https://arxiv.org/pdf/cond-mat/9910025#page=25">Mishchenko 等的随机优化思想</a>，但更新和带协方差目标并非原文实现的逐项复现。
 谱支持允许基态之上的束缚激发权重，没有预先删去单声子阈值以下的全部谱。</p>
 \[M_0=1,\qquad M_1=\varepsilon_0,\qquad M_2=\varepsilon_0^2+g^2.\]
 <p>两种方法均检查未展宽谱的精确矩。正则化强度或优化长度由独立链留出预测选择；参考谱不参与选择。</p>
-<div class="table-scroll"><table><caption>相同展宽下的非相干谱误差</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">首轮 Tikhonov</th><th scope="col">新版 Tikhonov</th><th scope="col">SOM 变体</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>32.6%</td><td>25.5%</td><td>11.1%</td></tr><tr><th scope="row">0.5</th><td>36.1%</td><td>35.5%</td><td>37.4%</td></tr></tbody></table></div>
+<div class="table-scroll"><table><caption>相同展宽下的非相干谱误差</caption><thead><tr><th scope="col">\(\lambda\)</th><th scope="col">首轮 Tikhonov</th><th scope="col">新版 Tikhonov</th><th scope="col">SOM 变体</th></tr></thead><tbody><tr><th scope="row">0.25</th><td>32.6%</td><td>25.3%</td><td>24.1%</td></tr><tr><th scope="row">0.5</th><td>36.1%</td><td>24.5%</td><td>18.8%</td></tr></tbody></table></div>
 <p>表中为去掉基态极点后的相对 \(L^1\) 误差，在 \(\eta=0.25t\)、\(\omega/t\in[-3.25,7]\) 下统一比较。
 <strong>尚有参数或方法未达到10%目标，精细谱形仍需进一步检验。</strong>
 随机优化没有在所有参数下带来改善，也不能因为一个重建更接近参考就反过来据此调参。</p>
@@ -66,9 +66,9 @@
 <figure><div class="figure-scroll data"><img src="results/validation-v2.svg" width="1000" height="650" alt="独立链留出预测分数随正则化强度和随机优化长度变化。"></div><figcaption>参数按留出预测分数选择，虚线表示所选值。</figcaption><p class="figure-links"><a href="results/validation-v2.svg">SVG</a><a href="results/validation-v2.pdf">PDF</a></p></figure>
 </section><section id="resolution"><h2>实际能分辨到什么程度</h2>
 <figure><div class="figure-scroll data"><img src="results/resolution.svg" width="1000" height="340" alt="非相干谱误差随显示展宽变化，虚线为百分之十的比较目标。"></div><figcaption>不同展宽下的事后精度评估；不能用更大的展宽冒充更高分辨率。</figcaption><p class="figure-links"><a href="results/resolution.svg">SVG</a><a href="results/resolution.pdf">PDF</a></p></figure>
-<p>在本轮扫描的展宽中，要让两种方法、两种耦合的非相干谱误差都低于10%，最小需要到 \(\eta=1t\)。这已是很粗的频率分辨率，不能据此确认单个声子侧带的峰宽或细峰结构。加大展宽不等于在原来的 \(\eta=0.25t\) 分辨率下完成目标；展宽也不是物理寿命。</p>
+<p>在本轮扫描的展宽中，要让两种方法、两种耦合的非相干谱误差都低于10%，最小需要到 \(\eta=0.6t\)。这已是很粗的频率分辨率，不能据此确认单个声子侧带的峰宽或细峰结构。加大展宽不等于在原来的 \(\eta=0.25t\) 分辨率下完成目标；展宽也不是物理寿命。</p>
 </section><section id="next"><h2>新增采样与后续计算</h2>
-<p>本页展示已完成的既有数据重分析。新增的每个耦合8条长虚时链、16条谱数据链已提交集群，本次发布时仍在排队；图表未把这些尚未完成的采样算入结果。两批作业成功后会自动进行后处理并保存新的报告。</p>
+<p>新增独立链与后处理已完成；本页使用合并后的长虚时结果及新谱数据。</p>
 <p>自动后处理将合并长虚时数据、重复两种延拓、块重采样和分辨率检查，并写出明确的验收结果。
 只有既定质量目标和 \(\eta=0.25t\) 的谱目标通过后，才启动 \(\lambda=0.75,1.0,1.5\) 的采样与独立参考。
 降低声子频率和外部声子扇区属于更后的阶段，目前没有把这些计算标记为完成。</p>
