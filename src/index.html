@@ -11,6 +11,14 @@
 </head>
 <body>
   <a class="skip-link" href="#content">跳到正文</a>
+  <nav class="site-nav" aria-label="站点页面目录">
+    <strong>页面目录</strong>
+    <ul>
+      <li><a href="index.html" aria-current="page">理论笔记</a></li>
+      <li><a href="results.html">数值结果</a></li>
+      <li><a href="spectral-map.html">谱函数图</a></li>
+    </ul>
+  </nav>
   <main id="content">
     <header>
       <h1>Diagrammatic Monte Carlo<br>与 Holstein 模型</h1>
@@ -27,7 +35,7 @@
         <li><a href="#model">Holstein 模型与传播子</a></li>
         <li><a href="#diagrams">费曼图与图的权重</a></li>
         <li><a href="#topologies">二阶图：先后、嵌套与交叉</a></li>
-        <li><a href="#sampling">蒙特卡洛更新与归一化</a></li>
+        <li><a href="#sampling">蒙特卡洛更新与归一化</a>（<a href="#sampling-example">完整采样实例</a>）</li>
         <li><a href="#observables">从传播子提取物理量</a></li>
         <li><a href="#validation">极限检验、收敛与误差</a></li>
         <li><a href="#finite-density">有限电子密度与 Bold DiagMC</a></li>
@@ -172,6 +180,176 @@
         \right].
       \]
       <p>\(T\) 包括更新类型、线的选择，以及新时间与动量的提议概率密度。如果换用带非平凡雅可比的坐标变换，还需计入对应因子。理论设计需要证明详细平衡，并确认所有有贡献的构型都能被访问。</p>
+
+      <section id="sampling-example" aria-labelledby="sampling-example-title">
+        <h3 id="sampling-example-title">5.1 完整实例：零阶图 → 一阶图 → 交叉图</h3>
+        <p>下面固定外部动量和虚时间，手算两次插入更新。每个构型都给出具体的声子端点与动量，再逐项计算 \(W\) 的数值。提议值和接受判定用的随机数选得便于手算；实际马尔可夫链还会发生删除与拒绝。</p>
+        <p>采用一维、零温、单电子模型。能量以 \(t\) 为单位，虚时间以 \(t^{-1}\) 为单位，以下取</p>
+        \[
+          t=\omega_0=g=1,\qquad \mu=-3,\qquad k=0,\qquad \tau=2.
+        \]
+        <p>于是 \(\varepsilon_p=-2\cos p\)，\(\varepsilon_0-\mu=1\)，而 \(\varepsilon_{\pm\pi/2}-\mu=3\)。外部 \((k,\tau)\) 在本例的所有更新中保持不变。</p>
+
+        <figure>
+          <div class="figure-scroll">
+            <svg class="sampling-diagram" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 740 470" role="img" aria-labelledby="sampling-diagram-title sampling-diagram-desc">
+              <title id="sampling-diagram-title">两次插入：从零阶电子线到两条声子线的交叉图</title>
+              <desc id="sampling-diagram-desc">三个构型具有相同的外部虚时间零到二。C0 没有声子。C1 在零点五发射动量 π/2 的声子，在一吸收。C2 再在零点七五发射动量负 π/2 的声子，在一点五吸收；两条虚线交叉，交点没有顶点。各段下方标出电子动量。</desc>
+              <defs>
+                <marker id="sampling-electron-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 0 L 8 4 L 0 8 Z" fill="#202020"/>
+                </marker>
+              </defs>
+              <g fill="none" stroke="#202020" stroke-width="1.7">
+                <path d="M 160 50 H 680 M 160 200 H 680 M 160 390 H 680"/>
+                <g marker-end="url(#sampling-electron-arrow)">
+                  <path d="M 400 50 H 430"/>
+                  <path d="M 210 200 H 240"/><path d="M 340 200 H 370"/><path d="M 540 200 H 570"/>
+                  <path d="M 210 390 H 240"/><path d="M 310 390 H 330"/><path d="M 375 390 H 395"/><path d="M 470 390 H 500"/><path d="M 605 390 H 635"/>
+                  <path d="M 63 82 V 163"/><path d="M 63 232 V 353"/>
+                </g>
+                <path d="M 290 200 C 290 80 420 80 420 200 M 290 390 C 290 260 420 260 420 390 M 355 390 C 355 260 550 260 550 390" stroke-dasharray="6 4"/>
+              </g>
+              <g fill="#202020">
+                <circle cx="290" cy="200" r="3.3"/><circle cx="420" cy="200" r="3.3"/>
+                <circle cx="290" cy="390" r="3.3"/><circle cx="355" cy="390" r="3.3"/>
+                <circle cx="420" cy="390" r="3.3"/><circle cx="550" cy="390" r="3.3"/>
+              </g>
+              <g fill="#202020" font-family="sans-serif" font-size="18" text-anchor="middle">
+                <text x="63" y="54">C₀ · n=0</text><text x="63" y="204">C₁ · n=1</text><text x="63" y="394">C₂ · n=2</text>
+                <text x="105" y="128" font-size="16">插入</text><text x="105" y="299" font-size="16">插入</text>
+                <text x="420" y="34">p=0</text><text x="160" y="80">0</text><text x="680" y="80">τ=2</text>
+                <text x="355" y="98">q₁=π/2</text>
+                <text x="225" y="226">0</text><text x="355" y="226">−π/2</text><text x="550" y="226">0</text>
+                <text x="160" y="253">0</text><text x="290" y="253">u₁=0.5</text><text x="420" y="253">v₁=1</text><text x="680" y="253">τ=2</text>
+                <text x="314" y="283">q₁=π/2</text><text x="495" y="283">q₂=−π/2</text>
+                <text x="225" y="418">0</text><text x="323" y="418">−π/2</text><text x="388" y="418">0</text><text x="485" y="418">π/2</text><text x="615" y="418">0</text>
+                <text x="160" y="448">0</text><text x="290" y="448">0.5</text><text x="355" y="448">0.75</text><text x="420" y="448">1</text><text x="550" y="448">1.5</text><text x="680" y="448">2</text>
+              </g>
+            </svg>
+          </div>
+          <figcaption>采样构型示意。横轴为虚时间；电子线下方的 \(0,\pm\pi/2\) 表示各段动量。黑点是相互作用顶点，虚线交叉处没有顶点。第二次插入覆盖了第一条声子线的吸收端点。</figcaption>
+        </figure>
+
+        <h4>（1）明确被积权重和提议规则</h4>
+        <p>沿用第 3 节的有序时间与归一化动量测度。插入一条线时新增的积分元为</p>
+        \[
+          dX_{\mathrm{new}}=du\,dv\,\frac{dq}{2\pi},
+          \qquad 0\lt u\lt v\lt\tau,\quad q\in[-\pi,\pi).
+        \]
+        <p>\(W(C)\) 是相对于这个测度的被积权重。每种配对只计一次，因此这里不再给 \(W\) 额外乘阶乘或 \(1/(2\pi)\)。连续变量恰好取某组数值的概率为零，Metropolis 比较的是同一测度下的概率密度。以下使用一个便于演示的均匀提议方案：</p>
+        <ol>
+          <li>每步以 \(p_+=p_-=1/2\) 选择插入或删除。零阶时若选到删除，就原地停留；不把插入概率重新改成 1。</li>
+          <li>插入时独立抽取 \(a,b\sim U(0,\tau)\)，令 \(u=\min(a,b)\)、\(v=\max(a,b)\)。有序三角区域上的密度为 \(2/\tau^2\)，因为两种抽取顺序得到同一对端点。</li>
+          <li>独立抽取 \(q\sim U[-\pi,\pi)\)。相对于普通 \(dq\) 的密度是 \(1/(2\pi)\)，相对于本文的 \(dq/(2\pi)\) 测度则是 1。</li>
+          <li>删除时，在当前所有声子线中等概率选一条，移除它的两个端点，并重新计算受影响的电子动量。</li>
+        </ol>
+        <p>因此，从 \(n\) 阶构型 \(C\) 插入到 \(n+1\) 阶构型 \(C'\)，对应的正反提议因子为</p>
+        \[
+          T(C\to C')=p_+\frac{2}{\tau^2},
+          \qquad T(C'\to C)=\frac{p_-}{n+1}.
+        \]
+        <p>第二个式子是恰好删掉新线、回到原构型的概率。代入详细平衡，得到本例的插入接受率：</p>
+        \[
+          P_+=\min\!\left[1,R_+\right],\qquad
+          R_+=\frac{W(C')}{W(C)}
+          \frac{p_-}{p_+}\frac{\tau^2}{2(n+1)}.
+        \]
+        <p>在反向更新选中同一条线后，删除接受率为 \(P_-=\min(1,R_+^{-1})\)。恢复量纲时，跨一阶的权重比带有 \(g^2\)，它与时间提议给出的 \(\tau^2\) 一起使 \(R_+\) 无量纲。这一接受式对应上述提议规则；若改用指数分布抽取时间，必须相应替换 \(T\)。<a href="#ref-prokofev">[1]</a></p>
+
+        <h4>（2）第一次插入：把零阶图 \(C_0\) 变成 \(C_1\)</h4>
+        <p>起始图只有一段裸电子传播：</p>
+        \[
+          W(C_0)=\mathcal G_0(0,2)
+          =e^{-(-2+3)\,2}=e^{-2}\approx0.135335.
+        \]
+        <p>假设选中了插入，并提出 \(u_1=0.5\)、\(v_1=1\)、\(q_1=\pi/2\)。发射后电子动量为 \(k-q_1=-\pi/2\)，吸收后恢复为 0。三个电子段的因子分别为：</p>
+        <div class="table-scroll">
+          <table>
+            <caption>\(C_1\) 的电子传播段</caption>
+            <thead><tr><th scope="col">时间区间</th><th scope="col">\(p\)</th><th scope="col">\(\Delta\tau\)</th><th scope="col">\(\varepsilon_p-\mu\)</th><th scope="col">\(\mathcal G_0\)</th></tr></thead>
+            <tbody>
+              <tr><td>\([0,0.5]\)</td><td>\(0\)</td><td>\(0.5\)</td><td>\(1\)</td><td>\(e^{-0.5}\)</td></tr>
+              <tr><td>\([0.5,1]\)</td><td>\(-\pi/2\)</td><td>\(0.5\)</td><td>\(3\)</td><td>\(e^{-1.5}\)</td></tr>
+              <tr><td>\([1,2]\)</td><td>\(0\)</td><td>\(1\)</td><td>\(1\)</td><td>\(e^{-1}\)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>再乘上两个顶点的 \(g^2=1\)，以及声子持续时间 \(v_1-u_1=0.5\) 对应的 \(D_0=e^{-0.5}\)：</p>
+        \[
+          \begin{aligned}
+          W(C_1)
+          &=\underbrace{g^2}_{\text{两个顶点}}
+            \underbrace{e^{-0.5}e^{-1.5}e^{-1}}_{\text{三个电子段}}
+            \underbrace{e^{-0.5}}_{\text{一条声子线}}\\
+          &=e^{-3.5}\approx0.0301974.
+          \end{aligned}
+        \]
+        <p>也可以先约去不变的外侧电子段，直接计算权重比：</p>
+        \[
+          \begin{aligned}
+          \frac{W(C_1)}{W(C_0)}
+          &=g^2e^{-[\omega_0+\varepsilon_{k-q_1}-\varepsilon_k](v_1-u_1)}\\
+          &=e^{-(1+0+2)\,0.5}
+          =e^{-1.5}\approx0.223130.
+          \end{aligned}
+        \]
+        <p>固定外部 \(\tau\) 时，所有图的电子段总长度都是 \(\tau\)，公共因子 \(e^{\mu\tau}\) 在权重比中抵消。这里电子改走较高能量的动量段，并产生一段声子传播，两者共同降低了权重。</p>
+
+        <h4>（3）抽随机数，决定接受还是拒绝</h4>
+        <p>本次 \(n=0\)、\(\tau=2\)，所以 \(T(C_0\to C_1)=1/4\)，\(T(C_1\to C_0)=1/2\)。接受率为</p>
+        \[
+          R_{01}=e^{-1.5}\frac{1/2}{1/4}
+          =2e^{-1.5}\approx0.446260,\qquad P_{01}=0.446260.
+        \]
+        <p>再独立抽取 \(r\sim U(0,1)\)：若本次 \(r=0.30\)，因为 \(r\lt P_{01}\)，接受并把当前构型设为 \(C_1\)；若抽到 \(r=0.70\)，则拒绝，当前构型仍为 \(C_0\)。接受概率需要同时包含权重比和提议比。</p>
+        <p>反向删除唯一声子线时，\(R_{10}=1/R_{01}\approx2.240845\)，所以 \(P_{10}=1\)。可以直接核对同一微元 \(dX_{\mathrm{new}}\) 两侧的详细平衡流量：</p>
+        \[
+          \underbrace{e^{-2}\frac14(2e^{-1.5})}_{W(C_0)T_{01}P_{01}}
+          =\underbrace{e^{-3.5}\frac12\cdot1}_{W(C_1)T_{10}P_{10}}
+          \approx0.0150987.
+        \]
+
+        <h4>（4）再次插入：从 \(C_1\) 得到交叉图 \(C_2\)</h4>
+        <p>接着假设从 \(C_1\) 提议插入 \(u_2=0.75\)、\(v_2=1.5\)、\(q_2=-\pi/2\)。顶点顺序为 \(u_1\lt u_2\lt v_1\lt v_2\)，对应第 4 节的交叉配对。电子动量始终等于外部 \(k\) 减去所有尚未吸收的声子动量：</p>
+        <div class="table-scroll">
+          <table>
+            <caption>\(C_2\) 的五段电子传播</caption>
+            <thead><tr><th scope="col">时间区间</th><th scope="col">未吸收的声子</th><th scope="col">\(p\)</th><th scope="col">\(\mathcal G_0\)</th></tr></thead>
+            <tbody>
+              <tr><td>\([0,0.5]\)</td><td>无</td><td>\(0\)</td><td>\(e^{-0.5}\)</td></tr>
+              <tr><td>\([0.5,0.75]\)</td><td>\(q_1\)</td><td>\(-\pi/2\)</td><td>\(e^{-0.75}\)</td></tr>
+              <tr><td>\([0.75,1]\)</td><td>\(q_1,q_2\)</td><td>\(0\)</td><td>\(e^{-0.25}\)</td></tr>
+              <tr><td>\([1,1.5]\)</td><td>\(q_2\)</td><td>\(\pi/2\)</td><td>\(e^{-1.5}\)</td></tr>
+              <tr><td>\([1.5,2]\)</td><td>无</td><td>\(0\)</td><td>\(e^{-0.5}\)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>四个顶点给出 \(g^4=1\)，两条声子线的持续时间分别是 0.5 和 0.75。因此</p>
+        \[
+          \begin{aligned}
+          W(C_2)
+          &=g^4\underbrace{e^{-0.5-0.75-0.25-1.5-0.5}}_{\text{五个电子段}}
+            \underbrace{e^{-0.5-0.75}}_{\text{两条声子线}}\\
+          &=e^{-4.75}\approx0.00865170,\\
+          \frac{W(C_2)}{W(C_1)}
+          &=e^{-1.25}\approx0.286505.
+          \end{aligned}
+        \]
+        <p>交叉处不产生额外顶点、耦合因子或负号。反向更新必须从两条声子线中选中新线才能回到 \(C_1\)，因此</p>
+        \[
+          T_{12}=\frac12\frac{2}{2^2}=\frac14,\qquad
+          T_{21}=\frac12\frac12=\frac14,\qquad
+          P_{12}=e^{-1.25}\approx0.286505.
+        \]
+        <p>若这次独立抽到 \(r=0.20\)，接受并进入 \(C_2\)。选中新线做反向删除时，接受率为 1。若漏掉删除时的选线概率 \(1/2\)，就会把本次插入接受率错误地放大一倍。</p>
+
+        <h4>（5）从两步手算到真正的采样</h4>
+        <p>不断重复“选择更新 → 提议内部变量 → 计算新旧 \(W\) 和 \(T\) → 抽数接受或拒绝”。热化后，每个测量步都记录当前构型，拒绝后的重复构型也必须计入；若只记录接受的更新，会改变访问频率。</p>
+        <p>在本文的直接按 \(W\) 采样且无额外偏置的方案中，\(W\) 已经决定构型出现的频率，计数时每步贡献一次访问，不再给访问次数额外乘 \(W\)。允许任意端点插入、删除任意线，可以经零阶图到达所有有限阶配对，包括交叉图；实际实现还可加入时间和动量移动来改善效率。最后用下面的零阶访问频率恢复 \(\mathcal G(k,\tau)\) 的绝对归一化。</p>
+      </section>
+
+      <h3>5.2 用零阶访问频率归一化</h3>
       <p><strong>相对频率还需要绝对归一化。</strong> 例如，固定 \((\mathbf k,\tau)\)，直接按 \(W\) 采样且没有额外偏置时，零阶图的访问概率是</p>
       \[
         \Pr(n=0)=\frac{\mathcal G_0(\mathbf k,\tau)}

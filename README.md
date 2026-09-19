@@ -4,6 +4,8 @@
 
 中文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。
 
+新增 [完整采样实例](https://rjguo1208.github.io/Holstein-model/#sampling-example)：从零阶图插入一条声子线，再插入得到交叉图，逐段列出电子动量、传播子、顶点因子和图权重，并手算正反提议概率、接受率及详细平衡。三个页面共用页面目录，宽屏固定在左侧，窄屏显示在页首，当前页有明确标记。
+
 新增 [数值结果页](https://rjguo1208.github.io/Holstein-model/results.html)：1D、零温、单电子 bare DiagMC，默认参数 t=ω₀=1、λ=0.25/0.5。基态和有效质量已完成验证，谱函数明确标为初步重建，并列出独立参考误差。原始块数据、代码和报告作为 ZIP 提供下载；所有曲线都有 SVG/PDF 版本。结果页的科学计算与网站排版检查分别记录。
 
 第二轮增加直接质量估计量、真正小 k 的 VED 曲率对照、精确非线性极点、连续矩形 SOM 变体、
@@ -85,6 +87,8 @@ scripts/check_site.py         数学、链接、字体与图来源检查
 KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学文献链接见网页末尾。
 
 本版的浏览器与排版检查见 [验证记录](docs/verification.md)。
+
+采样手算实例与全站页面目录的检查见 [实例及导航验证记录](docs/sampling-example-verification.md)。
 
 数值结果与新增页面的检查见 [结果验证记录](docs/results-verification.md)。
 
