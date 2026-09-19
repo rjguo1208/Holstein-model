@@ -1,5 +1,7 @@
 # 41-point DiagMC submission — 2026-09-18
 
+Update (2026-09-19): the 41-point calculation has now completed on Kestrel. See [the completion record](dense-map-kestrel-completed.md). The Anvil queue state below is the historical submission snapshot.
+
 The actual DiagMC grid is now configured to match the existing VED grid exactly:
 k_j=j*pi/40 for j=0,...,40. The current published DiagMC figure still contains
 17 measured points and remains correctly labeled until the new jobs complete.

@@ -1,0 +1,32 @@
+[
+  {
+    "file": "diagmc-map41-kestrel-completed-01.zip",
+    "files": 2355,
+    "bytes": 54251376,
+    "sha256": "506595ade7c33b5afc4bed7e22be13b4aebceb85d16557d2f54cd0949c38570b"
+  },
+  {
+    "file": "diagmc-map41-raw-lambda0.25-k000-019.zip",
+    "files": 400,
+    "bytes": 53722964,
+    "sha256": "ce22a98d9afc658f82df33b56a7d23a1898ef10750a8a58e512a781857693490"
+  },
+  {
+    "file": "diagmc-map41-raw-lambda0.25-k020-040.zip",
+    "files": 420,
+    "bytes": 35575901,
+    "sha256": "bb666cd4108add9b6e0eda1df3d20a5f184bde944b56087953509f4e8d86d503"
+  },
+  {
+    "file": "diagmc-map41-raw-lambda0.50-k000-019.zip",
+    "files": 400,
+    "bytes": 61316171,
+    "sha256": "4a05c3dd3bffd4c4c911666fd794bd24c788aad4fd05b904b299d2e7149e4787"
+  },
+  {
+    "file": "diagmc-map41-raw-lambda0.50-k020-040.zip",
+    "files": 420,
+    "bytes": 41195561,
+    "sha256": "07e6789a619094f26d71970c7d53df320f87d64480ed5ed846170ce781d7615c"
+  }
+]

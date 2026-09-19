@@ -16,10 +16,10 @@
 
 新增 [动量–能量谱函数图](https://rjguo1208.github.io/Holstein-model/spectral-map.html)：
 默认两种耦合、Γ→X 路径、线性与对数色标，提供 SVG/PDF/PNG、NPZ 和 CSV。
-17点 DiagMC 采样与后处理已在 highmem 完成；页面同时展示实际重建与独立 VED 参考。
+41点 DiagMC 加密计算已在 Kestrel 完成：复用9点、补算32点，共328条链；页面展示实际重建及全部41点与独立 VED 的比较。
 细分辨率谱仍未通过稳定性验证，较粗展宽下的整体谱形更稳定。
 数值来源、参考收敛和浏览器检查见 [谱图验证记录](docs/spectral-map-verification.md)。
-实际 DiagMC 谱图、完成作业、当前精度和新数据包见 [完成后的验证记录](docs/completed-runs-verification.md)。
+最新作业、精度检查和复现方法见 [Kestrel 41点完成记录](docs/dense-map-kestrel-completed.md)；[17点完成记录](docs/completed-runs-verification.md)保留为历史版本。
 
 ## 本地预览
 
