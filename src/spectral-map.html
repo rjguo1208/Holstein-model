@@ -25,8 +25,60 @@
 <a href="data/diagmc-map41-kestrel-grid.json">实际动量网格与复用记录</a> ·
 <a href="data/diagmc-map41-audit.json">全部41点的检查结果</a>。</p>
 <p>下方已替换为实际的41点重建。增加动量点改善动量采样密度，不能据此提高频率方向的精度声明。
-<strong>精细谱仍未通过稳定性验证。</strong>较粗展宽下的整体谱形更稳定；窄峰和声子侧带的精细结构仍需检验。</p></header>
-<section id="diagmc-map"><h2>实际 DiagMC 谱图：η=0.25t</h2>
+<strong>精细谱仍未通过稳定性验证。</strong>较粗展宽下的整体谱形更稳定；窄峰和声子侧带的精细结构仍需检验。</p><p><strong>新增：</strong><a href="#refinement">10点误差改进试验、128次 bootstrap 和模拟谱分辨率测试</a>已完成。</p></header>
+<section id="refinement"><h2>误差改进试验：10个动量点</h2>
+<p><strong>4倍采样与延拓改进已在 Kestrel 完成。</strong>每种耦合选择以下动量，覆盖问题区域及邻点，并以零动量作对照：</p>
+\[k/\pi=0,0.6,0.625,0.65,0.875,0.9,0.925,0.95,0.975,1.\]
+<p>
+每点8条新链、每链4800万生产步；两种耦合共新增160条链、76.8亿步。采样内核保持与41点基线相同。</p>
+<p>两种耦合下，传播子统计误差的典型值均降至原来的约51%。分块长度从4增到16后，逐点中位标准误差之比在0.95–1.03之间，未见系统性增长。
+14种重建设置在相同的留出数据和评分标准下比较，覆盖时间范围、时间与频率网格、协方差截断、谱支持、分块和最大熵方法。
+多个问题点受益于纳入原先未使用的 \(8\lt\tau t\le12\) 数据。</p>
+<div class="table-scroll"><table><caption>相同10点、η=0.25t：与独立 VED 比较的全谱相对积分误差</caption>
+<thead><tr><th scope="col">λ</th><th scope="col">原始中位数</th><th scope="col">仅4倍采样中位数</th><th scope="col">改进后中位数</th><th scope="col">原始最大值</th><th scope="col">改进后最大值</th></tr></thead>
+<tbody><tr><th scope="row">0.25</th><td>21.9%</td><td>26.1%</td><td>14.3%</td><td>37.2%</td><td>16.6%</td></tr><tr><th scope="row">0.5</th><td>40.4%</td><td>39.6%</td><td>11.0%</td><td>47.1%</td><td>24.2%</td></tr></tbody></table></div>
+<p>20组耦合／动量中有18组误差下降，另两组小幅上升。表中的“仅4倍采样”继续使用原来的延拓与最小平均留出分数选择规则；
+“改进后”使用冻结的重建设置和偏向较强正则化的一标准误差选择规则。这个规则是模型选择启发式，不是显著性检验。
+VED 仅在方案冻结并记录哈希后用于比较，不参与拟合、选择或替换结果。此表覆盖10点试验，不能与下方41点基线的最大误差直接混用。</p>
+<figure><div class="figure-scroll data"><img src="results/pilot-error-comparison.svg" width="1100" height="500" alt="两种耦合下，原始结果、仅四倍采样和延拓改进在相同十个动量点上的谱积分误差比较。"></div>
+<figcaption>相同试验点与相同展宽的事后比较；连线只引导阅读离散误差值。</figcaption><p class="figure-links"><a href="results/pilot-error-comparison.svg">SVG</a><a href="results/pilot-error-comparison.pdf">PDF</a><a href="results/pilot-error-comparison.png">PNG</a></p></figure>
+<figure><div class="figure-scroll data"><img src="results/pilot-problem-spectra.svg" width="1200" height="720" alt="六组问题动量的原始谱、四倍采样谱、改进谱及独立VED参考；阴影为128次bootstrap的16至84百分位范围。"></div>
+<figcaption>三个问题动量、两种耦合的绝对谱强度；η=0.25t。</figcaption><p class="figure-links"><a href="results/pilot-problem-spectra.svg">SVG</a><a href="results/pilot-problem-spectra.pdf">PDF</a><a href="results/pilot-problem-spectra.png">PNG</a></p></figure>
+<h3>不确定性和分辨率</h3>
+<p>每组完成128次分块 bootstrap，共2560次；每次在固定谱表示内重新选择正则化参数。
+初次有3次最大熵求解未收敛，已对相同样本、相同所选参数作数值重试，主谱保持冻结；
+<a href="data/diagmc-refinement-bootstrap-recovery.json">原失败与重试记录</a>均保留。
+图中阴影为16–84%经验分位范围，下载数据另含2.5–97.5%范围及可接受谱表示之间的差异。
+这些范围不包含所有谱模型偏差。另有36种模拟谱情况、每种24次独立噪声，共864次恢复测试，全部完成。</p>
+<figure><div class="figure-scroll data"><img src="results/pilot-resolution.svg" width="1000" height="500" alt="六个问题点在四种已知双峰间距下的恢复次数，每种24次噪声，实现相同判据；不可分辨的真谱标为不适用。"></div>
+<figcaption>已知双峰的条件恢复率。实际峰位、显著度和峰间凹陷都须满足判据；失败计入24次分母。</figcaption><p class="figure-links"><a href="results/pilot-resolution.svg">SVG</a><a href="results/pilot-resolution.pdf">PDF</a><a href="results/pilot-resolution.png">PNG</a></p></figure>
+<p><strong>精细窄峰仍未通过普遍的定量验证。</strong>例如在 \(k/\pi=0.9\)、\(\eta=0.1t\) 的模拟测试中，
+两种耦合均未能恢复间距 \(0.6t\) 的双峰（各0/24）；宽连续谱也可能产生伪峰。
+图中的“n/a”表示已知真谱在该显示展宽下本身就不满足双峰判据。
+恢复率只适用于这些模拟谱和测得的噪声协方差，24次样本不足以构成通用分辨率保证。</p>
+<details><summary>传播子误差下降及模拟谱实例</summary>
+<figure><div class="figure-scroll data"><img src="results/pilot-green-errors.svg" width="1000" height="400" alt="问题动量的虚时传播子新旧标准误差之比，与四倍有效采样预期的一半比较。"></div>
+<figcaption>统计误差下降约一半；谱误差不会因此自动减半。</figcaption><p class="figure-links"><a href="results/pilot-green-errors.svg">SVG</a><a href="results/pilot-green-errors.pdf">PDF</a><a href="results/pilot-green-errors.png">PNG</a></p></figure>
+<figure><div class="figure-scroll data"><img src="results/pilot-synthetic-examples.svg" width="1000" height="650" alt="使用强耦合高动量点噪声的单峰、双峰与连续谱重建，比较已知真谱和24次重建的中位数及范围。"></div>
+<figcaption>模拟谱可直接揭示峰合并和伪峰；较窄的经验范围仍可能伴随模型偏差。</figcaption><p class="figure-links"><a href="results/pilot-synthetic-examples.svg">SVG</a><a href="results/pilot-synthetic-examples.pdf">PDF</a><a href="results/pilot-synthetic-examples.png">PNG</a></p></figure>
+</details>
+<p><a href="data/diagmc-refinement-summary.json">逐点误差与模拟恢复率</a> ·
+<a href="data/diagmc-refinement-diagnostics.json">分块、链间及协方差诊断</a> ·
+<a href="data/diagmc-refinement-jobs.json">完成作业记录</a> ·
+<a href="https://github.com/rjguo1208/Holstein-model/tree/main/research/spectral-refinement">可审阅源码与复现方法</a> ·
+<a href="https://github.com/rjguo1208/Holstein-model/blob/main/docs/spectral-refinement-completed.md">完整试验记录</a>。</p>
+<p>试验 NPZ：<a href="data/diagmc-refinement-lambda0.25.npz">λ=0.25</a> · <a href="data/diagmc-refinement-lambda0.50.npz">λ=0.5</a>。
+各阶段谱的数组形状为 <code>(3,10,701)</code>，轴为 <code>(eta,k,energy)</code>；保留真实动量索引，不填补其余动量。</p>
+<p>完整复现包：<a href="data/diagmc-refinement-completed-01.zip">源码、诊断、模拟谱及报告</a> ·
+<a href="data/diagmc-refinement-bootstrap-draws.zip">全部 bootstrap 样本</a> ·
+<a href="data/diagmc-refinement-raw-lambda0.25.zip">λ=0.25 原始链</a> ·
+<a href="data/diagmc-refinement-raw-lambda0.50.zip">λ=0.5 原始链</a> ·
+<a href="data/diagmc-refinement-archives.json">大小与 SHA-256</a> ·
+<a href="data/diagmc-refinement-archive-validation.json">数据包独立复核</a>。</p>
+<p>模型选择的背景可参阅 <a href="https://arxiv.org/abs/2406.06763">Schumm 等的解析延拓交叉验证研究</a>。
+本轮新增方法是最大熵对照；下方保留完整41点基线，便于比较。</p>
+</section>
+<section id="diagmc-map"><h2>41点基线 DiagMC 谱图：η=0.25t</h2>
 <p>保持默认参数 \(t=\omega_0=1\)、\(\lambda=0.25,0.5\)，路径为 \(\Gamma(0)\to X(\pi)\)。
 41个动量点分别采样和延拓，不沿动量方向插值。横轴为 \(k\)，纵轴为相对真空的 \(\omega/t\)，
 左右色标统一为 \(tA_\eta(k,\omega)\)。</p>

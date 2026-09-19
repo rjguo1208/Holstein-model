@@ -1,0 +1,6 @@
+/build/
+/results/
+/logs/
+/inputs/
+__pycache__/
+.pytest_cache/

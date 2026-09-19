@@ -1,0 +1,30 @@
+[
+  {
+    "file": "diagmc-refinement-completed-01.zip",
+    "bytes": 64298050,
+    "sha256": "fdfea750b2de6c04a6289b96b7fbc084f3e9eddfa5344ffb453d87db0ab4c3d2",
+    "members": 240,
+    "zip_integrity_verified": true
+  },
+  {
+    "file": "diagmc-refinement-bootstrap-draws.zip",
+    "bytes": 46105027,
+    "sha256": "5af6b6d0ddd28e87e4efd5e0b3ee5b1c4ec5f3209ffda0fdc942796722d37d83",
+    "members": 22,
+    "zip_integrity_verified": true
+  },
+  {
+    "file": "diagmc-refinement-raw-lambda0.25.zip",
+    "bytes": 88422168,
+    "sha256": "99a9ae3426cb774d4dbeea0656a6eb5915b0c7d838eda56fcd3c42bb75811d13",
+    "members": 670,
+    "zip_integrity_verified": true
+  },
+  {
+    "file": "diagmc-refinement-raw-lambda0.50.zip",
+    "bytes": 98621035,
+    "sha256": "14292e06063a838885b284d30ebd04aa8029986858523f36c3f9f33a350bc8be",
+    "members": 670,
+    "zip_integrity_verified": true
+  }
+]

@@ -21,6 +21,11 @@
 数值来源、参考收敛和浏览器检查见 [谱图验证记录](docs/spectral-map-verification.md)。
 最新作业、精度检查和复现方法见 [Kestrel 41点完成记录](docs/dense-map-kestrel-completed.md)；[17点完成记录](docs/completed-runs-verification.md)保留为历史版本。
 
+新增 [谱函数误差改进试验](https://rjguo1208.github.io/Holstein-model/spectral-map.html#refinement)：
+10个动量点、两种耦合的独立4倍采样，14种延拓设置、每组128次 bootstrap 和864次模拟谱恢复。
+η=0.25t 的逐点误差中位数由21.9%／40.4%降到14.3%／11.0%；精细窄峰仍未普遍通过验证。
+见 [完成报告](docs/spectral-refinement-completed.md) 与 [可审阅科学代码](research/spectral-refinement/README.md)。
+
 ## 本地预览
 
 已生成的页面与全部资源保存在 `site/`：

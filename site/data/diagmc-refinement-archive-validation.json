@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "archives": 4,
+  "duplicate_entries_byte_identical": 320,
+  "raw_files_verified": 640,
+  "reviewable_source_files_verified": 37,
+  "original_inference_source_files_verified": 20,
+  "unchanged_successful_draws_at_repaired_points": 253,
+  "recovered_original_draws": 3,
+  "fresh_extraction_report_numeric_fields_identical": true,
+  "packaged_inputs_used": true,
+  "python_tests": 17,
+  "cpp_kernel_tests_passed": true,
+  "cpp_kernel_recompiled_from_archived_source": true,
+  "cpp_compiler": "/nopt/nrel/apps/cpu_stack/compilers/06-24/linux-rhel8-sapphirerapids/gcc-12.3.0/gcc-12.3.0-3bukajtjn5ntkb5nm762hdjtnh36hnh4/bin/g++",
+  "archive_hashes": {
+    "diagmc-refinement-completed-01.zip": "fdfea750b2de6c04a6289b96b7fbc084f3e9eddfa5344ffb453d87db0ab4c3d2",
+    "diagmc-refinement-bootstrap-draws.zip": "5af6b6d0ddd28e87e4efd5e0b3ee5b1c4ec5f3209ffda0fdc942796722d37d83",
+    "diagmc-refinement-raw-lambda0.25.zip": "99a9ae3426cb774d4dbeea0656a6eb5915b0c7d838eda56fcd3c42bb75811d13",
+    "diagmc-refinement-raw-lambda0.50.zip": "14292e06063a838885b284d30ebd04aa8029986858523f36c3f9f33a350bc8be"
+  }
+}

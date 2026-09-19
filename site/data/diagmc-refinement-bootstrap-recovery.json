@@ -1,0 +1,28 @@
+{
+  "complete": true,
+  "job_id": "18680098",
+  "recoveries": [
+    {
+      "coupling": 0.25,
+      "index": 25,
+      "replicates": [
+        69,
+        73
+      ]
+    },
+    {
+      "coupling": 0.5,
+      "index": 25,
+      "replicates": [
+        3
+      ]
+    }
+  ],
+  "source_hashes": {
+    "refinement.py": "14c25df98cac48b446f5a4d4de74af5c37d87317a654a4bba3d4150dfbf2f8fd",
+    "scripts/pilot_repair_bootstrap.py": "e00a2c9be9d89350ec657fbf3aa3625b868a9dcaafb23e5480a960b588162cf8"
+  },
+  "unchanged_central_selections": true,
+  "unchanged_successful_bootstrap_draws": true,
+  "reference_used": false
+}
