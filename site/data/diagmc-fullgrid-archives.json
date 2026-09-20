@@ -1,0 +1,162 @@
+[
+  {
+    "file": "diagmc-fullgrid-completed-01.zip",
+    "bytes": 62061843,
+    "sha256": "96b70f64fc6cf4cca0442e31a9ef21a1401f0c436ffcf865f8177d9c37b7ce08",
+    "members": 773,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-completed-01.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-completed-02.zip",
+    "bytes": 62060090,
+    "sha256": "4e29407e476afe81f763ad7887dc0361bc2d86645b85c3040e6336b6fa2ec427",
+    "members": 773,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-completed-02.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-completed-03.zip",
+    "bytes": 62060296,
+    "sha256": "c276a09abfc9a406def40e60cd8d90a0d43838370d960116e0ac52122d4ee198",
+    "members": 773,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-completed-03.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-reused-synthetic.zip",
+    "bytes": 40252907,
+    "sha256": "01a9101ae8c533a420720d80800301a7971598425416bed875334572d775429b",
+    "members": 73,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-reused-synthetic.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-bootstrap-lambda0.25-k000-020.zip",
+    "bytes": 56308830,
+    "sha256": "70d894d4e14cf38c576fb2e49e5c100284cb80162522846234d95ebd41fe658b",
+    "members": 27,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-bootstrap-lambda0.25-k000-020.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-bootstrap-lambda0.25-k021-040.zip",
+    "bytes": 48159720,
+    "sha256": "97e4d233f413e7265f80943932233fe82bd70e22a50e844f78a626071322b0c1",
+    "members": 23,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-bootstrap-lambda0.25-k021-040.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.25-k000-006.zip",
+    "bytes": 93371446,
+    "sha256": "dca9d39575d3e610f7fb578e8445dab87ff5410f56ef64b3a6567411bb3bba24",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.25-k000-006.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.25-k007-013.zip",
+    "bytes": 72083758,
+    "sha256": "7840e1e63379571e6e6ea834c212284c972f7e35c8fad64240439ae6d9de6752",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.25-k007-013.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.25-k014-020.zip",
+    "bytes": 56084350,
+    "sha256": "5efd43eae6898908348500d7c333178fd5be693370ce8570a41389cdfe938480",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.25-k014-020.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.25-k021-027.zip",
+    "bytes": 49135274,
+    "sha256": "6902b1b3eb8de325cd8af819dbffb2635781c97939ac47a4948742937e65edcd",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.25-k021-027.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.25-k028-034.zip",
+    "bytes": 46179334,
+    "sha256": "0e52d79f1174ee195c272352d122c371713a2af5e81d0f30eceb69edbcecde35",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.25-k028-034.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.25-k035-040.zip",
+    "bytes": 38709737,
+    "sha256": "1f3fae9387c7f0f6317609e8db44e66a675fcf13fc90db364585973c9cd9519b",
+    "members": 192,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.25-k035-040.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-bootstrap-lambda0.50-k000-020.zip",
+    "bytes": 60639088,
+    "sha256": "00bc4064236999ce357f8880195769503a3f88b00baa28927dd46a098a98fe34",
+    "members": 29,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-bootstrap-lambda0.50-k000-020.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-bootstrap-lambda0.50-k021-040.zip",
+    "bytes": 44031878,
+    "sha256": "67ac35e4410e37218bb35137a1cf57db3db20730f71bea13dee44a51a246c7cf",
+    "members": 21,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-bootstrap-lambda0.50-k021-040.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.50-k000-006.zip",
+    "bytes": 101135067,
+    "sha256": "340b5c7a557da94def57f455a55fd3fbc3cd6e6ae4038c9e239cdce312d6a190",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.50-k000-006.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.50-k007-013.zip",
+    "bytes": 86138188,
+    "sha256": "9a09fd3c26d56c0eddcb665d53bc92efc2479d17df3c6953b23523503459854f",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.50-k007-013.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.50-k014-020.zip",
+    "bytes": 65810226,
+    "sha256": "76f40ace4af9706baf0e4eba24c232c9495875da8a07e609b4de42142668f5a8",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.50-k014-020.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.50-k021-027.zip",
+    "bytes": 57106935,
+    "sha256": "8c34000f9de881e554c278a6448da1ec6e5af1101e2cfa2b078136bb293a4a91",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.50-k021-027.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.50-k028-034.zip",
+    "bytes": 53431408,
+    "sha256": "06706da81fac3d0284599614c2ac777115090f983a9208294af30c05a4237245",
+    "members": 224,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.50-k028-034.zip"
+  },
+  {
+    "file": "diagmc-fullgrid-raw-lambda0.50-k035-040.zip",
+    "bytes": 44657811,
+    "sha256": "d7708c1f793f374d45eb5c8f0515a25e4e30423c5acdec0b371d608402f2f796",
+    "members": 192,
+    "zip_integrity_verified": true,
+    "url": "https://github.com/rjguo1208/Holstein-model/releases/download/full-grid-refinement-20260919/diagmc-fullgrid-raw-lambda0.50-k035-040.zip"
+  }
+]

@@ -21,12 +21,13 @@
 数值来源、参考收敛和浏览器检查见 [谱图验证记录](docs/spectral-map-verification.md)。
 最新作业、精度检查和复现方法见 [Kestrel 41点完成记录](docs/dense-map-kestrel-completed.md)；[17点完成记录](docs/completed-runs-verification.md)保留为历史版本。
 
-[谱函数主图](https://rjguo1208.github.io/Holstein-model/spectral-map.html#diagmc-map)已将10个改进动量点纳入41点网格，并与同坐标、同展宽、同色标的 VED 并排展示；其余31点明确保留为原有结果。
+[谱函数主图](https://rjguo1208.github.io/Holstein-model/spectral-map.html#diagmc-map)的两种耦合、全部41点均已使用改进结果，与相同坐标、展宽和绝对色标的 VED 并排展示。
+每点4倍采样和128次 bootstrap；本轮补齐31点、新增496条链，完整网格共656条链、314.88亿生产步和10496次 bootstrap。
+η=0.25t 的全41点误差中位数由 16.3%／23.3% 变为 10.2%／10.1%；70/82组误差下降。精细窄峰仍未普遍通过验证。
+见 [全部41点完成报告](docs/full-grid-refinement-completed.md)、[科学源码与复现方法](research/spectral-fullgrid/README.md) 和 [完整复现数据](https://github.com/rjguo1208/Holstein-model/releases/tag/full-grid-refinement-20260919)。
 
-新增 [谱函数误差改进试验](https://rjguo1208.github.io/Holstein-model/spectral-map.html#refinement)：
-10个动量点、两种耦合的独立4倍采样，14种延拓设置、每组128次 bootstrap 和864次模拟谱恢复。
-η=0.25t 的逐点误差中位数由21.9%／40.4%降到14.3%／11.0%；精细窄峰仍未普遍通过验证。
-见 [完成报告](docs/spectral-refinement-completed.md) 与 [可审阅科学代码](research/spectral-refinement/README.md)。
+前轮10点试验、864次模拟谱恢复与原始谱图保留在页面的历史记录中；
+[前轮报告](docs/spectral-refinement-completed.md) 与 [前轮源码](research/spectral-refinement/README.md) 保持可访问。
 
 ## 本地预览
 
