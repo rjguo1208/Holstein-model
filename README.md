@@ -2,7 +2,13 @@
 
 网站：<https://rjguo1208.github.io/Holstein-model/>
 
-中文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。
+中英文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。
+
+[中文](https://rjguo1208.github.io/Holstein-model/) · [English](https://rjguo1208.github.io/Holstein-model/en/)。理论笔记、数值结果和谱函数图均有完整英文版；每页右上角的“中文 / English”切换到当前页面的对应语言，页面目录继续使用所选语言。两种语言共享公式、数值、科学图和下载数据。
+
+The theory notes, numerical results and spectral maps are available in Chinese
+and English. Use the language links in the top-right corner to switch the current
+page. Both versions share equations, numerical tables, figures and downloads.
 
 新增 [完整采样实例](https://rjguo1208.github.io/Holstein-model/#sampling-example)：从零阶图插入一条声子线，再插入得到交叉图，逐段列出电子动量、传播子、顶点因子和图权重，并手算正反提议概率、接受率及详细平衡。三个页面共用页面目录，宽屏固定在左侧，窄屏显示在页首，当前页有明确标记。
 
@@ -42,7 +48,7 @@ python3 -m http.server 8000 --bind 127.0.0.1
 
 ## 修改正文或公式
 
-需要 Node.js 22。修改 `src/index.html` 中的正文和 LaTeX，或修改 `src/style.css`，然后运行：
+需要 Node.js 22 和 Python 3。修改 `src/*.html` 中的正文和 LaTeX，或修改 `src/style.css`，然后运行：
 
 ```bash
 npm ci --ignore-scripts
@@ -50,7 +56,26 @@ npm run build
 npm run check
 ```
 
-使用 `\(...\)` 写行内公式，`\[...\]` 写独立公式。构建采用固定版本的 [KaTeX](https://katex.org/docs/api.html)，遇到不支持的公式语法即报错。数学表达式中的小于号使用 `\lt`，不使用 HTML 实体。`site/index.html` 和 `site/assets/` 中的数学字体、样式均为已提交的发布产物。
+使用 `\(...\)` 写行内公式，`\[...\]` 写独立公式。构建采用固定版本的 [KaTeX](https://katex.org/docs/api.html)，遇到不支持的公式语法即报错。数学表达式中的小于号使用 `\lt`，不使用 HTML 实体。`site/*.html`、`site/en/*.html` 和 `site/assets/` 均为已提交的发布产物。
+
+## 中英文同步维护 / Bilingual updates
+
+以后每次更新网站，必须同时更新中文和英文；这项用户要求也记录在 [AGENTS.md](AGENTS.md)。
+共同结构与中文内容保存在 `src/*.html`，经过人工翻译的英文保存在 `src/locales/en.json`。
+键是合并空白后的中文原文，值是对应英文。查看当前所有待翻译文本：
+
+```bash
+python3 scripts/localize.py --extract
+```
+
+修改中文后，在同一提交中更新对应英文；标题、段落、表格说明、图注、下载说明、元数据、替代文本以及公式中的文字说明均须同步。构建会拒绝缺失、空白、仍含中文或已过时的翻译，并检查两种语言的数学表达式一致。
+`npm run check` 检查所有页面的双语配对、当前语言、页面目录、本地链接、公式、锚点、数值表和共用资源。
+科学图使用英文或数学标注，两种语言直接复用同一数据与图。提交重建后的中文和英文产物，再一起部署。
+
+For every website update, edit the shared Chinese sources and their English
+translations together. The build fails on missing or obsolete translation keys
+and changed mathematics. Run both build and checks, review desktop/mobile
+language switching, and commit and deploy both generated versions together.
 
 ## 修改费曼图
 
@@ -80,16 +105,21 @@ gh workflow run pages.yml --ref main
 ```text
 src/index.html                正文及 LaTeX 公式
 src/results.html              数值结果、误差与初步谱函数
+src/spectral-map.html         谱函数图、VED 比较与完整历史记录
+src/locales/en.json           全站英文翻译；键为中文原文
 src/style.css                 简洁排版与打印样式
 site/index.html               预先渲染的静态网页
+site/en/                      完整英文版三个页面
 site/assets/katex/            数学样式、字体与许可证
 site/figures/                 费曼图的 LaTeX、PDF 与 SVG
 site/results/                 科学图的 SVG 与 PDF
 site/data/                    结果摘要、CSV、代码和原始数据包
 scripts/build.mjs             公式渲染与静态资源复制
+scripts/localize.py           英文翻译、共用链接与公式一致性检查
 scripts/build_figures.py      TikZ → PDF → SVG
 scripts/check_site.py         数学、链接、字体与图来源检查
 .github/workflows/            自动检查及 Pages 发布
+AGENTS.md                     后续更新必须同时维护中英文
 ```
 
 KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学文献链接见网页末尾。
@@ -101,3 +131,5 @@ KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学�
 数值结果与新增页面的检查见 [结果验证记录](docs/results-verification.md)。
 
 第二轮的完成范围、排队作业、数值限制与显示检查见 [第二轮验证记录](docs/results-v2-verification.md)。
+
+中英文翻译、同步构建及桌面／手机语言切换的检查见 [双语网站验证记录](docs/bilingual-website-verification.md)。
