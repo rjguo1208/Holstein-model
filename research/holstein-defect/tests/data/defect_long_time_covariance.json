@@ -1,0 +1,31 @@
+{
+  "parameters": {
+    "t": 1,
+    "omega": 1,
+    "g": 1,
+    "U": 1,
+    "mu": -2.9025953731109597,
+    "origin": 16,
+    "tau_max": 12,
+    "bins": 96
+  },
+  "note": "Numerical regression: lambda0.50, site16, training excludes chains4,5 of dense_data_01; this case required adaptive homotopy at weak entropy penalty.",
+  "source_input_sha256": {
+    "lambda0.50_i16_s00/run.json": "6de6c103e8c0533aa24e4bbe2d0993726830656b56b051afc0764fc118259790",
+    "lambda0.50_i16_s00/blocks.csv": "14d6fba8c5a2b1607a0de1bf5f4e521fd9ec3ac6f6f7281bb1c7343213aa0dd8",
+    "lambda0.50_i16_s01/run.json": "f125ab71abbf279566d6a24c9751e25911e95988f32fefcf4e52cce657f9f8ef",
+    "lambda0.50_i16_s01/blocks.csv": "2d41b2cf0e49fdbc7b949f1c36501f8e1b44c3558a30f8fb61933105fdbc768c",
+    "lambda0.50_i16_s02/run.json": "8daf44560fb18f9c5b405efcf6e1d1c5c0e1795a3f2dc37c6e05a8d882dbcf53",
+    "lambda0.50_i16_s02/blocks.csv": "ab0e98de37959842048f5ea5f52795fac8dba0d22e61d573e9a3950fd584629f",
+    "lambda0.50_i16_s03/run.json": "88f48a029047641d62d810f8a2486bc767384891a2f79b04728aca1820900d33",
+    "lambda0.50_i16_s03/blocks.csv": "2f84831143e8d08f19d9410a9bcb3acc199626fdcc2058af676960c7adcab2df",
+    "lambda0.50_i16_s04/run.json": "c67106467b940ee2f22261cd42b6a785a82a5fa15c08a2af5bc327c187f6d83f",
+    "lambda0.50_i16_s04/blocks.csv": "8f40ef230766330c4f3c132beaa6762dfacb039f55a744f209b3a3095463e104",
+    "lambda0.50_i16_s05/run.json": "6e1c762700a683840c43d753229bc0d2b9346e9ed161cd6b22daf03e69f21aa4",
+    "lambda0.50_i16_s05/blocks.csv": "bf995d061ce637ceb2c4d44d0d45cbf747be98e97209a076b97fd2f0789aae5b",
+    "lambda0.50_i16_s06/run.json": "539ea06fec771274fd023591f8475b3ad6692eb337fd1c5e8462b4916c595bd2",
+    "lambda0.50_i16_s06/blocks.csv": "03a5773dd2805fbc2334f74f4fe697627791ea1619dd33b1de4b9aaf60a384a8",
+    "lambda0.50_i16_s07/run.json": "66f219cdfc9b49bb88d0ebb585f94ad72944813de8db5bebd2bda707653bf7bd",
+    "lambda0.50_i16_s07/blocks.csv": "a303e216027cf121fe08f660c3b03c0c988791bb069bc2bf36949ff8e5a0fd84"
+  }
+}

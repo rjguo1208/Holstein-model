@@ -1,6 +1,6 @@
 {
   "complete": true,
-  "script_sha256": "7671bd202d4f06f0028e10efffd77696d39554e216e12269e681cf265845acac",
+  "script_sha256": "1d514880a3ef7939a36ebbc73e0c4a314ec9c6f8345b4f00bcd2ddc8e79f5661",
   "points": 41,
   "refined_points_per_coupling": 41,
   "baseline_points_per_coupling": 0,
@@ -82,7 +82,7 @@
         "site/data/lambda0.25_map.npz": "ad1c7460b1a7868fdb2f7e3b41728214bfaab4014c4b9dc217bbde71bb8ce8d3"
       },
       "output": "site/data/diagmc-updated41-lambda0.25-map.npz",
-      "output_sha256": "5b73222c3c897b3b3fc9e61569d0fde7b45cf6efb3558733d3531fd2b4c1f8a0",
+      "output_sha256": "48b06383f9db3780571d4a65afe00e9075eb9b4ca79f470f409aca769b030059",
       "relative_l1_by_eta_and_k": [
         [
           0.04986605089826836,
@@ -276,7 +276,7 @@
         "site/data/lambda0.50_map.npz": "432790b74bbded196ef02ee87dba11c499b932ee40e31abaf6e06447cfb216df"
       },
       "output": "site/data/diagmc-updated41-lambda0.50-map.npz",
-      "output_sha256": "976a9ca46099acc87fcf08144aff6400ca2b4fa824559f5c19385fa5c80514f2",
+      "output_sha256": "41342732e97c9eb0ada039b67c7aaca19c06556ec5321be579e517626845d811",
       "relative_l1_by_eta_and_k": [
         [
           0.08394028522192065,
@@ -418,10 +418,33 @@
       "vmin": 0.0,
       "vmax": 1.1115136617657988,
       "one_color_scale_for_all_four_panels": true,
+      "bare_band": "epsilon_k/t=-2 cos(k), analytic 401 points, dashed",
+      "vector_color_runs": [
+        {
+          "cells": 28741,
+          "rectangles": 8420,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 8105,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 8725,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 8461,
+          "identical_rgba": true
+        }
+      ],
       "files": {
-        "svg": "cedcf8066d389d0e424d5296d87b6a70627766e7424eed50fc83513dc72c5bc9",
-        "pdf": "707d6b525558bbdd31c727f19732023dbb7faf038a3a949ca94adf5cf9c02693",
-        "png": "0598340200afa539f16e168e501ce0858a8820174db0e0bf789037212469d797"
+        "svg": "fc40ae163ceb532a7821c4006ce7542a61274ec1774b17b07a61ebb6fc69d68b",
+        "pdf": "ee3bc357df7d175bb1083a42e59d2615546837fabb62d86f6f09707c82f0e0f0",
+        "png": "204bcd5f7d5ec5e6f048c6949d8ec93370db429971f31d8051222bd3895cacfc"
       }
     },
     {
@@ -431,10 +454,33 @@
       "vmin": 0.0,
       "vmax": 0.2906611035804454,
       "one_color_scale_for_all_four_panels": true,
+      "bare_band": "epsilon_k/t=-2 cos(k), analytic 401 points, dashed",
+      "vector_color_runs": [
+        {
+          "cells": 28741,
+          "rectangles": 14355,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 14456,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 13727,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 13893,
+          "identical_rgba": true
+        }
+      ],
       "files": {
-        "svg": "211cc4dc5bc79047c949052be2545a85733e7a973e6aa67a34149c806fa72ecd",
-        "pdf": "38fa42546dac7435312801f257491c22f8dbaad286aede5d61958e28afec4c71",
-        "png": "c2d7cdb56ab218bc29f357270cbb9e6ef3ea159f0ec290a8eef2bf8ccd32db66"
+        "svg": "ec689955ea33ab9a0b0981826063e0abd12c8d1e05dd216dfaebf76c0e665f7f",
+        "pdf": "352db53cea8841f54a1eeacd99f382fb37e52eb3fbf3ea0d29692a7bd0bf64d0",
+        "png": "6871398976362c4aa339aa69418d4cfbae3598ceb51a97feb9accc1cd8d487d5"
       }
     },
     {
@@ -444,12 +490,36 @@
       "vmin": 0.001,
       "vmax": 1.1115136617657988,
       "one_color_scale_for_all_four_panels": true,
+      "bare_band": "epsilon_k/t=-2 cos(k), analytic 401 points, dashed",
+      "vector_color_runs": [
+        {
+          "cells": 28741,
+          "rectangles": 15289,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 14016,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 15630,
+          "identical_rgba": true
+        },
+        {
+          "cells": 28741,
+          "rectangles": 13698,
+          "identical_rgba": true
+        }
+      ],
       "files": {
-        "svg": "46b7c104fab58db70ff510c0521c306448a5c84188cc93c296df3cbecbd2f391",
-        "pdf": "134c8023fb0883934fc84664e5f9d4c9e04acf10abd2e634ea8e4dbbb7baeb5e",
-        "png": "c98d2a7713c313f8efbdba9df6203f93f022944135fab535e56883a8a305002b"
+        "svg": "a62cb9dbc80813cf7c91c4371d90464ffc2aa7abd08a6dcce5435a78d25f4ceb",
+        "pdf": "adb405938dfd59b02fbb920a55100cb1433f6ecd4b5f526af461e2af2620973e",
+        "png": "e073f1a7484b70109413ff82362b2dbf8c9b5b5e3c7bc26f944ff60a5e247f55"
       }
     }
   ],
-  "bootstrap_note": "16-84% empirical ranges: 128 draws at every momentum; representation bias not included"
+  "bootstrap_note": "16-84% empirical ranges: 128 draws at every momentum; representation bias not included",
+  "plot_helper_sha256": "3a4942dced8da4aba3e6a196814d0eec789516cd008acca694845b95b899413a"
 }

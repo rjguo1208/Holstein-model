@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="1D零温单电子Holstein模型的单点吸引势：实空间bare DiagMC、独立VED验证、束缚态与初步局域谱函数图。">
+<title>单缺陷 Holstein：DiagMC 结果与局域谱</title>
+<link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head>
+<body><a class="skip-link" href="#content">跳到正文</a>
+<nav class="site-nav" aria-label="站点页面目录"><strong>页面目录</strong><ul>
+<li><a href="index.html">理论笔记</a></li><li><a href="results.html">数值结果</a></li>
+<li><a href="spectral-map.html">谱函数图</a></li><li><a href="defect.html" aria-current="page">单缺陷模型</a></li>
+</ul></nav><main id="content">
+<header><p><a href="index.html">理论与费曼图</a> · <a href="results.html">干净体系结果</a> · <a href="spectral-map.html">干净体系的动量谱图</a></p>
+<h1>单缺陷 Holstein 模型</h1>
+<p>1D、零温、单电子；第一阶段只改变一个格点的电子势能。更新：2026-09-23。</p>
+<p><strong>实空间 bare DiagMC 已实现，六组束缚态计算完成并与独立 VED 一致。</strong>
+在相同吸引势下，所比较的较强电子–声子耦合给出更大的束缚能与缺陷处电子密度。
+局域谱图也已生成，但细峰仍为初步重建；下文给出与 VED 的实际差异。</p></header>
+<nav aria-label="本文目录"><ol><li><a href="#model">模型和计算方法</a></li><li><a href="#ground">束缚能与权重</a></li><li><a href="#density">空间分布与局域化</a></li><li><a href="#spectra">位置–能量谱图</a></li><li><a href="#checks">验证与误差范围</a></li><li><a href="#download">数据和复现</a></li></ol></nav>
+<section id="model"><h2>模型和实空间展开</h2>
+\[\begin{aligned}
+H={}&-t\sum_i(c_{i+1}^{\dagger}c_i+\mathrm{h.c.})+\omega_0\sum_i b_i^{\dagger}b_i\\
+&+g\sum_i n_i(b_i+b_i^{\dagger})-U n_0,\qquad U>0.
+\end{aligned}\]
+\[t=\omega_0=\hbar=a=1,\qquad \lambda=\frac{g^2}{2t\omega_0}=0.25,\;0.5,\qquad U/t=0.5,\;1,\;2.\]
+<p>缺陷在 \(i=0\)，\(-U\) 表示吸引势。电子跃迁、声子频率及耦合保持空间均匀。
+缺陷破坏平移对称性，因此本轮直接测量实空间传播子：</p>
+\[\mathcal G_{ii,\mu}(\tau)=\langle\mathrm{vac}|c_i e^{-\tau(H-\mu N_e)}c_i^{\dagger}|\mathrm{vac}\rangle.\]
+<p>采用连续时间的实空间图展开：对电子跳跃和电子–声子顶点同时展开，缺陷势通过电子在缺陷处的停留时间精确计入。
+与干净体系的固定动量实现相比，电子自由跳跃现在也是被采样的顶点。
+这一构造对应 <a href="https://arxiv.org/abs/0806.2483">Mishchenko 等的 direct-space DMC 方法</a>；该文研究三维，不能把其临界势强度和耦合归一化直接用于这里的一维模型。</p>
+\[W(\mathcal C)\propto t^{N_h}g^{2n}
+\exp\!\left[U T_0-\omega_0\sum_{\ell=1}^{n}(v_\ell-u_\ell)+\mu\tau\right].\]
+<p>\(N_h\) 为跳跃次数，\(n\) 为声子线数，\(T_0\) 为电子在缺陷处的总停留时间。
+一条声子线的两个端点必须位于同一格点；先后、嵌套和交叉连接均可采样。
+电子路径位于无限整数链上，没有用于采样的空间边界。报告中的空间半径只限制直方图，并另设溢出计数。</p>
+<p>采样包括增删一对方向相反的跳跃、增删声子线、移动顶点与改变外部虚时间。
+利用固定相对顶点位置时的条件时间分布对各时间箱精确积分，并用零跳跃、零声子线扇区归一化。</p>
+</section>
+<section id="ground"><h2>束缚态能量与准粒子权重</h2>
+\[\mathcal G_{00,\mu}(\tau)\underset{\tau\to\infty}{\sim}Z_0 e^{-(E_{\mathrm{def}}-\mu)\tau},\qquad
+\Delta_b=E_{\mathrm{clean}}(k=0)-E_{\mathrm{def}}.\]
+<p>\(E_{\mathrm{def}}\) 由长虚时传播子的相关拟合得到。表中束缚能使用已有干净体系的 <strong>DiagMC</strong> 能量相减，误差按独立计算合成；VED 只用于单独比较。
+\(\Delta_b>0\) 表示低于干净体系带底的束缚态。</p>
+\[p_i=\langle\Psi_b|n_i|\Psi_b\rangle,\quad
+Z_i=|\langle\mathrm{vac}|c_i|\Psi_b\rangle|^2,\quad
+\sum_i p_i=1,\quad Z_b=\sum_i Z_i.\]
+<p>\(p_i\) 包含所有声子构型；\(Z_i\) 只保留声子真空分量，是局域谱中束缚态极点的权重。
+\(Z_b\) 是总零声子权重，与缺陷处密度 \(p_0\)、局域极点权重 \(Z_0\) 分别测量。</p>
+<div class="table-scroll"><table><caption>DiagMC：能量单位为 t；± 为统计标准误差估计</caption>
+<thead><tr><th scope="col">λ</th><th scope="col">U/t</th><th scope="col">Edef/t</th><th scope="col">Δb/t</th><th scope="col">p₀</th><th scope="col">Zb</th></tr></thead><tbody>@GROUND@</tbody></table></div>
+@BINDING@
+<div class="table-scroll"><table><caption>独立 VED 能量比较；末列按 DiagMC 统计误差计</caption>
+<thead><tr><th scope="col">λ</th><th scope="col">U/t</th><th scope="col">VED Edef/t</th><th scope="col">DiagMC − VED</th><th scope="col">差异 / 标准误差</th></tr></thead><tbody>@COMPARISON@</tbody></table></div>
+<p>当前六组能量与 VED 的最大差异约为1.11个统计标准误差。VED 的小数位用于对照，不代表 DiagMC 达到相同精度。</p>
+</section>
+<section id="density"><h2>空间分布与局域化</h2>
+@DENSITY@
+<p>在 \(U=t\) 下，\(\lambda=0.25\) 时电子位于缺陷处的概率约为 0.52；\(\lambda=0.5\) 时约为 0.61。
+同时 \(Z_b\) 下降，表示束缚态中声子激发分量增加。更集中的电子密度并不意味着更大的零声子权重。</p>
+\[r_{\mathrm{rms}}=\sqrt{\sum_i i^2p_i},\qquad
+p_i\propto e^{-2|i|/\xi}\quad\text{（在指定尾部窗口中拟合）}.\]
+<div class="table-scroll"><table><caption>U=t；ξ 的首个拟合窗口为 |i|=2,…,6</caption>
+<thead><tr><th scope="col">λ</th><th scope="col">局域 Z₀</th><th scope="col">r rms / a</th><th scope="col">DiagMC ξ/a</th><th scope="col">VED 同窗口 ξ/a</th></tr></thead><tbody>@LOCAL@</tbody></table></div>
+<p>这里的 \(Z_0\) 来自虚时中点的零声子投影，长虚时截距另存于原始报告。
+\(\xi\) 仍是有限窗口诊断：向更远尾部移动窗口后，统计量减少、拟合结果发生变化。
+完整 JSON 保留三个候选窗口，不能把上表当作已精确确定的渐近局域化长度。</p>
+</section>
+<section id="spectra"><h2>局域谱图：位置 × 能量 × 谱强度</h2>
+\[A_i(\omega)=\sum_\nu|\langle\nu|c_i^{\dagger}|\mathrm{vac}\rangle|^2\delta(\omega-E_\nu),\qquad
+\mathcal G_{ii,\mu}(\tau)=\int d\omega\,A_i(\omega)e^{-(\omega-\mu)\tau}.\]
+<p>先计算最直接的局域谱 \(A_i\)。横轴为位置 \(i\)，缺陷位于零点；纵轴为相对真空的能量，颜色为绝对强度 \(tA_{i,\eta}\)。
+每种耦合独立测量 \(i=0,\ldots,8\) 九个位置，再用该模型的反射对称性得到负位置，共显示17列。
+这张图不沿位置插值。若要计算缺陷体系的动量谱矩阵，还需要非对角传播子 \(G_{ij}\)。</p>
+\[A_{i,\eta}(\omega)=\int d\omega'\,A_i(\omega')\frac{\eta/\pi}{(\omega-\omega')^2+\eta^2}.\]
+<p>\(\eta\) 是洛伦兹展宽的半高半宽。它是显示分辨率，不等于物理寿命；有限图窗内的每列不重新归一化。</p>
+@FINE@
+@COARSE@
+<div class="table-scroll"><table><caption>全部9个测量位置的整谱相对 L1 差异范围：DiagMC 与 VED</caption>
+<thead><tr><th scope="col">λ</th><th scope="col">η=0.25t</th><th scope="col">η=0.5t</th><th scope="col">η=t</th><th scope="col">最大留出预测分数</th></tr></thead><tbody>@SPECTRAL@</tbody></table></div>
+\[\delta_i(\eta)=\frac{\int_{-4.5t}^{5.5t}|A^{\mathrm{MC}}_{i,\eta}-A^{\mathrm{VED}}_{i,\eta}|\,d\omega}
+{\int_{-4.5t}^{5.5t}A^{\mathrm{VED}}_{i,\eta}\,d\omega}.\]
+<p><strong>细谱尚未通过定量验证。</strong>较粗展宽下的差异较小，只支持宽谱包络的比较。
+基态计算通过检查，也不意味着解析延拓中的声子侧带、窄峰位置及峰宽已经可靠。</p>
+<p>延拓使用非负谱、精确时间箱核、协方差和独立链交叉验证。它约束展宽前的局域谱矩：</p>
+\[M_0=1,\quad M_1=V_i,\quad M_2=V_i^2+2t^2+g^2,\qquad V_i=-U\delta_{i0}.\]
+<p>谱支撑下界取 \(-2t-U-g^2/\omega_0\)，本轮上界取 \(10t\)。VED 谱与极点不参与重建或正则化参数选择。
+数据包含8次块 bootstrap 的16–84%经验范围；有限谱网格、能量上界及正则化带来的系统不确定性尚未被这些范围完全涵盖。</p>
+</section>
+<section id="checks"><h2>已完成的验证与误差范围</h2>
+<p>C++ 更新核和17项 Python 测试通过。独立采样验证了自由电子、无声子耦合的缺陷、原子极限，以及限制为一条声子线或一对跳跃的展开。
+原子极限还验证了有限虚时中点的零声子概率和声子数，避免只用基态能量检查采样。</p>
+<p>无声子耦合的一维吸引杂质给出可解析的基准：</p>
+\[E_b=-\sqrt{4t^2+U^2},\qquad \kappa=\operatorname{arsinh}\frac{U}{2t},\qquad
+p_i=\tanh\kappa\,e^{-2\kappa|i|}.\]
+<p>VED 将电子绝对位置与相对声子云分别截断。基态比较声子云生成代数8、10、12，再扩大电子半径；能量随两项最终截断变化均小于 \(10^{-5}t\)。
+局域谱在全部九个位置比较10→12代、半径24→40及 Lanczos 200→400步。
+测试展宽下最大谱差异分别约为0.21%、0.0078%和0.000073%；这是收敛差异，不是无限基底误差的严格上界。</p>
+<p>每个基态工作点使用8条独立链，每条3200万生产步；\(U/t=0.5,1,2\) 的最大投影时间分别为 \(128,64,32\)。
+比较三个长虚时窗口，并采用多种块长及独立链 jackknife 中较大的统计误差。
+VED 能量仅用于设置辅助采样位移 \(\mu\)，没有固定 DiagMC 拟合中的能量或权重。
+统计误差不等于全部投影偏差的上界。</p>
+<p>本轮共148条链、28.16亿生产步；三个 highmem 作业均在 b000 正常完成。
+逐链参数、块数、随机种子、源码与可执行文件哈希已检查；生产计算的阶数上限触发次数为0。</p>
+<div class="table-scroll"><table><caption>Slurm 完成记录；热化步不计入生产步</caption><thead><tr><th scope="col">阶段</th><th scope="col">Job ID</th><th scope="col">链数</th><th scope="col">运行时间</th></tr></thead>
+<tbody><tr><td>先导与解析检查</td><td>20881037</td><td>28</td><td>31秒</td></tr><tr><td>六组基态扫描</td><td>20881090</td><td>48</td><td>5分52秒</td></tr><tr><td>局域谱与参考检查</td><td>20881164</td><td>72</td><td>5分55秒</td></tr></tbody></table></div>
+</section>
+<section id="download"><h2>数据、代码与复现</h2>
+<p><a href="data/defect-ground.csv">基态表 CSV</a> · <a href="data/defect-summary.json">完整误差与检查 JSON</a> · <a href="data/defect-jobs.json">作业记录</a> · <a href="data/defect-method.md">方法与复现说明</a>。</p>
+<ul>@DOWNLOADS@</ul>
+<p>局域谱 NPZ 的 <code>A</code> 轴为 <code>(eta, site, energy)</code>，形状 <code>(3,17,801)</code>；<code>eta=[0.25,0.5,1]</code>。
+DiagMC 文件另含 bootstrap 范围和记录九个独立测量位置的 <code>measured_sites</code>，VED 文件为独立参考。</p>
+<ul><li><a href="data/defect-completed-01.zip">源码、参考数据、传播子分析、谱重建与报告</a></li>
+<li><a href="data/defect-ground-raw-01.zip">原始逐链数据：解析检查与基态</a></li>
+<li><a href="data/defect-spectra-raw-01.zip">原始逐链数据：局域谱</a></li>
+<li><a href="data/defect-ground-green-01.zip">传播子与相关块数组：解析检查和基态</a></li>
+<li><a href="data/defect-spectra-green-01.zip">传播子与相关块数组：局域谱</a></li>
+<li><a href="data/defect-archives.json">ZIP 大小与 SHA-256</a></li></ul>
+<p>五个 ZIP 解压至同一父目录，共用 <code>holstein-diagmc/</code> 根目录；源码包含编译、测试和 highmem 提交脚本。
+下一步优先在少数位置增加独立统计，并改变延拓时间窗、谱支撑与分辨率，确定细峰的可靠程度。</p>
+</section><footer><p><a href="index.html">理论与费曼图</a> · <a href="https://github.com/rjguo1208/Holstein-model">网站源文件</a></p></footer>
+</main></body></html>

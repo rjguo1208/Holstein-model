@@ -1,0 +1,54 @@
+{
+  "root": "holstein-diagmc",
+  "complete": true,
+  "archives": [
+    {
+      "name": "defect-dense-core-02.zip",
+      "bytes": 62277944,
+      "sha256": "2bc868d144630878dd3fd1fd7550634854e88bf9f94caad1ec77e516c4cc676e",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-core-02.zip"
+    },
+    {
+      "name": "defect-dense-previous-green-02.zip",
+      "bytes": 53589591,
+      "sha256": "3e24f11f4c86f5d1364d2be0ca03b36f47af9149296d02a4f2b3b068f0638002",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-previous-green-02.zip"
+    },
+    {
+      "name": "defect-dense-raw-lambda0.25-02.zip",
+      "bytes": 77070059,
+      "sha256": "0ed2be6ae456db045fd6f31e8d25ebe719d37497e3ede21777fd9762ad3b13d9",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-raw-lambda0.25-02.zip"
+    },
+    {
+      "name": "defect-dense-green-lambda0.25-02.zip",
+      "bytes": 68733888,
+      "sha256": "dbfbbccbc69ff65d1722579b2d6465fa0b56192ebd15354c607391bb278ee905",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-green-lambda0.25-02.zip"
+    },
+    {
+      "name": "defect-dense-fits-lambda0.25-02.zip",
+      "bytes": 68141463,
+      "sha256": "c63591babf99f5920f02a89cc01a2cafbf72b794de6d995aba727c04f1bf7dcd",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-fits-lambda0.25-02.zip"
+    },
+    {
+      "name": "defect-dense-raw-lambda0.50-02.zip",
+      "bytes": 77467619,
+      "sha256": "5e17074002fefe05c451349a0e1fbdd4722d03474e14a4ef59441b2fa14a5c02",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-raw-lambda0.50-02.zip"
+    },
+    {
+      "name": "defect-dense-green-lambda0.50-02.zip",
+      "bytes": 68754070,
+      "sha256": "cb86212c31add31785288416c781e8293bbda4507adb050b257b5285e3b5484f",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-green-lambda0.50-02.zip"
+    },
+    {
+      "name": "defect-dense-fits-lambda0.50-02.zip",
+      "bytes": 67964432,
+      "sha256": "b8de75cb66a6f815654c11b1f961cbed79617640b81741eb99475a14c0149033",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-spectra-dense-20260923/defect-dense-fits-lambda0.50-02.zip"
+    }
+  ]
+}

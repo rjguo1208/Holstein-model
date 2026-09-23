@@ -47,6 +47,22 @@ VED within about 1.11 estimated statistical standard errors. Position–energy
 local spectral maps include explicit reference comparisons and retain their
 preliminary status. All 148 chains and reproducible source are available.
 
+单缺陷局域谱现已完成加密：新增272条独立链、87.04亿生产步，17个独立位置反射为33列，
+192个原始虚时间箱、1601个绘图能量点和2176次 bootstrap。Green 函数相对统计误差约减半；
+细峰仍未通过分辨率验证。优化采样器在同种子轨迹与 Green 数据逐位一致的测试中提速约1.64–1.68倍，
+采样和后处理在 highmem 上按独立链及位置并行。局域图增加裸电子连续带边界和无声子缺陷束缚能虚线，
+干净体系三张主图增加裸色散。见 [加密方法与复现](research/holstein-defect/DEFECT_DENSE.md) 和
+[本轮完整数据](https://github.com/rjguo1208/Holstein-model/releases/tag/defect-spectra-dense-20260923)。
+
+The dense defect update adds 272 independent chains and 8.704 billion production steps:
+17 measured sites reflected to 33 displayed columns, 192 raw imaginary-time bins,
+1601 plotted energies and 2176 bootstrap draws. Relative Green-function statistical
+errors are roughly halved, while fine spectral peaks remain unvalidated. Fixed-seed
+checks preserve trajectories and Green data bit for bit with a measured 1.64–1.68x
+sampler speedup. Independent chains and positions run in parallel on highmem.
+Dashed guides show bare continuum edges and the phonon-free impurity bound energy
+on local maps, and the bare dispersion on the three main clean-system maps.
+
 ## 本地预览
 
 已生成的页面与全部资源保存在 `site/`：

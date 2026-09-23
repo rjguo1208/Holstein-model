@@ -10,6 +10,8 @@ from pathlib import Path
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+import matplotlib.patheffects as path_effects
+from spectral_plot import vector_map, save_figure
 from matplotlib.colors import LogNorm, Normalize
 import numpy as np
 
@@ -95,11 +97,17 @@ def plot(bundles, eta, logarithmic=False):
     norm = LogNorm(vmin=1e-3, vmax=upper) if logarithmic else Normalize(vmin=0., vmax=upper)
     fig, axes = plt.subplots(2, 2, figsize=(10.5, 8.6), sharex=True, sharey=True,
                              constrained_layout=True)
+    meshes=[]
     for row, b in enumerate(bundles):
         for col, (key, title) in enumerate([("A", "Refined DiagMC"), ("A_ved", "VED reference")]):
             ax = axes[row, col]
-            mesh = ax.pcolormesh(edges(b["k"] / np.pi), edges(b["energy"]), b[key][ie].T,
-                                 cmap="viridis", norm=norm, shading="flat", rasterized=False)
+            mesh = vector_map(ax,b["k"]/np.pi,b["energy"],b[key][ie],"viridis",norm)
+            meshes.append(mesh)
+            bare_k=np.linspace(0.,np.pi,401)
+            ax.plot(bare_k/np.pi,-2*np.cos(bare_k),color="white",linestyle="--",linewidth=1.2,
+                    label=r"Bare $\epsilon_k/t=-2\cos k$",
+                    path_effects=[path_effects.Stroke(linewidth=2.,foreground="black"),path_effects.Normal()])
+            ax.legend(loc="upper left",fontsize=8,framealpha=.85)
             ax.set(xlim=(0., 1.), ylim=(b["energy"][0], b["energy"][-1]))
             ax.set_title(rf"$\lambda={b['coupling']:g}$: {title}", pad=15)
             if col == 0:
@@ -113,13 +121,12 @@ def plot(bundles, eta, logarithmic=False):
     fig.suptitle(rf"Spectral function comparison: $\eta={eta:g}t$ ({scale})" + "\n"
                  "All 41 momenta: 4x DiagMC sampling and the same refinement protocol", fontsize=12)
     name = f"spectral-comparison-eta{eta:g}-{'log' if logarithmic else 'linear'}"
-    for extension in ["svg", "pdf", "png"]:
-        metadata = {"Date": None} if extension == "svg" else (
-            {"CreationDate": None, "ModDate": None} if extension == "pdf" else {})
-        fig.savefig(PLOTS / f"{name}.{extension}", dpi=170, bbox_inches="tight", metadata=metadata)
+    save_figure(fig,PLOTS/name,meshes+[bar.solids])
     plt.close(fig)
     return dict(name=name, eta=eta, scale=scale, vmin=float(norm.vmin), vmax=float(norm.vmax),
                 one_color_scale_for_all_four_panels=True,
+                bare_band="epsilon_k/t=-2 cos(k), analytic 401 points, dashed",
+                vector_color_runs=[m.vector_audit for m in meshes],
                 files={extension: digest(PLOTS / f"{name}.{extension}") for extension in ["svg", "pdf", "png"]})
 
 
@@ -143,6 +150,7 @@ def main():
         np.testing.assert_array_equal(bundles[0][key], bundles[1][key])
     plots = [plot(bundles, .25), plot(bundles, 1.), plot(bundles, .25, logarithmic=True)]
     provenance = dict(complete=True, script_sha256=digest(Path(__file__)),
+                      plot_helper_sha256=digest(Path(__file__).with_name("spectral_plot.py")),
                       points=41, refined_points_per_coupling=41, baseline_points_per_coupling=0,
                       scientific_summary_sha256=digest(summary_path),
                       eta=bundles[0]["eta"].tolist(), energy_window=[-3.25, 5.5],

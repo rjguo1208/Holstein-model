@@ -13,7 +13,7 @@
 <p>1D、零温、单电子；第一阶段只改变一个格点的电子势能。更新：2026-09-23。</p>
 <p><strong>实空间 bare DiagMC 已实现，六组束缚态计算完成并与独立 VED 一致。</strong>
 在相同吸引势下，所比较的较强电子–声子耦合给出更大的束缚能与缺陷处电子密度。
-局域谱图也已生成，但细峰仍为初步重建；下文给出与 VED 的实际差异。</p></header>
+局域谱已完成四倍统计加密，并扩展至33个显示位置；细峰仍需结合下文的 VED 对照和恢复检查判断。</p></header>
 <nav aria-label="本文目录"><ol><li><a href="#model">模型和计算方法</a></li><li><a href="#ground">束缚能与权重</a></li><li><a href="#density">空间分布与局域化</a></li><li><a href="#spectra">位置–能量谱图</a></li><li><a href="#checks">验证与误差范围</a></li><li><a href="#download">数据和复现</a></li></ol></nav>
 <section id="model"><h2>模型和实空间展开</h2>
 \[\begin{aligned}
@@ -64,57 +64,58 @@ p_i\propto e^{-2|i|/\xi}\quad\text{（在指定尾部窗口中拟合）}.\]
 \(\xi\) 仍是有限窗口诊断：向更远尾部移动窗口后，统计量减少、拟合结果发生变化。
 完整 JSON 保留三个候选窗口，不能把上表当作已精确确定的渐近局域化长度。</p>
 </section>
-<section id="spectra"><h2>局域谱图：位置 × 能量 × 谱强度</h2>
-\[A_i(\omega)=\sum_\nu|\langle\nu|c_i^{\dagger}|\mathrm{vac}\rangle|^2\delta(\omega-E_\nu),\qquad
+<section id="spectra"><h2>加密局域谱图：位置 × 能量 × 谱强度</h2>
+\[A_i(\omega)=\sum_\nu|\langle\nu|c_i^\dagger|\mathrm{vac}\rangle|^2\delta(\omega-E_\nu),\qquad
 \mathcal G_{ii,\mu}(\tau)=\int d\omega\,A_i(\omega)e^{-(\omega-\mu)\tau}.\]
-<p>先计算最直接的局域谱 \(A_i\)。横轴为位置 \(i\)，缺陷位于零点；纵轴为相对真空的能量，颜色为绝对强度 \(tA_{i,\eta}\)。
-每种耦合独立测量 \(i=0,\ldots,8\) 九个位置，再用该模型的反射对称性得到负位置，共显示17列。
-这张图不沿位置插值。若要计算缺陷体系的动量谱矩阵，还需要非对角传播子 \(G_{ij}\)。</p>
+<p>本轮优先加密单缺陷局域谱：每种耦合独立测量 \(i=0,\ldots,16\) 共17个位置，反射后显示33列；位置间不插值。横轴为格点，纵轴为相对真空的能量，颜色为绝对强度 \(tA_{i,\eta}\)。增加位置扩展了空间范围，格距仍为 \(a=1\)。</p>
+<p>每个位置由4条链增至8条链，每条生产步从1600万增至3200万；每个位置的生产统计增至四倍。虚时间箱从96增至192，\(\tau_{\max}=12/t\)；绘图能量点从801增至1601。能量网格加密和减小展宽本身不代表真实谱峰分辨率已经提高。</p>
 \[A_{i,\eta}(\omega)=\int d\omega'\,A_i(\omega')\frac{\eta/\pi}{(\omega-\omega')^2+\eta^2}.\]
-<p>\(\eta\) 是洛伦兹展宽的半高半宽。它是显示分辨率，不等于物理寿命；有限图窗内的每列不重新归一化。</p>
-<figure><div class="figure-scroll data"><img src="results/defect-ldos-eta0.25.svg" width="1020" height="840" alt="单缺陷局域谱图：横轴位置，纵轴能量，颜色为绝对谱强度。上排DiagMC初步重建，下排VED参考。"></div><figcaption>\(U=t,\ \eta=0.25t\)。四图使用同一色标和真空能量零点。上排出现的部分细峰没有得到 VED 支持，不能据此确认新的激发。</figcaption><p class="figure-links"><a href="results/defect-ldos-eta0.25.svg">SVG</a><a href="results/defect-ldos-eta0.25.pdf">PDF</a><a href="results/defect-ldos-eta0.25.png">PNG</a></p></figure>
-<figure><div class="figure-scroll data"><img src="results/defect-ldos-eta1.svg" width="1020" height="840" alt="同一局域谱的较粗展宽图，上排DiagMC与下排VED使用共同色标。"></div><figcaption>\(\eta=t\)：同一组重建谱增加显示展宽，宽谱包络与 VED 更接近。没有重新拟合或逐位置归一化。</figcaption><p class="figure-links"><a href="results/defect-ldos-eta1.svg">SVG</a><a href="results/defect-ldos-eta1.pdf">PDF</a><a href="results/defect-ldos-eta1.png">PNG</a></p></figure>
-<div class="table-scroll"><table><caption>全部9个测量位置的整谱相对 L1 差异范围：DiagMC 与 VED</caption>
-<thead><tr><th scope="col">λ</th><th scope="col">η=0.25t</th><th scope="col">η=0.5t</th><th scope="col">η=t</th><th scope="col">最大留出预测分数</th></tr></thead><tbody><tr><td>0.25</td><td>11.4%–44.0%</td><td>5.1%–20.0%</td><td>1.3%–5.2%</td><td>2.45</td></tr><tr><td>0.5</td><td>12.2%–36.7%</td><td>5.3%–18.8%</td><td>1.3%–6.7%</td><td>2.40</td></tr></tbody></table></div>
+<p>白色虚线为裸电子连续带边界 \(\omega=\pm2t\)，蓝色虚线为 \(g=0\) 时单缺陷的束缚能 \(E_b=-\sqrt{4t^2+U^2}\)。局域谱横轴是位置；余弦裸电子色散 \(\varepsilon_k=-2t\cos k\) 已加到干净体系的动量谱主图中。</p>
+<figure><div class="figure-scroll data"><img src="results/defect-dense-ldos-eta0.25.svg" width="1040" height="890" alt="加密单缺陷局域谱，展宽0.25t；横轴为33个格点，虚线标出裸电子带边界与无声子缺陷束缚能。"></div><figcaption>\(U=t,\ \eta=0.25t\)。上排为新 DiagMC 重建，下排为独立 VED；四图共用色标、展宽和能量零点。</figcaption><p class="figure-links"><a href="results/defect-dense-ldos-eta0.25.svg">SVG</a><a href="results/defect-dense-ldos-eta0.25.pdf">PDF</a><a href="results/defect-dense-ldos-eta0.25.png">PNG</a></p></figure>
+<figure><div class="figure-scroll data"><img src="results/defect-dense-ldos-eta0.15.svg" width="1040" height="890" alt="加密单缺陷局域谱，展宽0.15t；横轴为33个格点，虚线标出裸电子带边界与无声子缺陷束缚能。"></div><figcaption>\(U=t,\ \eta=0.15t\)。上排为新 DiagMC 重建，下排为独立 VED；四图共用色标、展宽和能量零点。较小展宽用于探索，窄峰尚未通过分辨率验证。</figcaption><p class="figure-links"><a href="results/defect-dense-ldos-eta0.15.svg">SVG</a><a href="results/defect-dense-ldos-eta0.15.pdf">PDF</a><a href="results/defect-dense-ldos-eta0.15.png">PNG</a></p></figure>
+<figure><div class="figure-scroll data"><img src="results/defect-dense-ldos-eta1.svg" width="1040" height="890" alt="加密单缺陷局域谱，展宽1t；横轴为33个格点，虚线标出裸电子带边界与无声子缺陷束缚能。"></div><figcaption>\(U=t,\ \eta=1t\)。上排为新 DiagMC 重建，下排为独立 VED；四图共用色标、展宽和能量零点。</figcaption><p class="figure-links"><a href="results/defect-dense-ldos-eta1.svg">SVG</a><a href="results/defect-dense-ldos-eta1.pdf">PDF</a><a href="results/defect-dense-ldos-eta1.png">PNG</a></p></figure>
+<div class="table-scroll"><table><caption>全部17个独立测量位置：整谱相对 L1 差异范围，DiagMC 与 VED</caption><thead><tr><th scope="col">λ</th><th scope="col">η=0.15t</th><th scope="col">η=0.25t</th><th scope="col">η=0.5t</th><th scope="col">η=1t</th></tr></thead><tbody><tr><td>0.25</td><td>5.3%–15.4%</td><td>3.3%–11.1%</td><td>1.4%–5.2%</td><td>0.4%–1.4%</td></tr><tr><td>0.5</td><td>4.6%–30.2%</td><td>2.8%–22.0%</td><td>1.2%–11.2%</td><td>0.4%–3.6%</td></tr></tbody></table></div>
 \[\delta_i(\eta)=\frac{\int_{-4.5t}^{5.5t}|A^{\mathrm{MC}}_{i,\eta}-A^{\mathrm{VED}}_{i,\eta}|\,d\omega}
 {\int_{-4.5t}^{5.5t}A^{\mathrm{VED}}_{i,\eta}\,d\omega}.\]
-<p><strong>细谱尚未通过定量验证。</strong>较粗展宽下的差异较小，只支持宽谱包络的比较。
-基态计算通过检查，也不意味着解析延拓中的声子侧带、窄峰位置及峰宽已经可靠。</p>
-<p>延拓使用非负谱、精确时间箱核、协方差和独立链交叉验证。它约束展宽前的局域谱矩：</p>
+<figure><div class="figure-scroll data"><img src="results/defect-dense-error.svg" width="1040" height="410" alt="两种耦合下，新旧局域谱在0.25t和t展宽时与VED的积分误差。"></div><figcaption>新旧结果与同一加密 VED 参考比较。旧数据仅有0至8号测量位置；连线只引导阅读离散误差值。</figcaption><p class="figure-links"><a href="results/defect-dense-error.svg">SVG</a><a href="results/defect-dense-error.pdf">PDF</a><a href="results/defect-dense-error.png">PNG</a></p></figure>
+<p>在相同的时间箱和块长下，原有九个位置的 Green 函数相对统计误差，新/旧比值的逐位置中位数为0.46–0.55。增加统计确实降低了测量噪声，但逆拉普拉斯变换仍会放大误差。图中差异同时包含新增数据和延拓方案变化的影响。</p>
+<p>细谱尚未通过定量分辨率验证。新的窄峰图仍应结合候选方案敏感性、bootstrap 范围和 VED 差异阅读；不能仅凭更细的图像确认新激发。</p>
+<h3>延拓、交叉验证与误差</h3>
 \[M_0=1,\quad M_1=V_i,\quad M_2=V_i^2+2t^2+g^2,\qquad V_i=-U\delta_{i0}.\]
-<p>谱支撑下界取 \(-2t-U-g^2/\omega_0\)，本轮上界取 \(10t\)。VED 谱与极点不参与重建或正则化参数选择。
-数据包含8次块 bootstrap 的16–84%经验范围；有限谱网格、能量上界及正则化带来的系统不确定性尚未被这些范围完全涵盖。</p>
+\[H=H_{e,\mathrm{def}}+\omega_0\sum_i\left(b_i+\frac{g}{\omega_0}n_i\right)^\dagger\left(b_i+\frac{g}{\omega_0}n_i\right)-\frac{g^2}{\omega_0},\qquad
+E\ge-\sqrt{4t^2+U^2}-\frac{g^2}{\omega_0}.\]
+<p>最大熵延拓使用上述局域谱矩和解析下界；后者由声子项配方及无声子缺陷哈密顿量的最低能量得到，无需 VED 极点先验。主设置为641个谱支撑点，上界10t；另比较321点、上界14t、时间箱、时间窗、块长和协方差截断。旧的321点非负平滑重建也作为候选，保留原来的较松下界。</p>
+<p>每折留出两条独立链，四折使用相同验证时间箱和协方差规则。每个方案选择位于最低平均分数一个折间标准误差以内的最大正则化参数，再按所选分数选择方案；所有选择在 VED 对照前冻结。这是模型选择启发式，不是分辨率或置信区间保证。</p>
+<p>每个位置完成64次分块 bootstrap，共2176次；在固定方案内重新选择正则化参数，保存逐点16–84%经验范围。候选方案的谱与分数、多种块长及整链误差均可下载。这些经验范围不包括全部谱网格、支撑上界和方案选择偏差。</p>
+<h3>已知谱峰的恢复检查</h3>
+<p>使用满足精确局域谱矩的人工单峰与双峰谱，分别加入由新旧数据测得的相关噪声。两种噪声水平采用相同的641点最大熵表示及留出链选参；双峰间距测试0.3t、0.6t和t，每例16次。该检查不使用 VED 的峰形；固定协方差和有限重复次数限制了它的适用范围。</p>
+<div class="table-scroll"><table><caption>人工双峰的成功恢复次数 / 64；合并两种耦合与 i=0、8，不能解释为统一物理分辨率</caption><thead><tr><th scope="col">Δω/t</th><th scope="col">旧噪声</th><th scope="col">新噪声</th></tr></thead><tbody><tr><td>0.3</td><td>0/64</td><td>0/64</td></tr><tr><td>0.6</td><td>0/64</td><td>0/64</td></tr><tr><td>1</td><td>0/64</td><td>0/64</td></tr></tbody></table></div>
+<p>单峰对照被误分裂的次数：旧噪声0/64，新噪声0/64。成功判据要求窗口内恰有两个足够突出的峰，且峰位分别距设定值不超过0.10t；完整设置与逐次结果见下载文件。</p>
 </section>
 <section id="checks"><h2>已完成的验证与误差范围</h2>
-<p>C++ 更新核和17项 Python 测试通过。独立采样验证了自由电子、无声子耦合的缺陷、原子极限，以及限制为一条声子线或一对跳跃的展开。
+<p>C++ 更新核和20项 Python 测试通过。独立采样验证了自由电子、无声子耦合的缺陷、原子极限，以及限制为一条声子线或一对跳跃的展开。
 原子极限还验证了有限虚时中点的零声子概率和声子数，避免只用基态能量检查采样。</p>
 <p>无声子耦合的一维吸引杂质给出可解析的基准：</p>
 \[E_b=-\sqrt{4t^2+U^2},\qquad \kappa=\operatorname{arsinh}\frac{U}{2t},\qquad
 p_i=\tanh\kappa\,e^{-2\kappa|i|}.\]
 <p>VED 将电子绝对位置与相对声子云分别截断。基态比较声子云生成代数8、10、12，再扩大电子半径；能量随两项最终截断变化均小于 \(10^{-5}t\)。
-局域谱在全部九个位置比较10→12代、半径24→40及 Lanczos 200→400步。
-测试展宽下最大谱差异分别约为0.21%、0.0078%和0.000073%；这是收敛差异，不是无限基底误差的严格上界。</p>
+加密局域谱在全部17个位置比较10→12代、半径40→64及 Lanczos 200→400步；覆盖四种展宽的最大谱差异依次为0.687%、0.00493%和0.0157%。这是收敛差异，不是无限基底误差的严格上界。</p>
 <p>每个基态工作点使用8条独立链，每条3200万生产步；\(U/t=0.5,1,2\) 的最大投影时间分别为 \(128,64,32\)。
 比较三个长虚时窗口，并采用多种块长及独立链 jackknife 中较大的统计误差。
 VED 能量仅用于设置辅助采样位移 \(\mu\)，没有固定 DiagMC 拟合中的能量或权重。
 统计误差不等于全部投影偏差的上界。</p>
-<p>本轮共148条链、28.16亿生产步；三个 highmem 作业均在 b000 正常完成。
+<p>初版共148条链、28.16亿生产步；三个 highmem 作业均在 b000 正常完成。
 逐链参数、块数、随机种子、源码与可执行文件哈希已检查；生产计算的阶数上限触发次数为0。</p>
-<div class="table-scroll"><table><caption>Slurm 完成记录；热化步不计入生产步</caption><thead><tr><th scope="col">阶段</th><th scope="col">Job ID</th><th scope="col">链数</th><th scope="col">运行时间</th></tr></thead>
+<div class="table-scroll"><table><caption>初版 Slurm 完成记录；热化步不计入生产步</caption><thead><tr><th scope="col">阶段</th><th scope="col">Job ID</th><th scope="col">链数</th><th scope="col">运行时间</th></tr></thead>
 <tbody><tr><td>先导与解析检查</td><td>20881037</td><td>28</td><td>31秒</td></tr><tr><td>六组基态扫描</td><td>20881090</td><td>48</td><td>5分52秒</td></tr><tr><td>局域谱与参考检查</td><td>20881164</td><td>72</td><td>5分55秒</td></tr></tbody></table></div>
+<p>新增采样为272条链、87.04亿生产步，highmem 作业20882157耗时2分35秒。采样器通过同种子轨迹与 Green 函数逐位一致性检查，所测用例提速约1.64–1.68倍。内存复用、特殊函数复用和精简观测输出减少单链开销；独立链和位置并行运行，每个数值进程使用一个 BLAS 线程。</p>
 </section>
 <section id="download"><h2>数据、代码与复现</h2>
-<p><a href="data/defect-ground.csv">基态表 CSV</a> · <a href="data/defect-summary.json">完整误差与检查 JSON</a> · <a href="data/defect-jobs.json">作业记录</a> · <a href="data/defect-method.md">方法与复现说明</a>。</p>
-<ul><li>DiagMC，λ=0.25：<a href="data/defect-diagmc-lambda0.25_map.npz">NPZ</a> · <a href="data/defect-diagmc-lambda0.25_map_eta0.25.csv.gz">η=0.25t 的 CSV（gzip）</a></li><li>VED，λ=0.25：<a href="data/defect-ved-lambda0.25_map.npz">NPZ</a> · <a href="data/defect-ved-lambda0.25_map_eta0.25.csv.gz">η=0.25t 的 CSV（gzip）</a></li><li>DiagMC，λ=0.5：<a href="data/defect-diagmc-lambda0.50_map.npz">NPZ</a> · <a href="data/defect-diagmc-lambda0.50_map_eta0.25.csv.gz">η=0.25t 的 CSV（gzip）</a></li><li>VED，λ=0.5：<a href="data/defect-ved-lambda0.50_map.npz">NPZ</a> · <a href="data/defect-ved-lambda0.50_map_eta0.25.csv.gz">η=0.25t 的 CSV（gzip）</a></li></ul>
-<p>局域谱 NPZ 的 <code>A</code> 轴为 <code>(eta, site, energy)</code>，形状 <code>(3,17,801)</code>；<code>eta=[0.25,0.5,1]</code>。
-DiagMC 文件另含 bootstrap 范围和记录九个独立测量位置的 <code>measured_sites</code>，VED 文件为独立参考。</p>
-<ul><li><a href="https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-completed-01.zip">源码、参考数据、传播子分析、谱重建与报告</a></li>
-<li><a href="https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-ground-raw-01.zip">原始逐链数据：解析检查与基态</a></li>
-<li><a href="https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-spectra-raw-01.zip">原始逐链数据：局域谱</a></li>
-<li><a href="https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-ground-green-01.zip">传播子与相关块数组：解析检查和基态</a></li>
-<li><a href="https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-spectra-green-01.zip">传播子与相关块数组：局域谱</a></li>
-<li><a href="data/defect-archives.json">ZIP 大小与 SHA-256</a></li></ul>
-<p>五个 ZIP 解压至同一父目录，共用 <code>holstein-diagmc/</code> 根目录；源码包含编译、测试和 highmem 提交脚本。
-下一步优先在少数位置增加独立统计，并改变延拓时间窗、谱支撑与分辨率，确定细峰的可靠程度。</p>
+<p>加密结果、完整选择诊断和恢复检查均已保存；原基态结果与旧版发布包仍可追溯。</p>
+<ul><li><a href="data/defect-dense-summary.json">加密谱误差与收敛 JSON</a></li><li><a href="data/defect-dense-resolution.json">人工谱恢复检查 JSON</a></li><li><a href="data/defect-dense-method.md">优化、方法和复现说明</a></li><li><a href="data/defect-dense-jobs.json">新作业记录</a></li><li><a href="data/defect-ground.csv">基态表 CSV</a></li><li><a href="data/defect-summary.json">原始基态与初步谱报告</a></li></ul>
+<ul><li>DiagMC, λ=0.25: <a href="data/defect-dense-diagmc-lambda0.25.npz">NPZ</a> · <a href="data/defect-dense-diagmc-lambda0.25-eta0.25.csv.gz">η=0.25t CSV (gzip)</a> · <a href="data/defect-dense-diagmc-lambda0.25-eta0.15.csv.gz">η=0.15t CSV (gzip)</a></li><li>VED, λ=0.25: <a href="data/defect-dense-ved-lambda0.25.npz">NPZ</a> · <a href="data/defect-dense-ved-lambda0.25-eta0.25.csv.gz">η=0.25t CSV (gzip)</a> · <a href="data/defect-dense-ved-lambda0.25-eta0.15.csv.gz">η=0.15t CSV (gzip)</a></li><li>λ=0.25: <a href="data/defect-dense-diagnostics-lambda0.25.npz">候选谱、旧谱与参考截断差异 NPZ</a></li><li>DiagMC, λ=0.5: <a href="data/defect-dense-diagmc-lambda0.50.npz">NPZ</a> · <a href="data/defect-dense-diagmc-lambda0.50-eta0.25.csv.gz">η=0.25t CSV (gzip)</a> · <a href="data/defect-dense-diagmc-lambda0.50-eta0.15.csv.gz">η=0.15t CSV (gzip)</a></li><li>VED, λ=0.5: <a href="data/defect-dense-ved-lambda0.50.npz">NPZ</a> · <a href="data/defect-dense-ved-lambda0.50-eta0.25.csv.gz">η=0.25t CSV (gzip)</a> · <a href="data/defect-dense-ved-lambda0.50-eta0.15.csv.gz">η=0.15t CSV (gzip)</a></li><li>λ=0.5: <a href="data/defect-dense-diagnostics-lambda0.50.npz">候选谱、旧谱与参考截断差异 NPZ</a></li></ul>
+<p>局域谱 NPZ 的 A 轴为 (eta, site, energy)，形状 (4,33,1601)，eta=[0.15,0.25,0.5,1]。DiagMC 文件含 bootstrap_16、bootstrap_84 和17个独立测量位置 measured_sites。范围为 −4.5t 至5.5t，每列保持绝对谱重；没有逐列归一化或能量平移。</p>
+<p><a href="https://github.com/rjguo1208/Holstein-model/releases/tag/defect-spectra-dense-20260923">本轮源码、原始链、传播子和全部 bootstrap 下载</a> · <a href="data/defect-dense-archives.json">发布包大小与 SHA-256</a> · <a href="https://github.com/rjguo1208/Holstein-model/releases/tag/single-defect-20260923">保留的初版发布包</a>。</p>
+<p>所有新 ZIP 解压至同一父目录，共用 holstein-diagmc/ 根目录。脚本拒绝覆盖既有结果；复算时使用新的输出目录。矢量图仅合并色标下颜色完全相同的相邻格块，已验证颜色逐格一致，未平滑谱数据。</p>
 </section><footer><p><a href="index.html">理论与费曼图</a> · <a href="https://github.com/rjguo1208/Holstein-model">网站源文件</a></p></footer>
 </main></body></html>

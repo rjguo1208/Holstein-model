@@ -18,9 +18,9 @@ inline unsigned vertices(const State& s) { return s.hops.size()+2*s.arcs.size();
 inline void sort_hops(State& s) {
     std::sort(s.hops.begin(),s.hops.end(),[](const Hop& a,const Hop& b){return a.time<b.time;});
 }
-inline Action action(const State& s,const Model& m) {
+inline Action action(const State& s,const Model& m,std::vector<int>& positions) {
     Action a; int position=m.origin; double previous=0;
-    std::vector<int> positions{position}; positions.reserve(s.hops.size()+1);
+    positions.clear(); positions.reserve(s.hops.size()+1); positions.push_back(position);
     for (const auto& h:s.hops) {
         if (!(h.time>previous && h.time<s.tau) || std::abs(h.direction)!=1) {a.valid=false;return a;}
         if (position==0) a.residence+=h.time-previous;
@@ -42,6 +42,9 @@ inline Action action(const State& s,const Model& m) {
     }
     a.value=m.omega*a.phonon_time-m.U*a.residence-m.mu*s.tau;
     return a;
+}
+inline Action action(const State& s,const Model& m) {
+    std::vector<int> positions; return action(s,m,positions);
 }
 inline double hop_add_ratio(const State& old,const Action& a,const Action& b,const Model& m) {
     // Ordered times from two independent uniform draws, then direction +/-.
@@ -65,6 +68,8 @@ inline double arc_remove_ratio(const State& old,const Action& a,const Action& b,
 class Sampler {
 public:
     Model model; State state; Action cached;
+    State scratch;
+    std::vector<int> positions;
     double tau_max; unsigned max_arcs,max_hop_pairs;
     std::mt19937_64 rng;
     std::array<std::uint64_t,7> attempted{},accepted{};
@@ -80,7 +85,7 @@ public:
         // Symmetric, state-independent add/remove probabilities (including nulls).
         const double c=uniform();
         const unsigned type=c<.16?0:c<.32?1:c<.48?2:c<.64?3:c<.76?4:c<.88?5:6;
-        ++attempted[type]; State trial=state;double ratio=0;
+        ++attempted[type]; State& trial=scratch;trial=state;double ratio=0;
         if (type==0) {
             if (model.t==0) return;
             if (state.hops.size()/2==max_hop_pairs) {++hop_cap_attempts;return;}
@@ -89,9 +94,13 @@ public:
             trial.hops.push_back({u,direction});trial.hops.push_back({v,-direction});sort_hops(trial);
         } else if (type==1) {
             if(state.hops.empty())return;
-            std::vector<unsigned> positive,negative;
-            for(unsigned i=0;i<state.hops.size();++i)(state.hops[i].direction>0?positive:negative).push_back(i);
-            unsigned i=positive[index(positive.size())],j=negative[index(negative.size())];if(i<j)std::swap(i,j);
+            const unsigned ip=index(state.hops.size()/2),im=index(state.hops.size()/2);
+            unsigned i=0,j=0,np=0,nm=0;
+            for(unsigned k=0;k<state.hops.size();++k) {
+                if(state.hops[k].direction>0) {if(np++==ip)i=k;}
+                else {if(nm++==im)j=k;}
+            }
+            if(i<j)std::swap(i,j);
             trial.hops.erase(trial.hops.begin()+i);trial.hops.erase(trial.hops.begin()+j);
         } else if(type==2) {
             if(model.g==0)return;
@@ -116,7 +125,7 @@ public:
             if(vertices(state)==0) {
                 const double rate=-model.mu-(model.origin==0?model.U:0);
                 trial.tau=-std::log1p(-uniform()*(-std::expm1(-rate*tau_max)))/rate;
-                state=std::move(trial);cached=action(state,model);++accepted[type];return;
+                std::swap(state,trial);cached=action(state,model,positions);++accepted[type];return;
             }
             const bool logarithmic=uniform()<.7;
             trial.tau=logarithmic?state.tau*std::exp(.8*(uniform()-.5)):tau_max*uniform();
@@ -126,7 +135,7 @@ public:
             for(auto& l:trial.arcs){l.u*=r;l.v*=r;}
             ratio=(vertices(state)+(logarithmic?1:0))*std::log(r);
         }
-        const Action next=action(trial,model);
+        const Action next=action(trial,model,positions);
         if(!next.valid){++invalid_proposals;return;}
         if(type==0)ratio=hop_add_ratio(state,cached,next,model);
         if(type==1)ratio=hop_remove_ratio(state,cached,next,model);
@@ -137,25 +146,55 @@ public:
             ratio=arc_remove_ratio(state,cached,next,state.arcs[j],model);
         }
         if(type>=4)ratio+=cached.value-next.value;
-        if(ratio>=0 || std::log(uniform())<ratio){state=std::move(trial);cached=next;++accepted[type];}
+        if(ratio>=0 || std::log(uniform())<ratio){std::swap(state,trial);cached=next;++accepted[type];}
     }
 };
+
+// Same convergent series / continued fraction as gamma_p, with a cached
+// log-Gamma value for the many time bins at a fixed expansion order.
+inline double gamma_p_cached(unsigned s,double x,double log_gamma) {
+    if(x==0)return 0;
+    const double prefactor=std::exp(s*std::log(x)-x-log_gamma);
+    if(x<s+1.) {
+        double term=1./s,sum=term;
+        for(unsigned j=1;j<10000;++j) {
+            term*=x/(s+j);sum+=term;
+            if(std::abs(term)<std::abs(sum)*2e-15)return prefactor*sum;
+        }
+    } else {
+        constexpr double tiny=1e-300;
+        double b=x+1-s,c=1/tiny,d=1/b,h=d;
+        for(unsigned j=1;j<10000;++j) {
+            const double an=-static_cast<double>(j)*(static_cast<double>(j)-s);
+            b+=2;d=an*d+b;if(std::abs(d)<tiny)d=tiny;
+            c=b+an/c;if(std::abs(c)<tiny)c=tiny;
+            d=1/d;const double delta=d*c;h*=delta;
+            if(std::abs(delta-1)<2e-15)return std::clamp(1-prefactor*h,0.,1.);
+        }
+    }
+    throw std::runtime_error("Incomplete gamma did not converge");
+}
 
 // Exact integration over the external time at fixed scaled vertex positions.
 // Density proportional to tau^N exp(-a*tau), N=N_hop+2*N_arc.
 inline void conditional(const State& s,const Action& a,const Model& m,double T,
                         std::vector<double>& probability,std::vector<double>& energy) {
     const unsigned N=vertices(s),shape=N+1;
-    const double rate=a.value/s.tau,norm=diagmc::gamma_p(shape,rate*T);
+    const double rate=a.value/s.tau,log_gamma=std::lgamma(static_cast<double>(shape));
+    const double norm=gamma_p_cached(shape,rate*T,log_gamma);
     if(!(rate>0 && norm>std::numeric_limits<double>::min()))throw std::runtime_error("Invalid conditional time normalization");
     double previous=0,previous_lower=0;
     for(unsigned i=0;i<probability.size();++i){
         const double edge=T*(i+1)/probability.size();
-        const double next=i+1==probability.size()?1:diagmc::gamma_p(shape,rate*edge)/norm;
+        const double next=i+1==probability.size()?1:gamma_p_cached(shape,rate*edge,log_gamma)/norm;
         probability[i]=std::max(0.,next-previous);
-        const double lower=N?diagmc::gamma_p(N,rate*edge)/norm:0;
-        energy[i]=(rate+m.mu)*probability[i]-rate*(lower-previous_lower);
-        previous=next;previous_lower=lower;
+        if(!energy.empty()) {
+            // P(N,x)=P(N+1,x)+exp(-x) x^N / Gamma(N+1).
+            const double lower=N?next+std::exp(N*std::log(rate*edge)-rate*edge-log_gamma)/norm:0;
+            energy[i]=(rate+m.mu)*probability[i]-rate*(lower-previous_lower);
+            previous_lower=lower;
+        }
+        previous=next;
     }
 }
 }
