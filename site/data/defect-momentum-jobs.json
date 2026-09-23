@@ -1,0 +1,247 @@
+{
+  "complete": true,
+  "jobs": [
+    {
+      "job_id": "20883897",
+      "name": "defect-k-ved",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:14:19",
+      "cpus": "17",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20883897.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:14:19",
+      "cpus": "17",
+      "max_rss": "4353156K"
+    },
+    {
+      "job_id": "20883897.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:14:19",
+      "cpus": "17",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20883985",
+      "name": "defect-k-report",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:50",
+      "cpus": "9",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20883985.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:50",
+      "cpus": "9",
+      "max_rss": "5666384K"
+    },
+    {
+      "job_id": "20883985.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:50",
+      "cpus": "9",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884064",
+      "name": "defect-k-mc-pilot",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:09",
+      "cpus": "16",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884064.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:09",
+      "cpus": "16",
+      "max_rss": "201196K"
+    },
+    {
+      "job_id": "20884064.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:09",
+      "cpus": "16",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884069",
+      "name": "defect-k-mc",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:04",
+      "cpus": "16",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884069.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:04",
+      "cpus": "16",
+      "max_rss": "554324K"
+    },
+    {
+      "job_id": "20884069.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:04",
+      "cpus": "16",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884108",
+      "name": "defect-k-fit-pilot",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:21",
+      "cpus": "10",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884108.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:21",
+      "cpus": "10",
+      "max_rss": "1919484K"
+    },
+    {
+      "job_id": "20884108.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:21",
+      "cpus": "10",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884137",
+      "name": "defect-k-plot",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:31",
+      "cpus": "2",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884137.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:31",
+      "cpus": "2",
+      "max_rss": "818216K"
+    },
+    {
+      "job_id": "20884137.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:01:31",
+      "cpus": "2",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884144",
+      "name": "defect-k-fit",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:17:46",
+      "cpus": "16",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884144.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:17:46",
+      "cpus": "16",
+      "max_rss": "5265732K"
+    },
+    {
+      "job_id": "20884144.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:17:46",
+      "cpus": "16",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884149",
+      "name": "defect-k-mc-report",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:02:07",
+      "cpus": "3",
+      "max_rss": ""
+    },
+    {
+      "job_id": "20884149.batch",
+      "name": "batch",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:02:07",
+      "cpus": "3",
+      "max_rss": "1026352K"
+    },
+    {
+      "job_id": "20884149.extern",
+      "name": "extern",
+      "partition": "",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:02:07",
+      "cpus": "3",
+      "max_rss": ""
+    }
+  ],
+  "ordering": "VED report complete, then analytic nonlocal DiagMC validation, production sampling, continuation and comparison",
+  "archive_job_id": "20884393"
+}

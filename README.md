@@ -161,3 +161,18 @@ KaTeX 的许可证随发布资源保留在 `site/assets/katex/LICENSE`。科学�
 第二轮的完成范围、排队作业、数值限制与显示检查见 [第二轮验证记录](docs/results-v2-verification.md)。
 
 中英文翻译、同步构建及桌面／手机语言切换的检查见 [双语网站验证记录](docs/bilingual-website-verification.md)。
+
+新增 [缺陷动量谱](https://rjguo1208.github.io/Holstein-model/defect.html#momentum)
+（[English](https://rjguo1208.github.io/Holstein-model/en/defect.html#momentum)）：
+201个动量点、1601个能量点，采用以缺陷为中心的33格点相干观测窗口。
+先完成 VED，再以开放电子端点重新采样20.48亿步 bare DiagMC；两种方法均叠加裸宿主余弦色散，
+并提供干净体系对照、缺陷差值图及12864次条件 bootstrap。窄峰仍未通过定量分辨率验证。
+方法与复现见 [DEFECT_MOMENTUM.md](research/holstein-defect/DEFECT_MOMENTUM.md)，
+完整数据见 [动量谱发布包](https://github.com/rjguo1208/Holstein-model/releases/tag/defect-momentum-20260923)。
+
+The new defect momentum spectra use 201 momenta and 1601 energies for a coherent
+33-site observation window centered on one defect. VED was completed first,
+followed by 2.048 billion fresh bare DiagMC steps with open electron endpoints.
+Both methods include the bare-host cosine guide, with clean-system and defect-difference
+comparisons and 12864 conditional bootstrap repeats. Narrow peaks are not certified
+as resolved. Full definitions, cutoff checks, source and data are linked above.

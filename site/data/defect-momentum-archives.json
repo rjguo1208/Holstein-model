@@ -1,0 +1,317 @@
+{
+  "complete": true,
+  "release": "https://github.com/rjguo1208/Holstein-model/releases/tag/defect-momentum-20260923",
+  "archives": [
+    {
+      "name": "defect-momentum-part01.zip",
+      "bytes": 80541137,
+      "sha256": "039f9fab49d630707fe287180cf1e05bd97253d740cfd2f2e07e853da6e5b333",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part01.zip"
+    },
+    {
+      "name": "defect-momentum-part02.zip",
+      "bytes": 79570870,
+      "sha256": "11edab04df43424608988eee907cc09816acab190c5ef9f88d7310d22867da6f",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part02.zip"
+    },
+    {
+      "name": "defect-momentum-part03.zip",
+      "bytes": 80775201,
+      "sha256": "23a924f59c556f5e559d38a2dda0eec5752cb98773b665485eac81b07f45f936",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part03.zip"
+    },
+    {
+      "name": "defect-momentum-part04.zip",
+      "bytes": 80025486,
+      "sha256": "8c19339563f8aced15fd4742965a4395b3571299f1670f7fdc6fdb7e4928ec9d",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part04.zip"
+    },
+    {
+      "name": "defect-momentum-part05.zip",
+      "bytes": 68957918,
+      "sha256": "41c1f7e952ff58db38d34536578114fa2df3f67e661b67dde07d7bd216038d82",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part05.zip"
+    },
+    {
+      "name": "defect-momentum-part06.zip",
+      "bytes": 51513686,
+      "sha256": "689ee147dbd6343c6030111e49980f42f4fa82072a151066502864d5ba6a1c45",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part06.zip"
+    },
+    {
+      "name": "defect-momentum-part07.zip",
+      "bytes": 21038879,
+      "sha256": "a6747e44a51fbaf35816c4fabad975185d1ab8ba99e78e11b2a093f2844d21f2",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part07.zip"
+    },
+    {
+      "name": "defect-momentum-part08.zip",
+      "bytes": 21059451,
+      "sha256": "7e0824e01885f183d236272fcb0bc2c30d2a9fdd27231b1a7acba6f4913e315d",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part08.zip"
+    },
+    {
+      "name": "defect-momentum-part09.zip",
+      "bytes": 20923223,
+      "sha256": "bd07e79d23d8a982c748f8a238ac733ccc5e0d94ad862f2cb449366257b08408",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part09.zip"
+    },
+    {
+      "name": "defect-momentum-part10.zip",
+      "bytes": 21087796,
+      "sha256": "2d9a7618b7130138bbcb7e9371e201ac071f700056dd7dfc2c374f3e78cfb9df",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part10.zip"
+    },
+    {
+      "name": "defect-momentum-part11.zip",
+      "bytes": 17557970,
+      "sha256": "9277b812425a57ead1312a23025bf8d176fd36cecf581417a0600bb0fd13f763",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part11.zip"
+    },
+    {
+      "name": "defect-momentum-part12.zip",
+      "bytes": 17582607,
+      "sha256": "4d5d2a6267f35be589e764409ebdb987bc6ad7c05e28e56e4761b8ba6a22adb2",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part12.zip"
+    },
+    {
+      "name": "defect-momentum-part13.zip",
+      "bytes": 17639992,
+      "sha256": "9221215ade5a7e05f0256399fb2a000afabae12964b75ec0b8bfe183d96748f8",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part13.zip"
+    },
+    {
+      "name": "defect-momentum-part14.zip",
+      "bytes": 21692373,
+      "sha256": "63c53ce40660e2f125ddc29899ed087b2f84b1eab9b337610781e77fdf57cbe4",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part14.zip"
+    },
+    {
+      "name": "defect-momentum-part15.zip",
+      "bytes": 18554731,
+      "sha256": "87aa5ff6c323fdf572a62e33bcddf07d0ff55d58a99acb3fff2cf3b1d19167bd",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part15.zip"
+    },
+    {
+      "name": "defect-momentum-part16.zip",
+      "bytes": 11829514,
+      "sha256": "0da5b498e641da0f87e02c12448940a34cbf8070a26c2612b628fe543e0b45f1",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part16.zip"
+    },
+    {
+      "name": "defect-momentum-part17.zip",
+      "bytes": 14280265,
+      "sha256": "0a151dcf74c189d2b4f8162f6c0f0d1d5d084a5813c285385ed5dc170b232982",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part17.zip"
+    },
+    {
+      "name": "defect-momentum-part18.zip",
+      "bytes": 49052420,
+      "sha256": "cb91e3ee19a20a393a04ce2dcd7916e1e1a0516e36c498f6398b04a234585d79",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part18.zip"
+    },
+    {
+      "name": "defect-momentum-part19.zip",
+      "bytes": 83122017,
+      "sha256": "7c0a86df4212c7ab52f910675bef9a5a535c1f3805b6126e55c07d67bd5461b4",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part19.zip"
+    },
+    {
+      "name": "defect-momentum-part20.zip",
+      "bytes": 52872887,
+      "sha256": "d2b454bace8fa5d42861d9f92b206b7602a128cde0d5e8ddb92cdc1f468807be",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part20.zip"
+    },
+    {
+      "name": "defect-momentum-part21.zip",
+      "bytes": 14591574,
+      "sha256": "2f104062b3d39ddd4b7fac4cdf06e5b7013df149468947942f10d8cbca74b413",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part21.zip"
+    },
+    {
+      "name": "defect-momentum-part22.zip",
+      "bytes": 73009329,
+      "sha256": "119a3ac2afaf8a3b09bf5d3818b48fde1b2e81eaaa9f63842dfb10693d3e90e6",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part22.zip"
+    },
+    {
+      "name": "defect-momentum-part23.zip",
+      "bytes": 72989337,
+      "sha256": "b099f6df00ed9f89dd92a98bec9328d7f57fd89c3dfa77db5ff19fb41f11dec0",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part23.zip"
+    },
+    {
+      "name": "defect-momentum-part24.zip",
+      "bytes": 48799645,
+      "sha256": "ea55614683a8c00f5fced81c7bfe286244357be50c7f516aa1fe300e7dd48b37",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-part24.zip"
+    }
+  ],
+  "assets": [
+    {
+      "name": "defect-momentum-ved-eta0.25.pdf",
+      "bytes": 5317143,
+      "sha256": "80ae3c06191d0f258984ec9e9d5ed25f1b0464cd3cab234fb751cc94d2f0dae3",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.25.pdf"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.25.png",
+      "bytes": 376179,
+      "sha256": "38f1a704c09420afcc75c602ef61907c90c7f3b7e30fbeab7753a0faf3235e1e",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.25.png"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.15-difference.pdf",
+      "bytes": 887378,
+      "sha256": "1f286511c8c8719cde39afa80a68e6831043bf4e3d942264f0020d2d684a2c6f",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15-difference.pdf"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.15-difference.png",
+      "bytes": 141132,
+      "sha256": "610efd20e55251bfeac8398641f2fa2204a2a64bd6416b91651d059545715ff6",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15-difference.png"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.15-difference.svg",
+      "bytes": 7043980,
+      "sha256": "7123d34093daf0bca83e799dd0702198b9009cbc3f0460e34cfc113518e5fca6",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15-difference.svg"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.25.svg",
+      "bytes": 36285413,
+      "sha256": "d6dd7172e7976e1a7527220b046e496e8bd07ca900dc6750b7dcc63ebef8ef43",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.25.svg"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.1.pdf",
+      "bytes": 2792841,
+      "sha256": "2a26e8d47be63a17ffbcfc4f0ad02bbcd22dd6f1da71eeaca5be41f9343b8810",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.1.pdf"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.1.png",
+      "bytes": 303335,
+      "sha256": "a40fbaa97254f561d51e3397e04d1b22894ce5f51fef696c98d9cd9095512270",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.1.png"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.15.pdf",
+      "bytes": 3726844,
+      "sha256": "066735993297263fdf75ba7fe5cb3638f2264947852b11e2276c5c43939f8964",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15.pdf"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.15.png",
+      "bytes": 339120,
+      "sha256": "d91e88ad97c77e1c0f2cfe268622bacc0bbc47327c958aec8abd0f402cfd1d4f",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15.png"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.15.svg",
+      "bytes": 29061708,
+      "sha256": "f8961a42879974edb7e7c66f9bbc259b7fb1777d9a9b6708c5b3eda5763c14aa",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15.svg"
+    },
+    {
+      "name": "defect-momentum-ved-eta0.1.svg",
+      "bytes": 24268828,
+      "sha256": "da0da031ecc10160b1499adbb0702719cc12375645f0dd728aff1f3ccdd9e3b7",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.1.svg"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta0.15.svg",
+      "bytes": 30338709,
+      "sha256": "af28798147276d22a2ab85a0b24c417ab275f204ff0fcaafa50886c30ffd9521",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.15.svg"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta1.pdf",
+      "bytes": 9739110,
+      "sha256": "5a8490a9a2d64cd71dc73dca808f1dbe67a41078c08f41d89b1b9af764a5af8c",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta1.pdf"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta1.png",
+      "bytes": 501744,
+      "sha256": "6b09121548f1da03d229b70d203f3990889497edb2a60800a59ff331c06b1e57",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta1.png"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta1.svg",
+      "bytes": 56417663,
+      "sha256": "87abbf879a542bd2f69abefb1716f9aeea09436bc388203dd5ca0d9a2ea2c3ab",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta1.svg"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta0.15.png",
+      "bytes": 361372,
+      "sha256": "030a1ed73ee6d1e14639bf6eaa2b5b23550aebac1df19a596e4ad9c5551b3993",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.15.png"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta0.15.pdf",
+      "bytes": 4047956,
+      "sha256": "2960de89b14d2d8d7204982eb99108365c19c97589b80dfea8327c6b6977cb0b",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.15.pdf"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta0.25.svg",
+      "bytes": 38008664,
+      "sha256": "0b6bf55791440921d56f275eb86f63337497b3815c108c456b9873403d7c6b2d",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.25.svg"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta0.25.png",
+      "bytes": 397011,
+      "sha256": "7bd02693cfb48695016c986e11d2c2d9f1ed98168fe1dd67d23d7f9105ea6fc3",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.25.png"
+    },
+    {
+      "name": "defect-momentum-diagmc-eta0.25.pdf",
+      "bytes": 5734153,
+      "sha256": "cb189d3235919d5bb29078fa3b47559d119a7b12287ec3034311ddd3c83a434f",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.25.pdf"
+    },
+    {
+      "name": "lambda0.25_U1_Nh12_R96_W32.npz",
+      "bytes": 24328944,
+      "sha256": "dd98e5fe1c9831b174e2d996f79a08e815c56ee578fbbf6e40094f30de50e85e",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.25_U1_Nh12_R96_W32.npz"
+    },
+    {
+      "name": "lambda0.25_U0_Nh12_R96_W32.npz",
+      "bytes": 24328372,
+      "sha256": "87ef13a17d79c343c518a4c30d7367bb27438e8bc586831ed1ad7d2e43faf13e",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.25_U0_Nh12_R96_W32.npz"
+    },
+    {
+      "name": "lambda0.50_U0_Nh12_R96_W32.npz",
+      "bytes": 24321060,
+      "sha256": "28033a3da9c8d974622e0e3376ebf346e11c7ec99fda0e8b772e34d28326de63",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.50_U0_Nh12_R96_W32.npz"
+    },
+    {
+      "name": "lambda0.50_U1_Nh12_R96_W32.npz",
+      "bytes": 24323072,
+      "sha256": "1276150425c954acdeed47e68224e25f3a91f9771c77c4a61288d8e73209fb9a",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.50_U1_Nh12_R96_W32.npz"
+    },
+    {
+      "name": "defect-momentum-diagmc-lambda0.50.npz",
+      "bytes": 49033127,
+      "sha256": "f1f645a3f3b9851eda1630056ef83c068c888f139e73014ac2440feace9ea9fc",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-lambda0.50.npz"
+    },
+    {
+      "name": "defect-momentum-diagmc-lambda0.25.npz",
+      "bytes": 49039444,
+      "sha256": "c187f07f7bbcfcd59705d8f34f54871f71f3e09522e29e7b8677ed23df4c9ed3",
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-lambda0.25.npz"
+    }
+  ],
+  "files": 2215,
+  "manifest_sha256": "e9550e653e0faecbed21c979fb3ae6dfd45315f43bfa4662e1d1b05ba554f2ea",
+  "total_bytes": 1490532610
+}

@@ -29,7 +29,8 @@ def operators(bins,tau_max,mu,lower,upper,size):
 
 
 def entropy_scan(tau,green,cov,p,alphas,size=641,upper=10.,tau_limit=8.,tolerance=1e-8,
-                 target_moments=None,energies=None,max_iterations=400,extended_precision=True):
+                 target_moments=None,energies=None,max_iterations=400,extended_precision=True,
+                 whitening_mode='relative_green'):
     from defect_entropy_stable import long_solve
     lower=-np.hypot(2*p['t'],p['U'])-p['g']**2/p['omega']
     en,K,M,Q,R=operators(p['bins'],p['tau_max'],p['mu'],lower,upper,size)
@@ -37,7 +38,13 @@ def entropy_scan(tau,green,cov,p,alphas,size=641,upper=10.,tau_limit=8.,toleranc
         en=np.asarray(energies);K=bin_kernel(tau,p['tau_max']/p['bins'],en,p['mu'])
         M=np.vstack([np.ones(len(en)),en,en**2]);Q,R=np.linalg.qr(M.T,mode='reduced')
     use=tau<=tau_limit
-    W=whitening(green[use],cov[np.ix_(use,use)],tolerance)
+    if whitening_mode == 'variance':
+        from defect_momentum_mc import variance_whitening
+        W=variance_whitening(cov[np.ix_(use,use)],tolerance)
+    elif whitening_mode == 'relative_green':
+        W=whitening(green[use],cov[np.ix_(use,use)],tolerance)
+    else:
+        raise ValueError('Unknown covariance whitening mode')
     if len(W)<3:raise ValueError('Insufficient covariance rank')
     moments=local_moments(p) if target_moments is None else np.asarray(target_moments)
     c=np.linalg.solve(R.T,moments);B=W@K[use];y=W@green[use]

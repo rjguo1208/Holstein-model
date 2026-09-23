@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="1D零温单电子Holstein模型的单点吸引势：实空间bare DiagMC、独立VED验证、束缚态与初步局域谱函数图。">
-<title>单缺陷 Holstein：DiagMC 结果与局域谱</title>
+<meta name="description" content="1D零温单电子Holstein模型：单缺陷局域谱、201点VED动量谱、全新非局域bare DiagMC及误差检查。">
+<title>单缺陷 Holstein：局域谱与动量谱</title>
 <link rel="stylesheet" href="assets/katex/katex.min.css"><link rel="stylesheet" href="assets/style.css"></head>
 <body><a class="skip-link" href="#content">跳到正文</a>
 <nav class="site-nav" aria-label="站点页面目录"><strong>页面目录</strong><ul>
@@ -14,7 +14,7 @@
 <p><strong>实空间 bare DiagMC 已实现，六组束缚态计算完成并与独立 VED 一致。</strong>
 在相同吸引势下，所比较的较强电子–声子耦合给出更大的束缚能与缺陷处电子密度。
 局域谱已完成四倍统计加密，并扩展至33个显示位置；细峰仍需结合下文的 VED 对照和恢复检查判断。</p></header>
-<nav aria-label="本文目录"><ol><li><a href="#model">模型和计算方法</a></li><li><a href="#ground">束缚能与权重</a></li><li><a href="#density">空间分布与局域化</a></li><li><a href="#spectra">位置–能量谱图</a></li><li><a href="#checks">验证与误差范围</a></li><li><a href="#download">数据和复现</a></li></ol></nav>
+<nav aria-label="本文目录"><ol><li><a href="#model">模型和计算方法</a></li><li><a href="#ground">束缚能与权重</a></li><li><a href="#density">空间分布与局域化</a></li><li><a href="#momentum">动量–能量谱图</a></li><li><a href="#spectra">位置–能量谱图</a></li><li><a href="#checks">验证与误差范围</a></li><li><a href="#download">数据和复现</a></li></ol></nav>
 <section id="model"><h2>模型和实空间展开</h2>
 \[\begin{aligned}
 H={}&-t\sum_i(c_{i+1}^{\dagger}c_i+\mathrm{h.c.})+\omega_0\sum_i b_i^{\dagger}b_i\\
@@ -63,6 +63,50 @@ p_i\propto e^{-2|i|/\xi}\quad\text{（在指定尾部窗口中拟合）}.\]
 <p>这里的 \(Z_0\) 来自虚时中点的零声子投影，长虚时截距另存于原始报告。
 \(\xi\) 仍是有限窗口诊断：向更远尾部移动窗口后，统计量减少、拟合结果发生变化。
 完整 JSON 保留三个候选窗口，不能把上表当作已精确确定的渐近局域化长度。</p>
+</section>
+<section id="momentum">
+<h2>缺陷体系动量谱：201个 k 点</h2>
+<p>新增结果使用相同参数 \(t=\omega_0=U=1\)、\(\lambda=0.25,0.5\)。先完成实空间 VED，再独立重新采样非局域 bare DiagMC。横轴为 \(k/\pi\)，纵轴为相对真空的能量，颜色为谱强度；白色虚线为裸宿主余弦色散 \(\varepsilon_k=-2t\cos k\)。</p>
+<h3>相干观测窗口与动量分辨率</h3>
+\[c^\dagger_{k,L}=\frac{1}{\sqrt L}\sum_{j=-16}^{16}e^{ikj}c_j^\dagger,\qquad L=33.\]
+\[A_{L,\eta}(k,\omega)=-\frac{1}{\pi L}\operatorname{Im}\sum_{i,j=-16}^{16}e^{ik(j-i)}\langle\mathrm{vac}|c_i(\omega+i\eta-H)^{-1}c_j^\dagger|\mathrm{vac}\rangle.\]
+<p>单缺陷破坏平移对称性，k 在这里标记入射探测态。主图采用以缺陷为中心的33格点相干窗口，保留所有非局域传播贡献；电子在传播过程中可以离开窗口。它与33格点封闭链、周期缺陷阵列、对局域谱直接做傅里叶变换的结果不同。</p>
+<p>\(k\in[0,\pi]\) 共201点，\(\Delta k=\pi/200\)；能量范围 \([-4.5t,5.5t]\) 共1601点，\(\Delta\omega=0.00625t\)。每个 k 都直接由传播矩阵或端点位移统计求和，没有动量插值。相邻点共享实空间信息与统计误差；33格点矩形窗口的动量宽度约为 \(2\pi/33\)，不能仅凭网格更密宣称物理分辨率提高。</p>
+<p>VED 另计算65格点观测窗口。扩大观测窗口会改变物理观测量，并稀释单个缺陷的相对谱重；这与扩大数值边界以检查收敛是两件事。全部图保留绝对谱重，未逐列归一化或平移能量。</p>
+<h3 id="momentum-ved">VED：含缺陷与干净体系</h3>
+<figure><div class="figure-scroll data"><img src="results/defect-momentum-ved-eta0.25.png" width="1040" height="880" alt="201个动量点的VED谱图；比较单缺陷与干净体系，白色虚线为弯曲的裸电子余弦色散。"></div><figcaption>\(\eta=0.25t\)。上排为单缺陷，下排为相同观测窗口的干净体系；两列对应两种耦合，四图共用色标。VED 使用声子云12代、电子半径96、Lanczos 800步。</figcaption><p class="figure-links"><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.25.svg">SVG</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.25.pdf">PDF</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.25.png">PNG</a></p></figure>
+<figure><div class="figure-scroll data"><img src="results/defect-momentum-ved-eta0.15-difference.png" width="1040" height="480" alt="缺陷与干净体系的动量谱差值；红蓝色分别显示谱重增加和减少，保留余弦裸带虚线。"></div><figcaption>\(\eta=0.15t\) 的缺陷减干净体系差值：红色表示增重，蓝色表示减重，零点为白色。低能束缚态的能量固定，但探测谱重随 k 改变；水平束缚态信号与余弦裸带参照可以同时存在。</figcaption><p class="figure-links"><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15-difference.svg">SVG</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15-difference.pdf">PDF</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15-difference.png">PNG</a></p></figure>
+<p>独立检查覆盖全部动量：声子云10→12代、电子半径64→96、递推400→800步；另在每组参数的五个动量直接注入余弦/正弦态，检查非局域矩阵重建。声子截断造成的最大整谱相对 L1 差异，在 \(\eta/t=0.25,0.15,0.1\) 时分别为0.846%、3.021%、6.749%。更窄展宽图显示截断敏感性，不能当作全部细结构已收敛的证明。</p>
+<p>较窄展宽的完整 VED 图：<a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.15.pdf">η=0.15t PDF</a> · <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-ved-eta0.1.pdf">η=0.1t PDF</a>。</p>
+<h3 id="momentum-diagmc">重新采样的非局域 bare DiagMC</h3>
+<p>新的采样器允许电子起点和终点不同，增加单次跳跃的插入/删除与起点平移热浴更新，直接记录端点位移。两种耦合各8条独立链，每条1.28亿生产步，共20.48亿步；虚时间箱192个，最大虚时12/t。采样顺序在 VED 完成之后，16个进程在 highmem 并行，所有阶数上限触发次数为零。</p>
+<p>正式采样前，自由电子、无声子缺陷和原子极限通过24条链的解析检查，最大偏差为2.21个统计标准误差。编译测试检查了详细平衡、奇数跳跃、声子局域性、起点热浴和中途越出观测窗口。已有闭合路径局域谱数据没有被重新标记成动量谱。</p>
+\[M_0=1,\qquad M_1=-2t\left(1-\frac1L\right)\cos k-\frac UL,\]
+\[M_2=2t^2+2t^2\left(1-\frac2L\right)\cos2k+\frac{4tU}{L}\cos k+\frac{U^2}{L}+g^2.\]
+<p>延拓使用未展宽谱的精确窗口谱矩与解析能量下界，不输入 VED 极点或谱形。带符号 Green 函数和完整协方差均保留，不裁剪噪声负值。每折留出两条链进行四折选择，比较六种时间、谱网格、块长或协方差设置；各动量完成32次分块 bootstrap，共12864次。16–84%经验范围以所选表示为条件，不包括全部系统偏差，也不是相邻动量的独立误差。</p>
+<figure><div class="figure-scroll data"><img src="results/defect-momentum-diagmc-eta0.25.png" width="1040" height="880" alt="201个动量点的非局域DiagMC与VED对照谱图，展宽0.25t，虚线为裸电子余弦色散。"></div><figcaption>\(\eta=0.25t\)。左列为全新非局域 DiagMC 重建，右列为相同窗口和展宽下的 VED；每行对应一种耦合。颜色保持绝对强度。网格加密未被当作细峰分辨率验证。</figcaption><p class="figure-links"><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.25.svg">SVG</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.25.pdf">PDF</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta0.25.png">PNG</a></p></figure>
+<p>DiagMC 图中个别竖直接缝与逐动量的离散选参有关，不能解释为物理能带断裂。这里保留原始重建结果，没有沿动量方向平滑这些变化。</p>
+<figure><div class="figure-scroll data"><img src="results/defect-momentum-diagmc-eta1.png" width="1040" height="880" alt="展宽t时的非局域DiagMC与VED动量谱对照。"></div><figcaption>\(\eta=t\) 的较宽展宽对照；窗口、动量点、能量零点与上图相同。窄峰仍需结合候选方案、bootstrap 和独立 VED 差异判断。</figcaption><p class="figure-links"><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta1.svg">SVG</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta1.pdf">PDF</a><a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-eta1.png">PNG</a></p></figure>
+<h3>动量谱数据与复现</h3>
+<div class="table-scroll"><table><caption>全部201个动量：DiagMC 与 VED 的整谱相对 L1 差异范围</caption><thead><tr><th scope="col">λ</th><th scope="col">η=0.15t</th><th scope="col">η=0.25t</th><th scope="col">η=t</th></tr></thead><tbody>
+<tr><td>0.25</td><td>6.1%–17.5%</td><td>4.0%–12.1%</td><td>0.3%–1.7%</td></tr>
+<tr><td>0.5</td><td>9.7%–26.4%</td><td>6.2%–15.7%</td><td>0.5%–1.7%</td></tr>
+</tbody></table></div>
+<p>在 \(\tau\leq6/t\) 内，未延拓 Green 函数与独立 VED 的最大差异为2.47个保守统计标准误差；这里取多种块长与整链估计中较大的误差。\(\eta=t\) 时两种耦合的整谱差异均小于1.75%。这些检查支持采样与宽谱形的一致性，不能证明细小峰已经分辨。</p>
+<p>误差在展示能量窗内积分；截断、统计噪声和延拓偏差都可能贡献差异。新的 DiagMC 窄峰尚未通过定量分辨率验证。完整数据保留未延拓的 Green 函数、不同块长误差、候选方案与 bootstrap 权重。</p>
+<ul>
+<li>VED, λ=0.25, U/t=0: <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.25_U0_Nh12_R96_W32.npz">NPZ</a></li>
+<li>VED, λ=0.25, U/t=1: <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.25_U1_Nh12_R96_W32.npz">NPZ</a></li>
+<li>DiagMC, λ=0.25, U/t=1: <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-lambda0.25.npz">NPZ</a></li>
+<li>VED, λ=0.5, U/t=0: <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.50_U0_Nh12_R96_W32.npz">NPZ</a></li>
+<li>VED, λ=0.5, U/t=1: <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/lambda0.50_U1_Nh12_R96_W32.npz">NPZ</a></li>
+<li>DiagMC, λ=0.5, U/t=1: <a href="https://github.com/rjguo1208/Holstein-model/releases/download/defect-momentum-20260923/defect-momentum-diagmc-lambda0.50.npz">NPZ</a></li>
+<li><a href="data/defect-momentum-summary.json">动量谱检查与误差 JSON</a></li>
+<li><a href="data/defect-momentum-method.md">观测量、优化与复现说明</a></li>
+<li><a href="data/defect-momentum-jobs.json">highmem 作业记录</a></li>
+<li><a href="data/defect-momentum-archives.json">发布文件大小与 SHA-256</a></li>
+<li><a href="https://github.com/rjguo1208/Holstein-model/releases/tag/defect-momentum-20260923">完整源码、原始链、VED递推与延拓结果发布包</a></li></ul>
+<p>VED NPZ 的 A_W16、A_W32 分别对应33和65格点窗口；DiagMC NPZ 的 A、A_ved、bootstrap_16、bootstrap_84 均按 (eta, k, energy) 排列，形状为 (5,201,1601)，eta=[0.1,0.15,0.25,0.5,1]。网页使用清晰的 PNG 预览；链接提供原始矢量 SVG/PDF 与数值数组。</p>
 </section>
 <section id="spectra"><h2>加密局域谱图：位置 × 能量 × 谱强度</h2>
 \[A_i(\omega)=\sum_\nu|\langle\nu|c_i^\dagger|\mathrm{vac}\rangle|^2\delta(\omega-E_\nu),\qquad
