@@ -1,0 +1,77 @@
+{
+  "submitted_utc": "2026-09-23T19:35:01.742686+00:00",
+  "partition": "highmem",
+  "pilot_job": 20881037,
+  "status": "COMPLETED",
+  "scope": "single on-site attraction; analytic validation and U=1 comparison before scan",
+  "pilot_status": "COMPLETED",
+  "pilot_validation_passed": true,
+  "atomic_projector_check": {
+    "kind": "atomic",
+    "max_bin_standardized_error": 1.2100499251121342,
+    "rms_standardized_error": 0.6561318812866926,
+    "passed": true,
+    "projector_checks": {
+      "zero_ph": {
+        "value": 0.6174502123241895,
+        "error": 0.006715978102395291,
+        "expected": 0.6164708688382322,
+        "passed": true
+      },
+      "nph": {
+        "value": 0.48642493614553584,
+        "error": 0.008913763170066777,
+        "expected": 0.48374718439085757,
+        "passed": true
+      }
+    }
+  },
+  "scan_job": 20881090,
+  "scan_submitted_utc": "2026-09-23T19:39:31.731777+00:00",
+  "scan_production_steps": 1536000000,
+  "spectra_job": 20881164,
+  "spectra_dependency": "afterok:20881090",
+  "spectra_submitted_utc": "2026-09-23T19:44:08.653076+00:00",
+  "spectra_chains": 72,
+  "spectra_production_steps": 1152000000,
+  "captured_utc": "2026-09-23T19:58:18.112288+00:00",
+  "accounting_timezone": "America/Indianapolis",
+  "accounting": [
+    {
+      "job_id": "20881037",
+      "name": "holstein-defect",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:00:31",
+      "node": "b000",
+      "start_local": "2026-09-23T15:35:49",
+      "end_local": "2026-09-23T15:36:20"
+    },
+    {
+      "job_id": "20881090",
+      "name": "holstein-defect-scan",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:05:52",
+      "node": "b000",
+      "start_local": "2026-09-23T15:39:49",
+      "end_local": "2026-09-23T15:45:41"
+    },
+    {
+      "job_id": "20881164",
+      "name": "holstein-defect-ldos",
+      "partition": "highmem",
+      "state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed": "00:05:55",
+      "node": "b000",
+      "start_local": "2026-09-23T15:45:49",
+      "end_local": "2026-09-23T15:51:44"
+    }
+  ],
+  "scan_status": "COMPLETED",
+  "spectra_status": "COMPLETED",
+  "spectral_resolution_validated": false
+}

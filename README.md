@@ -4,13 +4,13 @@
 
 中英文理论笔记，讲解 DiagMC 的图空间、Holstein 单极化子的裸图展开、详细平衡、绝对归一化、物理量提取、收敛检查，以及有限电子密度的区别。
 
-[中文](https://rjguo1208.github.io/Holstein-model/) · [English](https://rjguo1208.github.io/Holstein-model/en/)。理论笔记、数值结果和谱函数图均有完整英文版；每页右上角的“中文 / English”切换到当前页面的对应语言，页面目录继续使用所选语言。两种语言共享公式、数值、科学图和下载数据。
+[中文](https://rjguo1208.github.io/Holstein-model/) · [English](https://rjguo1208.github.io/Holstein-model/en/)。理论笔记、数值结果、谱函数图和单缺陷模型均有完整英文版；每页右上角的“中文 / English”切换到当前页面的对应语言，页面目录继续使用所选语言。两种语言共享公式、数值、科学图和下载数据。
 
-The theory notes, numerical results and spectral maps are available in Chinese
+The theory notes, numerical results, spectral maps and single-defect model are available in Chinese
 and English. Use the language links in the top-right corner to switch the current
 page. Both versions share equations, numerical tables, figures and downloads.
 
-新增 [完整采样实例](https://rjguo1208.github.io/Holstein-model/#sampling-example)：从零阶图插入一条声子线，再插入得到交叉图，逐段列出电子动量、传播子、顶点因子和图权重，并手算正反提议概率、接受率及详细平衡。三个页面共用页面目录，宽屏固定在左侧，窄屏显示在页首，当前页有明确标记。
+新增 [完整采样实例](https://rjguo1208.github.io/Holstein-model/#sampling-example)：从零阶图插入一条声子线，再插入得到交叉图，逐段列出电子动量、传播子、顶点因子和图权重，并手算正反提议概率、接受率及详细平衡。四个页面共用页面目录，宽屏固定在左侧，窄屏显示在页首，当前页有明确标记。
 
 新增 [数值结果页](https://rjguo1208.github.io/Holstein-model/results.html)：1D、零温、单电子 bare DiagMC，默认参数 t=ω₀=1、λ=0.25/0.5。基态和有效质量已完成验证，谱函数明确标为初步重建，并列出独立参考误差。原始块数据、代码和报告作为 ZIP 提供下载；所有曲线都有 SVG/PDF 版本。结果页的科学计算与网站排版检查分别记录。
 
@@ -34,6 +34,18 @@ page. Both versions share equations, numerical tables, figures and downloads.
 
 前轮10点试验、864次模拟谱恢复与原始谱图保留在页面的历史记录中；
 [前轮报告](docs/spectral-refinement-completed.md) 与 [前轮源码](research/spectral-refinement/README.md) 保持可访问。
+
+新增 [单缺陷模型](https://rjguo1208.github.io/Holstein-model/defect.html)（[English](https://rjguo1208.github.io/Holstein-model/en/defect.html)）：
+只改变一个格点的电子势能，实现连续时间实空间 bare DiagMC，计算两种耦合和三种吸引强度。
+六组基态能量与独立 VED 的最大差异约为1.11个统计标准误差。局域谱图并列展示 DiagMC 与 VED，
+细峰明确标为初步重建；源码和148条链的数据见 [方法](research/holstein-defect/README.md)、
+[验证记录](docs/defect-verification.md) 与 [复现数据](https://github.com/rjguo1208/Holstein-model/releases/tag/single-defect-20260923)。
+
+The new single-defect calculation expands hopping and electron–phonon vertices
+in continuous imaginary time. Six bound-state energies agree with independent
+VED within about 1.11 estimated statistical standard errors. Position–energy
+local spectral maps include explicit reference comparisons and retain their
+preliminary status. All 148 chains and reproducible source are available.
 
 ## 本地预览
 

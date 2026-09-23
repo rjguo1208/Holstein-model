@@ -1,0 +1,16 @@
+{
+  "zip_integrity_verified": true,
+  "archives_extracted": 5,
+  "chains": 148,
+  "production_steps": 2816000000,
+  "fresh_extraction_cpp_tests_passed": true,
+  "fresh_extraction_python_tests_passed": 17,
+  "regenerated_report_matches": true,
+  "comparison_excludes": [
+    "created_utc",
+    "clean_diagmc.*.source"
+  ],
+  "published_source_matches_workspace": true,
+  "original_report_sha256": "dd3543cd69b3831a59ec94cdd48fb20a3f7cf3d788b3b0d2b353a2cbae9a2bef",
+  "replay_report_sha256": "7be2fe74040d81eb33387f3a77d8acdd25cdb4a4930f939ce998d8b740ce5561"
+}

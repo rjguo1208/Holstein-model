@@ -1,0 +1,45 @@
+{
+  "root": "holstein-diagmc",
+  "archives": [
+    {
+      "file": "defect-completed-01.zip",
+      "bytes": 18829808,
+      "sha256": "506040597f359d846b8359b530cf169bb3e9bc3ac0216cb781b42019d5238021",
+      "members": 439,
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-completed-01.zip",
+      "zip_integrity_verified": true
+    },
+    {
+      "file": "defect-ground-raw-01.zip",
+      "bytes": 52955724,
+      "sha256": "cdeed11b8735f46f6ab52dc4dde0c57785f7fc01d67aa84aa993977c02e6ac8c",
+      "members": 304,
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-ground-raw-01.zip",
+      "zip_integrity_verified": true
+    },
+    {
+      "file": "defect-spectra-raw-01.zip",
+      "bytes": 63807122,
+      "sha256": "35a24ed8879067bc1a342c50bf4a71e66c29765c0c2d13e14655ea67cc91ff03",
+      "members": 288,
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-spectra-raw-01.zip",
+      "zip_integrity_verified": true
+    },
+    {
+      "file": "defect-ground-green-01.zip",
+      "bytes": 43152820,
+      "sha256": "e4b345ff06209da46161bde7c5e1db9664012662acbf74745f7446d93f18d750",
+      "members": 14,
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-ground-green-01.zip",
+      "zip_integrity_verified": true
+    },
+    {
+      "file": "defect-spectra-green-01.zip",
+      "bytes": 53482814,
+      "sha256": "9ff38719a952f09b4ef290192821d881b6e5662b08a2b106a2517e14241beef1",
+      "members": 18,
+      "url": "https://github.com/rjguo1208/Holstein-model/releases/download/single-defect-20260923/defect-spectra-green-01.zip",
+      "zip_integrity_verified": true
+    }
+  ]
+}
